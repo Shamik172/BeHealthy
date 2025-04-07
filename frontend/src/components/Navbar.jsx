@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import ProfileDropdown from "./ProfileDropdown"; // Importing the extracted dropdown
+import ContactUs from "./contactus/ContactUs";
+
 
 function Navbar() {
   const [darkMode, setDarkMode] = useState(false);
@@ -13,15 +15,19 @@ function Navbar() {
     <nav className={`${darkMode ? "bg-green-800" : "bg-green-600"} p-4 shadow-md z-50 relative`}>
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
-        <h1 className="text-white text-2xl font-bold">Yoga Portal</h1>
+        <h1 className="text-white text-2xl font-bold">Yoga-Verse</h1>
 
         {/* Navigation Links */}
         <div className="space-x-6 hidden sm:flex">
           <NavLink to="/">Home</NavLink>
           {!isLoggedIn && (
             <>
-              <NavLink to="/login">Login</NavLink>
-              <NavLink to="/signup">Signup</NavLink>
+              {/* <NavLink to="/login">Login</NavLink> */}
+              {/* <NavLink to="/signup">Signup</NavLink> */}
+              <NavLink to="/reviews">Reviews</NavLink>
+              <NavLink to="/aboutus">AboutUs</NavLink>
+              <NavLink to="/contactus">ContactUs</NavLink>
+              
             </>
           )}
         </div>
