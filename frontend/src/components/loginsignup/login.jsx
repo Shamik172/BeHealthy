@@ -1,23 +1,78 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import { handleSuccess, handleError } from "../../utils"; 
+import {ToastContainer} from 'react-toastify' ;
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
   const navigate = useNavigate(); // Initialize navigation
 
-  const handleLogin = (e) => {
+  const [loginInfo, setLoginInfo] = useState({
+    email: "",
+    password: ""
+  });
+
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setLoginInfo((prev) => ({ ...prev, [name]: value }));
+};
+
+const handleLogin = async (e) => {
     e.preventDefault();
 
-    // Mock authentication (Replace with real backend authentication)
-    if (email === "test@example.com" && password === "password123") {
-      console.log("Login successful!");
-      navigate("/"); // Redirect to Home Page
-    } else {
-      alert("Invalid email or password!");
+    const { email, password } = loginInfo;
+
+    if (!email || !password) {
+        return handleError('Email and password are required');
+        // console.log("error :-> email and password are required");
     }
-  };
+
+    try {
+        const url = "http://localhost:5050/auth/login";
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(loginInfo)
+        });
+
+        const text = await response.text(); // Read response as text first
+        console.log("result",text)
+
+        let result;
+        try {
+            result = JSON.parse(text); // Try to parse JSON
+        } catch (error) {
+          console.log("error" , error);
+            return handleError("Invalid server response");
+        }
+        const { success, message, jwtToken, name, error } = result;
+
+        if (success) {
+            handleSuccess(message);
+            localStorage.setItem('token', jwtToken);
+            localStorage.setItem('name', name);
+            setTimeout(() => {
+                navigate('/loginhome');
+            }, 1000);
+        } else if (error) {
+            const details = error?.details?.[0]?.message || "Login failed";
+            handleError(details);
+            console.log("error", error);
+        }
+        else{
+          handleError("username or password is incorrect or both are incorrect") ;
+        }
+
+    } catch (err) {
+        console.error("Login Error:", err);
+        handleError("Something went wrong. Please try again.");
+    }
+};
 
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-gradient-to-br from-green-300 via-teal-400 to-green-600">
@@ -49,7 +104,7 @@ function Login() {
           className="absolute w-20 h-20 bg-teal-300 opacity-20 rounded-full -top-5 -right-5"
         ></motion.div>
 
-        <h2 className="text-3xl font-bold text-green-800 mb-6">Yoga Login</h2>
+        <h2 className="text-3xl font-bold text-green-800 mb-6">Yoga-Verse Login</h2>
         <p className="text-gray-500 mb-4">Find your inner peace 🌿</p>
 
         {/* Form Fields */}
@@ -58,8 +113,9 @@ function Login() {
             type="email"
             placeholder="Email"
             className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-400 transition-transform duration-200 hover:scale-105"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={loginInfo.email}
+            onChange={handleChange}
+            name="email"
             required
             whileFocus={{ scale: 1.05 }}
           />
@@ -67,8 +123,9 @@ function Login() {
             type="password"
             placeholder="Password"
             className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-400 transition-transform duration-200 hover:scale-105"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={loginInfo.password}
+            onChange={handleChange}
+            name="password"
             required
             whileFocus={{ scale: 1.05 }}
           />
@@ -91,6 +148,7 @@ function Login() {
           </Link>
         </p>
       </motion.div>
+      <ToastContainer /> 
     </div>
   );
 }

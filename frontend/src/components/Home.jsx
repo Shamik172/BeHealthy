@@ -1,4 +1,5 @@
 import Hero from "./Hero";
+import QuoteMarquee from "./quoteTicker/QuoteTicker";
 import YogaCardsHome from "./YogaCardsHome";
 import YogaCategories from "./YogaCategories";
 import YogaSidebar from "./YogaSidebar";
@@ -6,6 +7,7 @@ import YogaSidebar from "./YogaSidebar";
 export default function Home() {
   return (
     <div>
+       <QuoteMarquee />
       <Hero />
 
       {/* Welcome Section */}

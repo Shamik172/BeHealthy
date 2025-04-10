@@ -1,0 +1,812 @@
+[
+    {
+        "id": "asana1",
+        "name": "Downward-Facing Dog",
+        "bodyParts": [
+          "Shoulders",
+          "Hamstrings",
+          "Calves"
+        ],
+        "difficulty": "Beginner",
+        "duration": "30-60 seconds",
+        "benefits": [
+          "Stretches hamstrings, calves, and spine",
+          "Strengthens arms and legs",
+          "Relieves stress"
+        ],
+        "steps": [
+          "Start on hands and knees.",
+          "Lift knees, push hips back and up.",
+          "Form an inverted V shape.",
+          "Hold and breathe deeply."
+        ],
+        "image": "/images/asanas/downward_dog.jpg",
+        "video": "/videos/downward_dog.mp4"
+      },
+      {
+        "id": "asana2",
+        "name": "Cobra Pose",
+        "bodyParts": [
+          "Back",
+          "Shoulders",
+          "Chest"
+        ],
+        "difficulty": "Beginner",
+        "duration": "15-30 seconds",
+        "benefits": [
+          "Opens chest and strengthens spine",
+          "Improves posture",
+          "Energizes the body"
+        ],
+        "steps": [
+          "Lie face down, hands under shoulders.",
+          "Press palms and lift upper body.",
+          "Keep elbows soft and shoulders relaxed.",
+          "Hold with deep breathing."
+        ],
+        "image": "/images/asanas/cobra_pose.jpg",
+        "video": "/videos/cobra_pose.mp4"
+      },
+      {
+        "id": "asana3",
+        "name": "Bridge Pose",
+        "bodyParts": [
+          "Lower Back",
+          "Glutes",
+          "Hamstrings"
+        ],
+        "difficulty": "Beginner",
+        "duration": "30-60 seconds",
+        "benefits": [
+          "Strengthens back and glutes",
+          "Opens chest and shoulders",
+          "Stimulates abdominal organs"
+        ],
+        "steps": [
+          "Lie on back, knees bent, feet hip-width.",
+          "Lift hips while pressing feet and arms.",
+          "Clasp hands under your back.",
+          "Hold and breathe."
+        ],
+        "image": "/images/asanas/bridge_pose.jpg",
+        "video": "/videos/bridge_pose.mp4"
+      },
+      {
+        "id": "asana4",
+        "name": "Boat Pose",
+        "bodyParts": [
+          "Core",
+          "Hip Flexors"
+        ],
+        "difficulty": "Intermediate",
+        "duration": "20-40 seconds",
+        "benefits": [
+          "Strengthens abs and spine",
+          "Improves balance and posture",
+          "Stimulates kidneys and intestines"
+        ],
+        "steps": [
+          "Sit with knees bent, feet on floor.",
+          "Lift feet, extend legs at 45 degrees.",
+          "Stretch arms forward parallel to the floor.",
+          "Hold and engage core."
+        ],
+        "image": "/images/asanas/boat_pose.jpg",
+        "video": "/videos/boat_pose.mp4"
+      },
+      {
+        "id": "asana5",
+        "name": "Child\u2019s Pose",
+        "bodyParts": [
+          "Neck",
+          "Back",
+          "Hips"
+        ],
+        "difficulty": "Beginner",
+        "duration": "1-2 minutes",
+        "benefits": [
+          "Gently stretches spine and hips",
+          "Relieves back and neck tension",
+          "Calms the mind"
+        ],
+        "steps": [
+          "Kneel on mat, big toes touching, knees apart.",
+          "Lower torso between thighs.",
+          "Stretch arms forward or back.",
+          "Rest forehead and breathe."
+        ],
+        "image": "/images/asanas/child_pose.jpg",
+        "video": "/videos/child_pose.mp4"
+      },
+      {
+        "id": "asana6",
+        "name": "Eagle Arms",
+        "bodyParts": [
+          "Shoulders",
+          "Upper Back"
+        ],
+        "difficulty": "Beginner",
+        "duration": "30 seconds per side",
+        "benefits": [
+          "Improves shoulder mobility",
+          "Stretches upper back",
+          "Enhances focus"
+        ],
+        "steps": [
+          "Extend arms forward, cross right arm over left.",
+          "Bend elbows, bring palms together.",
+          "Lift elbows slightly, drop shoulders.",
+          "Hold and switch sides."
+        ],
+        "image": "/images/asanas/eagle_arms.jpg",
+        "video": "/videos/eagle_arms.mp4"
+      },
+      {
+        "id": "asana7",
+        "name": "Warrior II",
+        "bodyParts": [
+          "Legs",
+          "Hips",
+          "Arms"
+        ],
+        "difficulty": "Intermediate",
+        "duration": "30-60 seconds",
+        "benefits": [
+          "Strengthens legs and arms",
+          "Opens hips and chest",
+          "Improves stamina and concentration"
+        ],
+        "steps": [
+          "Step feet wide, turn right foot out, left foot slightly in.",
+          "Bend right knee, arms parallel to floor.",
+          "Gaze over right hand.",
+          "Hold and repeat on other side."
+        ],
+        "image": "/images/asanas/warrior_2.jpg",
+        "video": "/videos/warrior_2.mp4"
+      },
+      {
+        "id": "asana8",
+        "name": "Seated Forward Bend",
+        "bodyParts": [
+          "Hamstrings",
+          "Calves",
+          "Back"
+        ],
+        "difficulty": "Beginner",
+        "duration": "30-90 seconds",
+        "benefits": [
+          "Stretches spine and hamstrings",
+          "Stimulates liver and kidneys",
+          "Improves digestion"
+        ],
+        "steps": [
+          "Sit with legs extended, spine straight.",
+          "Inhale, reach arms up.",
+          "Exhale, hinge at hips and fold forward.",
+          "Hold and relax neck."
+        ],
+        "image": "/images/asanas/seated_forward_bend.jpg",
+        "video": "/videos/seated_forward_bend.mp4"
+      },
+      {
+        "id": "asana9",
+        "name": "Plank Pose",
+        "bodyParts": [
+          "Core",
+          "Arms",
+          "Shoulders"
+        ],
+        "difficulty": "Beginner",
+        "duration": "30-60 seconds",
+        "benefits": [
+          "Strengthens core, arms, and shoulders",
+          "Improves posture",
+          "Boosts endurance"
+        ],
+        "steps": [
+          "Start in a push-up position.",
+          "Align shoulders over wrists.",
+          "Engage your core and hold."
+        ],
+        "image": "/images/asanas/plank_pose.jpg",
+        "video": "/videos/plank_pose.mp4"
+      },
+      {
+        "id": "asana10",
+        "name": "Tree Pose",
+        "bodyParts": [
+          "Legs",
+          "Core",
+          "Arms"
+        ],
+        "difficulty": "Beginner",
+        "duration": "30-60 seconds",
+        "benefits": [
+          "Improves balance",
+          "Strengthens legs and spine",
+          "Opens hips"
+        ],
+        "steps": [
+          "Stand tall, shift weight onto one leg.",
+          "Place sole of other foot on inner thigh or calf.",
+          "Bring hands to prayer position."
+        ],
+        "image": "/images/asanas/tree_pose.jpg",
+        "video": "/videos/tree_pose.mp4"
+      },
+      {
+        "id": "asana11",
+        "name": "Triangle Pose",
+        "bodyParts": [
+          "Hips",
+          "Hamstrings",
+          "Chest"
+        ],
+        "difficulty": "Intermediate",
+        "duration": "30-60 seconds",
+        "benefits": [
+          "Stretches hips, spine, and chest",
+          "Strengthens legs",
+          "Improves digestion"
+        ],
+        "steps": [
+          "Stand with legs wide, arms extended.",
+          "Reach forward and tilt down, hand to shin or floor.",
+          "Look up at top hand."
+        ],
+        "image": "/images/asanas/triangle_pose.jpg",
+        "video": "/videos/triangle_pose.mp4"
+      },
+      {
+        "id": "asana12",
+        "name": "Chair Pose",
+        "bodyParts": [
+          "Legs",
+          "Back",
+          "Arms"
+        ],
+        "difficulty": "Beginner",
+        "duration": "30-60 seconds",
+        "benefits": [
+          "Strengthens thighs and ankles",
+          "Tones the core",
+          "Improves balance"
+        ],
+        "steps": [
+          "Stand with feet together.",
+          "Bend knees and raise arms overhead.",
+          "Hold and breathe."
+        ],
+        "image": "/images/asanas/chair_pose.jpg",
+        "video": "/videos/chair_pose.mp4"
+      },
+      {
+        "id": "asana13",
+        "name": "Camel Pose",
+        "bodyParts": [
+          "Back",
+          "Chest",
+          "Shoulders"
+        ],
+        "difficulty": "Intermediate",
+        "duration": "30-60 seconds",
+        "benefits": [
+          "Opens chest and shoulders",
+          "Improves spinal flexibility",
+          "Stimulates digestion"
+        ],
+        "steps": [
+          "Kneel with knees hip-width apart.",
+          "Place hands on lower back.",
+          "Lean back and reach for heels."
+        ],
+        "image": "/images/asanas/camel_pose.jpg",
+        "video": "/videos/camel_pose.mp4"
+      },
+      {
+        "id": "asana14",
+        "name": "Reclining Twist",
+        "bodyParts": [
+          "Spine",
+          "Hips",
+          "Shoulders"
+        ],
+        "difficulty": "Beginner",
+        "duration": "1-2 minutes",
+        "benefits": [
+          "Relieves spinal tension",
+          "Improves digestion",
+          "Relaxes the body"
+        ],
+        "steps": [
+          "Lie on back, bring one knee across the body.",
+          "Extend opposite arm out.",
+          "Gaze opposite to the twist."
+        ],
+        "image": "/images/asanas/reclining_twist.jpg",
+        "video": "/videos/reclining_twist.mp4"
+      },
+      {
+        "id": "asana15",
+        "name": "Pigeon Pose",
+        "bodyParts": [
+          "Hips",
+          "Glutes",
+          "Lower Back"
+        ],
+        "difficulty": "Intermediate",
+        "duration": "1-2 minutes",
+        "benefits": [
+          "Opens hip flexors",
+          "Releases lower back tension",
+          "Improves flexibility"
+        ],
+        "steps": [
+          "Bring one knee forward and extend other leg back.",
+          "Square hips to the front.",
+          "Fold forward and rest."
+        ],
+        "image": "/images/asanas/pigeon_pose.jpg",
+        "video": "/videos/pigeon_pose.mp4"
+      },
+      {
+        "id": "asana16",
+        "name": "Fish Pose",
+        "bodyParts": [
+          "Chest",
+          "Throat",
+          "Back"
+        ],
+        "difficulty": "Intermediate",
+        "duration": "15-30 seconds",
+        "benefits": [
+          "Stretches neck and chest",
+          "Relieves respiratory issues",
+          "Improves posture"
+        ],
+        "steps": [
+          "Lie on back, prop chest with forearms.",
+          "Arch back and rest crown of head.",
+          "Hold gently."
+        ],
+        "image": "/images/asanas/fish_pose.jpg",
+        "video": "/videos/fish_pose.mp4"
+      },
+      {
+        "id": "asana17",
+        "name": "Crow Pose",
+        "bodyParts": [
+          "Arms",
+          "Core",
+          "Wrists"
+        ],
+        "difficulty": "Advanced",
+        "duration": "20-40 seconds",
+        "benefits": [
+          "Strengthens arms and wrists",
+          "Improves focus and balance",
+          "Tones core"
+        ],
+        "steps": [
+          "Start in squat, place palms on floor.",
+          "Lift hips, bend elbows.",
+          "Balance knees on arms."
+        ],
+        "image": "/images/asanas/crow_pose.jpg",
+        "video": "/videos/crow_pose.mp4"
+      },
+      {
+        "id": "asana18",
+        "name": "Lotus Pose",
+        "bodyParts": [
+          "Hips",
+          "Knees",
+          "Ankles"
+        ],
+        "difficulty": "Advanced",
+        "duration": "1-5 minutes",
+        "benefits": [
+          "Calms the brain",
+          "Opens hips",
+          "Promotes meditation"
+        ],
+        "steps": [
+          "Sit with legs extended.",
+          "Place each foot on opposite thigh.",
+          "Rest hands on knees."
+        ],
+        "image": "/images/asanas/lotus_pose.jpg",
+        "video": "/videos/lotus_pose.mp4"
+      },
+      {
+        "id": "asana19",
+        "name": "Cat-Cow Pose",
+        "bodyParts": [
+          "Spine",
+          "Neck",
+          "Back"
+        ],
+        "difficulty": "Beginner",
+        "duration": "1-2 minutes",
+        "benefits": [
+          "Warms up the spine",
+          "Improves flexibility",
+          "Relieves back tension"
+        ],
+        "steps": [
+          "Start on hands and knees.",
+          "Alternate between arching and rounding the back."
+        ],
+        "image": "/images/asanas/cat_cow_pose.jpg",
+        "video": "/videos/cat_cow_pose.mp4"
+      },
+      {
+        "id": "asana20",
+        "name": "Happy Baby",
+        "bodyParts": [
+          "Hips",
+          "Inner Thighs",
+          "Lower Back"
+        ],
+        "difficulty": "Beginner",
+        "duration": "1-2 minutes",
+        "benefits": [
+          "Relaxes lower back",
+          "Opens hips",
+          "Reduces stress"
+        ],
+        "steps": [
+          "Lie on back, grab feet from outside.",
+          "Pull knees towards armpits.",
+          "Rock gently."
+        ],
+        "image": "/images/asanas/happy_baby.jpg",
+        "video": "/videos/happy_baby.mp4"
+      },
+      {
+        "id": "asana21",
+        "name": "Supine Butterfly",
+        "bodyParts": [
+          "Hips",
+          "Groin",
+          "Thighs"
+        ],
+        "difficulty": "Beginner",
+        "duration": "2-5 minutes",
+        "benefits": [
+          "Relaxes the body",
+          "Stretches inner thighs",
+          "Stimulates abdominal organs"
+        ],
+        "steps": [
+          "Lie back, bring soles of feet together.",
+          "Let knees fall open.",
+          "Place hands on belly."
+        ],
+        "image": "/images/asanas/supine_butterfly.jpg",
+        "video": "/videos/supine_butterfly.mp4"
+      },
+      {
+        "id": "asana22",
+        "name": "Side Plank",
+        "bodyParts": [
+          "Arms",
+          "Obliques",
+          "Legs"
+        ],
+        "difficulty": "Intermediate",
+        "duration": "30-60 seconds",
+        "benefits": [
+          "Strengthens obliques",
+          "Improves balance",
+          "Tones arms"
+        ],
+        "steps": [
+          "Start in plank, shift weight to one side.",
+          "Stack feet and lift opposite arm.",
+          "Hold."
+        ],
+        "image": "/images/asanas/side_plank.jpg",
+        "video": "/videos/side_plank.mp4"
+      },
+      {
+        "id": "asana23",
+        "name": "Standing Forward Fold",
+        "bodyParts": [
+          "Hamstrings",
+          "Calves",
+          "Back"
+        ],
+        "difficulty": "Beginner",
+        "duration": "30-60 seconds",
+        "benefits": [
+          "Calms the mind",
+          "Stretches spine and legs",
+          "Reduces fatigue"
+        ],
+        "steps": [
+          "Stand tall, exhale and fold forward.",
+          "Let head hang.",
+          "Relax into the pose."
+        ],
+        "image": "/images/asanas/standing_forward_fold.jpg",
+        "video": "/videos/standing_forward_fold.mp4"
+      },
+      {
+        "id": "asana24",
+        "name": "Upward Plank Pose",
+        "bodyParts": [
+          "Shoulders",
+          "Arms",
+          "Spine"
+        ],
+        "difficulty": "Intermediate",
+        "duration": "15-30 seconds",
+        "benefits": [
+          "Strengthens arms and back",
+          "Stretches chest and shoulders",
+          "Boosts energy"
+        ],
+        "steps": [
+          "Sit with legs extended, hands behind hips.",
+          "Lift hips up, point toes.",
+          "Hold and breathe."
+        ],
+        "image": "/images/asanas/upward_plank_pose.jpg",
+        "video": "/videos/upward_plank_pose.mp4"
+      },
+      {
+        "id": "asana25",
+        "name": "Garland Pose",
+        "bodyParts": [
+          "Hips",
+          "Ankles",
+          "Back"
+        ],
+        "difficulty": "Beginner",
+        "duration": "30-60 seconds",
+        "benefits": [
+          "Improves hip mobility",
+          "Aids digestion",
+          "Strengthens ankles"
+        ],
+        "steps": [
+          "Squat with feet wide.",
+          "Bring palms together at chest.",
+          "Press elbows into knees."
+        ],
+        "image": "/images/asanas/garland_pose.jpg",
+        "video": "/videos/garland_pose.mp4"
+      },
+      {
+        "id": "asana26",
+        "name": "Sphinx Pose",
+        "bodyParts": [
+          "Back",
+          "Chest",
+          "Shoulders"
+        ],
+        "difficulty": "Beginner",
+        "duration": "1-2 minutes",
+        "benefits": [
+          "Strengthens spine",
+          "Opens chest",
+          "Stimulates abdominal organs"
+        ],
+        "steps": [
+          "Lie on stomach, elbows under shoulders.",
+          "Lift chest and gaze forward.",
+          "Hold and breathe."
+        ],
+        "image": "/images/asanas/sphinx_pose.jpg",
+        "video": "/videos/sphinx_pose.mp4"
+      },
+      {
+        "id": "asana27",
+        "name": "Half Lord of the Fishes",
+        "bodyParts": [
+          "Spine",
+          "Shoulders",
+          "Neck"
+        ],
+        "difficulty": "Intermediate",
+        "duration": "30-60 seconds",
+        "benefits": [
+          "Improves spinal mobility",
+          "Stimulates digestive organs",
+          "Relieves fatigue"
+        ],
+        "steps": [
+          "Sit with legs extended, bend one leg over.",
+          "Twist towards bent leg.",
+          "Use opposite elbow for leverage."
+        ],
+        "image": "/images/asanas/half_lord_fishes.jpg",
+        "video": "/videos/half_lord_fishes.mp4"
+      },
+      {
+        "id": "asana28",
+        "name": "Revolved Triangle",
+        "bodyParts": [
+          "Spine",
+          "Hamstrings",
+          "Hips"
+        ],
+        "difficulty": "Advanced",
+        "duration": "30-60 seconds",
+        "benefits": [
+          "Improves balance",
+          "Stretches legs and spine",
+          "Detoxifies internal organs"
+        ],
+        "steps": [
+          "Stand wide, turn one foot out.",
+          "Reach opposite arm down, twist torso.",
+          "Extend other arm upward."
+        ],
+        "image": "/images/asanas/revolved_triangle.jpg",
+        "video": "/videos/revolved_triangle.mp4"
+      },
+      {
+      "id": "asana29",
+      "name": "Downward-Facing Dog",
+      "bodyParts": ["Shoulders", "Hamstrings", "Calves"],
+      "difficulty": "Beginner",
+      "duration": "30-60 seconds",
+      "benefits": [
+        "Stretches hamstrings, calves, and spine",
+        "Strengthens arms and legs",
+        "Relieves stress"
+      ],
+      "steps": [
+        "Start on hands and knees.",
+        "Lift knees, push hips back and up.",
+        "Form an inverted V shape.",
+        "Hold and breathe deeply."
+      ],
+      "image": "/images/asanas/downward_dog.jpg",
+      "video": "/videos/downward_dog.mp4"
+    },
+    {
+      "id": "asana30",
+      "name": "Cobra Pose",
+      "bodyParts": ["Back", "Shoulders", "Chest"],
+      "difficulty": "Beginner",
+      "duration": "15-30 seconds",
+      "benefits": [
+        "Opens chest and strengthens spine",
+        "Improves posture",
+        "Energizes the body"
+      ],
+      "steps": [
+        "Lie face down, hands under shoulders.",
+        "Press palms and lift upper body.",
+        "Keep elbows soft and shoulders relaxed.",
+        "Hold with deep breathing."
+      ],
+      "image": "/images/asanas/cobra_pose.jpg",
+      "video": "/videos/cobra_pose.mp4"
+    },
+    {
+      "id": "asana31",
+      "name": "Bridge Pose",
+      "bodyParts": ["Lower Back", "Glutes", "Hamstrings"],
+      "difficulty": "Beginner",
+      "duration": "30-60 seconds",
+      "benefits": [
+        "Strengthens back and glutes",
+        "Opens chest and shoulders",
+        "Stimulates abdominal organs"
+      ],
+      "steps": [
+        "Lie on back, knees bent, feet hip-width.",
+        "Lift hips while pressing feet and arms.",
+        "Clasp hands under your back.",
+        "Hold and breathe."
+      ],
+      "image": "/images/asanas/bridge_pose.jpg",
+      "video": "/videos/bridge_pose.mp4"
+    },
+    {
+      "id": "asana32",
+      "name": "Boat Pose",
+      "bodyParts": ["Core", "Hip Flexors"],
+      "difficulty": "Intermediate",
+      "duration": "20-40 seconds",
+      "benefits": [
+        "Strengthens abs and spine",
+        "Improves balance and posture",
+        "Stimulates kidneys and intestines"
+      ],
+      "steps": [
+        "Sit with knees bent, feet on floor.",
+        "Lift feet, extend legs at 45 degrees.",
+        "Stretch arms forward parallel to the floor.",
+        "Hold and engage core."
+      ],
+      "image": "/images/asanas/boat_pose.jpg",
+      "video": "/videos/boat_pose.mp4"
+    },
+    {
+      "id": "asana33",
+      "name": "Child’s Pose",
+      "bodyParts": ["Neck", "Back", "Hips"],
+      "difficulty": "Beginner",
+      "duration": "1-2 minutes",
+      "benefits": [
+        "Gently stretches spine and hips",
+        "Relieves back and neck tension",
+        "Calms the mind"
+      ],
+      "steps": [
+        "Kneel on mat, big toes touching, knees apart.",
+        "Lower torso between thighs.",
+        "Stretch arms forward or back.",
+        "Rest forehead and breathe."
+      ],
+      "image": "/images/asanas/child_pose.jpg",
+      "video": "/videos/child_pose.mp4"
+    },
+    {
+      "id": "asana34",
+      "name": "Eagle Arms",
+      "bodyParts": ["Shoulders", "Upper Back"],
+      "difficulty": "Beginner",
+      "duration": "30 seconds per side",
+      "benefits": [
+        "Improves shoulder mobility",
+        "Stretches upper back",
+        "Enhances focus"
+      ],
+      "steps": [
+        "Extend arms forward, cross right arm over left.",
+        "Bend elbows, bring palms together.",
+        "Lift elbows slightly, drop shoulders.",
+        "Hold and switch sides."
+      ],
+      "image": "/images/asanas/eagle_arms.jpg",
+      "video": "/videos/eagle_arms.mp4"
+    },
+    {
+      "id": "asana35",
+      "name": "Warrior II",
+      "bodyParts": ["Legs", "Hips", "Arms"],
+      "difficulty": "Intermediate",
+      "duration": "30-60 seconds",
+      "benefits": [
+        "Strengthens legs and arms",
+        "Opens hips and chest",
+        "Improves stamina and concentration"
+      ],
+      "steps": [
+        "Step feet wide, turn right foot out, left foot slightly in.",
+        "Bend right knee, arms parallel to floor.",
+        "Gaze over right hand.",
+        "Hold and repeat on other side."
+      ],
+      "image": "/images/asanas/warrior_2.jpg",
+      "video": "/videos/warrior_2.mp4"
+    },
+    {
+      "id": "asana36",
+      "name": "Seated Forward Bend",
+      "bodyParts": ["Hamstrings", "Calves", "Back"],
+      "difficulty": "Beginner",
+      "duration": "30-90 seconds",
+      "benefits": [
+        "Stretches spine and hamstrings",
+        "Stimulates liver and kidneys",
+        "Improves digestion"
+      ],
+      "steps": [
+        "Sit with legs extended, spine straight.",
+        "Inhale, reach arms up.",
+        "Exhale, hinge at hips and fold forward.",
+        "Hold and relax neck."
+      ],
+      "image": "/images/asanas/seated_forward_bend.jpg",
+      "video": "/videos/seated_forward_bend.mp4"
+    }
+  ]
+  
