@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import ProfileDropdown from "./ProfileDropdown"; // Importing the extracted dropdown
 import ContactUs from "./contactus/ContactUs";
+import Asanas from "./Asanas/Asanas";
 
 
 function Navbar() {
@@ -27,7 +28,8 @@ function Navbar() {
               <NavLink to="/reviews">Reviews</NavLink>
               <NavLink to="/aboutus">AboutUs</NavLink>
               <NavLink to="/contactus">ContactUs</NavLink>
-              
+              <NavLink to="/asanas">Asanas</NavLink>
+
             </>
           )}
         </div>
@@ -35,9 +37,14 @@ function Navbar() {
         {/* Right Section: Dark Mode & Profile */}
         <div className="flex items-center space-x-4">
           {/* Dark Mode Toggle */}
-          <button onClick={toggleDarkMode} className="text-white mb-1 text-2xl hover:scale-110 hover:text-yellow-300">
-            {darkMode ? <MdLightMode /> : <MdDarkMode />}
+          <button
+            onClick={toggleDarkMode}
+            className="text-white mb-1 text-2xl transition-transform transform hover:scale-125 hover:text-yellow-300 duration-300"
+            title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          >
+            {darkMode ? <MdLightMode className="animate-pulse" /> : <MdDarkMode />}
           </button>
+
 
           {/* Profile Dropdown */}
           <ProfileDropdown isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />

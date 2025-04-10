@@ -11,6 +11,7 @@ function ContactUs() {
   });
 
   const handleChange = (e) => {
+    
     const { name, value } = e.target;
     setContactInfo((prev) => ({ ...prev, [name]: value }));
   };
