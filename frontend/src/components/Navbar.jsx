@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { IoMdNotificationsOutline } from "react-icons/io"; // ✅ Notification Icon
 import ProfileDropdown from "./ProfileDropdown"; // Importing the extracted dropdown
-import ContactUs from "./contactus/ContactUs";
-import Asanas from "./Asanas/Asanas";
-
 
 function Navbar() {
   const [darkMode, setDarkMode] = useState(false);
@@ -23,13 +21,16 @@ function Navbar() {
           <NavLink to="/">Home</NavLink>
           {!isLoggedIn && (
             <>
-              {/* <NavLink to="/login">Login</NavLink> */}
-              {/* <NavLink to="/signup">Signup</NavLink> */}
               <NavLink to="/reviews">Reviews</NavLink>
               <NavLink to="/aboutus">AboutUs</NavLink>
               <NavLink to="/contactus">ContactUs</NavLink>
               <NavLink to="/asanas">Asanas</NavLink>
-
+              <NavLink to="/notifications">
+                <div className="flex items-center gap-1">
+                  <IoMdNotificationsOutline className="text-lg" />
+                  <span>Notifications</span>
+                </div>
+              </NavLink>
             </>
           )}
         </div>
@@ -44,7 +45,6 @@ function Navbar() {
           >
             {darkMode ? <MdLightMode className="animate-pulse" /> : <MdDarkMode />}
           </button>
-
 
           {/* Profile Dropdown */}
           <ProfileDropdown isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />

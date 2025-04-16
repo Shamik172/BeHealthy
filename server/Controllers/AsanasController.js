@@ -13,7 +13,6 @@ const getAsanasByBodyPart = async (req, res) => {
     
       asanas = await AsanasModel.find();
     }
-
     res.status(200).json(asanas);
   } catch (error) {
     console.error('Error fetching asanas:', error);
