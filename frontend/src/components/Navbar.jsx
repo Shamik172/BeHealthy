@@ -4,6 +4,7 @@ import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { IoMdNotificationsOutline } from "react-icons/io"; // ✅ Notification Icon
 import ProfileDropdown from "./ProfileDropdown"; // Importing the extracted dropdown
 
+
 function Navbar() {
   const [darkMode, setDarkMode] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Change based on authentication

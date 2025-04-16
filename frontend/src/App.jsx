@@ -1,13 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Home from "./components/home";
-import Login from "./components/loginsignup/login";
-import Signup from "./components/loginsignup/signup";
+import Home from "./components/Home";
+import Login from "./components/loginsignup/Login";
+import Signup from "./components/loginsignup/Signup";
 import LoginHome from "./components/loginsignup/LoginHome";
 import ContactUs from "./components/contactus/ContactUs";
 import AboutUs from "./components/aboutus/AboutUs";
-import Asanas from "./components/Asanas/Asanas";
+import Asanas from "./components/asanas/Asanas";
 import Footer from "./components/footer/Footer";
+import YogaVenuePage from "./components/findyogamate/YogaVenuePage";
+// import QuoteTicker from "./components/quoteTicker/QuoteTicker";
 
 // Notification components
 import { NotificationProvider } from "./NotificationContext";
@@ -32,6 +34,7 @@ function App() {
           <Route path="/asanas" element={<Asanas />} />
           <Route path="/testx" element={<NotificationButton />} />
           <Route path="/notifications" element={<NotificationHistory />} /> {/* ✅ added route */}
+          <Route path="/test" element={<YogaVenuePage/>} />
         </Routes>
 
         <Footer />
