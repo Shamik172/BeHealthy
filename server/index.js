@@ -8,6 +8,7 @@ const AuthRouter = require('./Routes/AuthRouter') ;
 const ContactUsRouter= require('./Routes/ContactUsRouter');
 // const AsanasRouter = require('./Routes/AsanasRouter') ;
 const AsanasRouter =require('./Routes/AsanasRouter');
+const locationRoutes = require('./Routes/locationRoutes')
 
 
 
@@ -34,6 +35,7 @@ app.use('/auth' , AuthRouter);
 app.use('/contactus', ContactUsRouter) ;
 
 app.use('/asanas', AsanasRouter) ;
+app.use('/api', locationRoutes);
 
 app.listen(PORT , ()=>{
    console.log(`Server is running on PORT : => ${PORT}`);

@@ -8,24 +8,34 @@ import ContactUs from "./components/contactus/ContactUs";
 import AboutUs from "./components/aboutus/AboutUs";
 import Asanas from "./components/Asanas/Asanas";
 import Footer from "./components/footer/Footer";
-// import QuoteTicker from "./components/quoteTicker/QuoteTicker";
 
+// Notification components
+import { NotificationProvider } from "./NotificationContext";
+import NotificationPopup from "./components/Notification/NotificationPopup";
+import NotificationHistory from "./components/Notification/NotificatioHistory"; // ✅ import added
+import NotificationButton from "./Testx/NotificationButton";
 
 function App() {
   return (
     <Router>
-      <Navbar />
-      {/* <QuoteTicker/> */}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-         <Route  path='/loginhome'  element={<LoginHome/>}   />
-         <Route path="/contactus" element={<ContactUs />} />
-         <Route path="/aboutus" element={<AboutUs />} />
-         <Route path="/asanas" element={<Asanas />} />
-      </Routes>
-      <Footer />
+      <NotificationProvider>
+        <Navbar />
+        <NotificationPopup />
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/loginhome" element={<LoginHome />} />
+          <Route path="/contactus" element={<ContactUs />} />
+          <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/asanas" element={<Asanas />} />
+          <Route path="/testx" element={<NotificationButton />} />
+          <Route path="/notifications" element={<NotificationHistory />} /> {/* ✅ added route */}
+        </Routes>
+
+        <Footer />
+      </NotificationProvider>
     </Router>
   );
 }
