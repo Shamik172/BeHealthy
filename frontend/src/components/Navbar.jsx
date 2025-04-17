@@ -2,9 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import ProfileDropdown from "./ProfileDropdown"; // Importing the extracted dropdown
-import ContactUs from "./contactus/ContactUs";
-import Asanas from "./Asanas/Asanas";
-
 
 function Navbar() {
   const [darkMode, setDarkMode] = useState(false);
@@ -26,9 +23,11 @@ function Navbar() {
               {/* <NavLink to="/login">Login</NavLink> */}
               {/* <NavLink to="/signup">Signup</NavLink> */}
               <NavLink to="/reviews">Reviews</NavLink>
+              <NavLink to="/bodyparts">Body-Parts</NavLink>
+              <NavLink to="/diseases">Diseases</NavLink>
               <NavLink to="/aboutus">AboutUs</NavLink>
               <NavLink to="/contactus">ContactUs</NavLink>
-              <NavLink to="/asanas">Asanas</NavLink>
+              <NavLink to="/history">History</NavLink>
 
             </>
           )}

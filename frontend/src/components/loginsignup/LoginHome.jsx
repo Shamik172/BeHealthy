@@ -5,9 +5,9 @@ import { ToastContainer } from 'react-toastify';
 
 const LoginHome = () => {
    const navigate =useNavigate() ;
-   const [loggedInUser , setLoggedInUser] = useState('');
+   const [loggedInUser , setLoggedInUser] = useState('User');
 
-
+  //  setLoggedInUser(localStorage.getItem('loggedInUser'));
    useEffect(()=>{
      setLoggedInUser(localStorage.getItem('loggedInUser'))
    }, []) ;
@@ -26,7 +26,7 @@ const LoginHome = () => {
    })
   return (
     <div>
-        <h1>{loggedInUser}</h1>
+        <h1>Hii {loggedInUser}</h1>
         <button onClick={handleLogout}>Logout</button>
          
       

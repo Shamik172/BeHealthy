@@ -6,8 +6,10 @@ import Signup from "./components/loginsignup/signup";
 import LoginHome from "./components/loginsignup/LoginHome";
 import ContactUs from "./components/contactus/ContactUs";
 import AboutUs from "./components/aboutus/AboutUs";
-import Asanas from "./components/Asanas/Asanas";
+import BodyParts from "./components/asanas/bodyParts/BodyParts";
+import Disease from "./components/asanas/diseases/Disease";
 import Footer from "./components/footer/Footer";
+import History from "./components/history/History";
 // import QuoteTicker from "./components/quoteTicker/QuoteTicker";
 
 
@@ -23,7 +25,9 @@ function App() {
          <Route  path='/loginhome'  element={<LoginHome/>}   />
          <Route path="/contactus" element={<ContactUs />} />
          <Route path="/aboutus" element={<AboutUs />} />
-         <Route path="/asanas" element={<Asanas />} />
+         <Route path="/bodyparts" element={<BodyParts />} />
+         <Route path="/diseases" element={<Disease />} />
+         <Route path="/history" element={<History />} />
       </Routes>
       <Footer />
     </Router>

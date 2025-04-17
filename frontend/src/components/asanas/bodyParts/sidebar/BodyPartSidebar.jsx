@@ -1,15 +1,41 @@
 import { useEffect, useRef, useState } from "react";
 
+const bodyPartIcons = {
+  Head: "🧠",
+  Neck: "🧍‍♂️",
+  Eyes: "👁️",
+  Shoulders: "🤷",
+  "Upper Back": "🔙",
+  Arms: "💪",
+  Wrists: "✋",
+  Forearms: "🦾",
+  Back: "🪑",
+  Spine: "🦴",
+  Core: "🏋️",
+  Hips: "🕺",
+  Chest: "🫀",
+  Heart: "❤️",
+  Lungs: "🫁",
+  Abdomen: "🧘",
+  "Lower Back": "📦",
+  Legs: "🦵",
+  Knees: "🦿",
+  Ankles: "🦶",
+  Feet: "🦶",
+  Calves: "🧦",
+  "Full Body": "🧍",
+  "Side Body": "↔️",
+  Hamstrings: "🎯",
+  Groin: "🚻",
+  Thighs: "🥋",
+  Balance: "⚖️"
+};
+
 function BodyPartSidebar({ selectedPart, onSelect }) {
   const [search, setSearch] = useState("");
   const listRef = useRef(null);
 
-  const bodyParts = [
-    "Head", "Eyes", "Neck", "Shoulders", "Arms", "Wrists", "Back", "Spine",
-    "Chest", "Lungs", "Heart", "Core", "Abdomen", "Hips", "Legs", "Knees",
-    "Ankles", "Feet", "Full Body", "Upper Back", "Forearms", "Side Body",
-    "Hamstrings", "Calves", "Groin", "Thighs", "Balance"
-  ];
+  const bodyParts = Object.keys(bodyPartIcons);
 
   const filteredParts = bodyParts.filter(part =>
     part.toLowerCase().includes(search.toLowerCase())
@@ -23,7 +49,7 @@ function BodyPartSidebar({ selectedPart, onSelect }) {
   }, [selectedPart]);
 
   return (
-    <div className="w-64 p-4 bg-green-100 shadow-md overflow-y-auto max-h-screen">
+    <div className="w-64 p-4 bg-green-50 shadow-md overflow-y-auto max-h-screen">
       <h2 className="text-xl font-bold text-green-700 mb-4">Target Area</h2>
       <input
         type="text"
@@ -37,13 +63,14 @@ function BodyPartSidebar({ selectedPart, onSelect }) {
           <li
             key={index}
             onClick={() => onSelect(part)}
-            className={`cursor-pointer px-3 py-2 rounded-md transition font-medium ${
+            className={`flex items-center gap-2 cursor-pointer px-3 py-2 rounded-md transition font-medium ${
               selectedPart === part
                 ? "bg-green-400 text-white selected-body-part"
                 : "bg-white text-green-800 hover:bg-green-200"
             }`}
           >
-            {part}
+            <span className="text-lg">{bodyPartIcons[part]}</span>
+            <span>{part}</span>
           </li>
         ))}
         <li
