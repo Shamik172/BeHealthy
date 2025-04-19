@@ -1,5 +1,5 @@
 function YogaCategories() {
-    const categories = ["Strength", "Flexibility", "Relaxation", "Balance", "Posture", "Core"];
+    const categories = ["Body-Part Specific" ,"Strength", "Flexibility", "Relaxation", "Balance", "Posture", "Core" , "Disease Specific"];
   
     return (
       <div className="container mx-auto px-4 sm:px-6 py-6">
