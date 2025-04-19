@@ -50,12 +50,13 @@ const handleLogin = async (e) => {
           console.log("error" , error);
             return handleError("Invalid server response");
         }
-        const { success, message, jwtToken, name, error } = result;
+        const { success, message, jwtToken, name, error, user } = result;
 
         if (success) {
             handleSuccess(message);
             localStorage.setItem('token', jwtToken);
             localStorage.setItem('name', name);
+            localStorage.setItem('role', user.role);  // Store role
             setTimeout(() => {
                 navigate('/loginhome');
             }, 1000);

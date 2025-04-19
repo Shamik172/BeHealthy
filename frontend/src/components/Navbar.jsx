@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { MdMenu, MdClose } from "react-icons/md";
-import ProfileDropdown from "./ProfileDropdown";
+import { Link } from "react-router-dom";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { IoMdNotificationsOutline } from "react-icons/io"; // ✅ Notification Icon
+import ProfileDropdown from "./ProfileDropdown"; // Importing the extracted dropdown
+
 
 function Navbar() {
   const [darkMode, setDarkMode] = useState(false);
@@ -93,9 +95,8 @@ function Navbar() {
             <span>{darkMode ? "Light Mode" : "Dark Mode"}</span>
           </button>
 
-          <div className="pt-4">
-            <ProfileDropdown isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-          </div>
+          {/* Profile Dropdown */}
+          <ProfileDropdown isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
         </div>
       </div>
     </>
