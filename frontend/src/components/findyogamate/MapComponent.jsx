@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  Tooltip,
-  useMap,
-} from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Tooltip, useMap,} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-geosearch/dist/geosearch.css';
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import { FaUserAlt } from 'react-icons/fa'; // Using FaUserAlt for user location
 import { divIcon } from 'leaflet';
+import L from "leaflet";
 
 const SearchBox = ({ setVenues }) => {
   const map = useMap();
@@ -62,36 +56,49 @@ const SearchBox = ({ setVenues }) => {
 
 const MapComponent = ({ venues, setVenues }) => {
   const [userLocation, setUserLocation] = useState(null);
+const MapComponent = ({ venues, setVenues, userLocation, setUserLocation }) => {
+  // const [userLocation, setUserLocation] = useState(null);
 
-  useEffect(() => {
-    // Get user's current location using geolocation API
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setUserLocation({ lat: latitude, lng: longitude });
-        },
-        (error) => {
-          console.error("Error getting location:", error);
-          // You can handle error here, e.g., set default location
-        }
-      );
-    } else {
-      console.log("Geolocation is not supported by this browser.");
-      // Handle case if geolocation is not supported
-    }
-  }, []);
+  // useEffect(() => {
+  //   // Get user's current location using geolocation API
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(
+  //       (position) => {
+  //         const { latitude, longitude } = position.coords;
+  //         setUserLocation({ lat: latitude, lng: longitude });
+  //       },
+  //       (error) => {
+  //         console.error("Error getting location:", error);
+  //         // You can handle error here, e.g., set default location
+  //       }
+  //     );
+  //   } else {
+  //     console.log("Geolocation is not supported by this browser.");
+  //     // Handle case if geolocation is not supported
+  //   }
+  // }, []);
 
   if (!userLocation) {
     return <div>Loading map...</div>; // Show loading while fetching location
   }
 
   // Custom User Icon using FaUserAlt from react-icons
-  const userIcon = divIcon({
-    html: `<div style="font-size: 24px; color: red; text-align: center; cursor: pointer;"><FaUserAlt /></div>`,
-    iconSize: [30, 30], // Size of the icon
-    iconAnchor: [15, 30], // Anchor point for the icon
+  // const userIcon = divIcon({
+  //   html: `<div style="font-size: 24px; color: red; text-align: center; cursor: pointer;"> ${<FaUserAlt />}</div>`,
+  //   iconSize: [30, 30], // Size of the icon
+  //   iconAnchor: [15, 30], // Anchor point for the icon
+  // });
+
+  
+
+  const userIcon = L.divIcon({
+    html: `<div style="font-size: 15px; color: red; text-align: center; cursor: pointer;">
+            <i class="fas fa-user"></i>
+          </div>`,
+    iconSize: [20, 20],
+    iconAnchor: [15, 30],
   });
+
 
   return (
     <MapContainer
@@ -112,6 +119,7 @@ const MapComponent = ({ venues, setVenues }) => {
 
       {/* Venue markers */}
       {venues.map((venue) => (
+      {/* {venues.map((venue) => (
         <Marker
           key={venue._id}
           position={[venue.location.lat, venue.location.lng]}
@@ -119,11 +127,26 @@ const MapComponent = ({ venues, setVenues }) => {
         >
           <Popup>
             <strong>{venue.name}</strong> <br />
-            Morning: {venue.users.filter((u) => u.slots.includes('Morning')).length} <br />
-            Evening: {venue.users.filter((u) => u.slots.includes('Evening')).length}
+            Morning: {venue.morningCount} <br />
+            Evening: {venue.eveningCount}
           </Popup>
+
         </Marker>
-      ))}
+      ))} */}
+      {venues.map((venue) => (
+      <Marker
+        key={venue._id}
+        position={[venue.location.lat, venue.location.lng]}
+        icon={new L.Icon.Default()}
+      >
+        <Popup>
+          <strong>{venue.name}</strong>
+          <div>🧘‍♂️ Morning: <b>{venue.users?.filter((u) => u.slots.includes("Morning")).length || 0}</b></div>
+          <div>🌇 Evening: <b>{venue.users?.filter((u) => u.slots.includes("Evening")).length || 0}</b></div>
+        </Popup>
+      </Marker>
+))}
+
     </MapContainer>
   );
 };
