@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 const Asanas = require('../Models/Asanas');
 const auth = require('../Middlewares/Auth');
@@ -71,16 +72,16 @@ router.get('/by-body-part', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
-
+ 
 router.get("/by-disease", async (req, res) => {
   try {
-    const { disease } = req.query;
-
+    const  {disease}  = req.query;
     const filter = disease
-      ? { diseases: { $in: [new RegExp(disease, "i")] } } // for array matching
-      : {};
+    ? { diseases: { $in: [new RegExp(disease, "i")] } } // for array matching
+    : {};
+    console.log(filter);
 
-    const asanas = await AsanasModel.find(filter);
+    const asanas = await Asanas.find(filter);
     res.status(200).json(asanas);
   } catch (err) {
     console.error("Error fetching asanas by disease:", err);
