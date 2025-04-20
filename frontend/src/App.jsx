@@ -17,13 +17,14 @@ import { NotificationProvider } from "./NotificationContext";
 import NotificationPopup from "./components/Notification/NotificationPopup";
 import NotificationHistory from "./components/Notification/NotificatioHistory";
 import NotificationButton from "./Testx/NotificationButton";
+import AdminDashboard from "../../admin/src/components/AdminDashboard";
 
 // Admin Components
-import AdminDashboard from "./components/admin/AdminDashboard";
-import AdminRoute from "./components/admin/AdminRoute";
-import AdminUsers from "./components/admin/AdminUsers";
-import AdminAsanas from "./components/admin/AdminAsanas";
-import AdminSettings from "./components/admin/AdminSettings";
+// import AdminDashboard from "./components/admin/AdminDashboard";
+// import AdminRoute from "./components/admin/AdminRoute";
+// import AdminUsers from "./components/admin/AdminUsers";
+// import AdminAsanas from "./components/admin/AdminAsanas";
+// import AdminSettings from "./components/admin/AdminSettings";
 
 function App() {
   return (
@@ -51,7 +52,7 @@ function App() {
               <Route path="/test" element={<YogaVenuePage />} />
 
               {/* Admin Routes */}
-              <Route path="/admin" element={
+              {/* <Route path="/admin" element={
                 <AdminRoute>
                   <AdminDashboard />
                 </AdminRoute>
@@ -70,7 +71,7 @@ function App() {
                 <AdminRoute>
                   <AdminSettings />
                 </AdminRoute>
-              } />
+              } /> */}
             </Routes>
           </main>
 
