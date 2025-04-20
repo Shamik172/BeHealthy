@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import BodyPartSidebar from "../sidebar/BodyPartSidebar";
+import BodyPartSidebar from "../sidebar/BodyPartSidebar"; 
 
-function YogaCards() {
+function YogaCardsByBodyPart() {
   const [asanas, setAsanas] = useState([]);
   const [selectedBodyPart, setSelectedBodyPart] = useState("");
   const [expandedCardId, setExpandedCardId] = useState(null);
@@ -109,4 +109,4 @@ function YogaCards() {
   );
 }
 
-export default YogaCards;
+export default YogaCardsByBodyPart;

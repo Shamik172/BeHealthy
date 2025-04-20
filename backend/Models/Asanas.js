@@ -3,35 +3,38 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const AsanasSchema = new Schema({
-    name :{
-        type : String,
-        required : true
-    },
-    bodyParts :{
-        type : [String],
+    name: {
+        type: String,
         required: true
     },
-    difficulty:{
+    bodyParts: {
+        type: [String],
+        required: true
+    },
+    diseases: {
+        type: [String], 
+        default: []
+    },
+    difficulty: {
         type: String
     },
-    duration : {
-        type :String
+    duration: {
+        type: String
     },
-    benefits : {
-        type : [String]
+    benefits: {
+        type: [String]
     },
-    steps : {
-        type :[String]
+    steps: {
+        type: [String]
     },
-    image :{
-        type : String
+    image: {
+        type: String
     },
-    video :{
-        type : String
+    video: {
+        type: String
     }
-}, {timestamps : true});
+}, { timestamps: true });
 
-const AsanasModel =new  mongoose.model('Asanas', AsanasSchema);
+const AsanasModel = mongoose.model('Asanas', AsanasSchema);
 
-module.exports = AsanasModel ;
-
+module.exports = AsanasModel;
