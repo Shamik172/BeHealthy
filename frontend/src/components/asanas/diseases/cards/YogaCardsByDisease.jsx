@@ -3,19 +3,20 @@ import { motion } from "framer-motion";
 import DiseaseSidebar from "../sidebar/DiseaseSidebar";
 
 function YogaCardsByDisease() {
-  const [asanas, setAsanas] = useState([]);
+  const [asanas, setAsanas] = useState([]); 
   const [selectedDisease, setSelectedDisease] = useState("");
   const [expandedCardId, setExpandedCardId] = useState(null);
 
   useEffect(() => {
     const fetchAsanas = async () => {
       const query = selectedDisease ? `?disease=${encodeURIComponent(selectedDisease)}` : "";
-      const url = `http://localhost:5050/asanas/by-disease${query}`;
+      console.log(query);
+      const url = `http://localhost:5050/asanas/by-disease/${query}`;
   
-    //   console.log("Fetching from:", url); // For debugging
+      console.log("Fetching from:", url); // For debugging
       const res = await fetch(url);
       const data = await res.json();
-    //   console.log("Fetched:", data); // For debugging
+      console.log("Fetched:", data); // For debugging
       setAsanas(data);
     };
   
