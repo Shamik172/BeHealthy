@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { handleSuccess, handleError } from "../../utils";
+import { handleSuccess, handleError } from "../utils";
 
 function AdminAsanas() {
   const [asanas, setAsanas] = useState([]);
