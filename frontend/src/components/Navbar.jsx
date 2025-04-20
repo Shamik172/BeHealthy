@@ -1,7 +1,16 @@
 import { useState } from "react";
+// <<<<<<< anantesh
+// import { Link, useLocation } from "react-router-dom";
+// import { MdMenu, MdClose } from "react-icons/md";
+// import ProfileDropdown from "./ProfileDropdown";
+// =======
 import { Link, useLocation } from "react-router-dom";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { MdMenu, MdClose } from "react-icons/md";
-import ProfileDropdown from "./ProfileDropdown";
+import { IoMdNotificationsOutline } from "react-icons/io"; // ✅ Notification Icon
+import ProfileDropdown from "./ProfileDropdown"; // Importing the extracted dropdown
+
+// >>>>>>> main
 
 function Navbar() {
   const [darkMode, setDarkMode] = useState(false);
@@ -79,6 +88,12 @@ function Navbar() {
               <MobileNavLink to="/aboutus" icon="ℹ️" onClick={toggleSidebar}>About Us</MobileNavLink>
               <MobileNavLink to="/contactus" icon="📞" onClick={toggleSidebar}>Contact Us</MobileNavLink>
               <MobileNavLink to="/notifications" icon="🔔" onClick={toggleSidebar}>Notifications</MobileNavLink>
+//               <NavLink to="/notifications">
+//                 <div className="flex items-center gap-1">
+//                   <IoMdNotificationsOutline className="text-lg" />
+//                   <span>Notifications</span>
+//                 </div>
+//               </NavLink>
             </>
           )}
 

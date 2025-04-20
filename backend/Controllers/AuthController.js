@@ -65,6 +65,15 @@ exports.login = async ( req, res) => {
                                name : existingUser.name,
                                jwtToken, 
                             });
+        res.json({
+            success: true,
+            token: jwtToken,
+            user: {
+              id: existingUser._id,
+              email: existingUser.email,
+              role: existingUser.role  // Include role in response
+            }
+          });
     } catch (error) {
         console.error("Signup Error:", error); 
         res.status(500).json({ error: "Internal Server Error", success: false });
