@@ -1,33 +1,48 @@
-// FILE: src/components/AdminAsanas.jsx
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { handleSuccess, handleError } from '../utils';
-import PrimaryButton from './PrimaryButton';
+// ...existing imports...
+import React, { useEffect, useState } from "react";
+import { handleSuccess, handleError } from "../utils";
+import PrimaryButton from "./PrimaryButton";
+import AdminBackButton from "./AdminBackButton";
 
-function AdminAsanas() {
+const API_URL = "http://localhost:5050/asanas";
+
+const stringToArray = (str) =>
+  str
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+const AdminAsanas = () => {
   const [asanas, setAsanas] = useState([]);
   const [newAsana, setNewAsana] = useState({
-    name: '',
-    bodyParts: '',
-    difficulty: '',
-    duration: '',
-    benefits: '',
-    steps: '',
-    image: '',
-    video: ''
+    name: "",
+    bodyParts: "",
+    benefits: "",
+    steps: "",
+    image: "",
   });
-
-  const stringToArray = (str) => str.split(',').map(item => item.trim());
+  const [editingId, setEditingId] = useState(null);
+  const [editAsana, setEditAsana] = useState({
+    name: "",
+    bodyParts: "",
+    benefits: "",
+    steps: "",
+    image: "",
+  });
 
   const fetchAsanas = async () => {
     try {
-      const response = await fetch('http://localhost:5050/asanas');
-      const data = await response.json();
-      if (data.success) setAsanas(data.asanas);
+      const res = await fetch(API_URL);
+      const data = await res.json();
+      setAsanas(data.asanas || []);
     } catch {
-      handleError('Failed to fetch asanas');
+      handleError("Failed to fetch asanas");
     }
   };
+
+  useEffect(() => {
+    fetchAsanas();
+  }, []);
 
   const handleAddAsana = async (e) => {
     e.preventDefault();
@@ -36,111 +51,256 @@ function AdminAsanas() {
         ...newAsana,
         bodyParts: stringToArray(newAsana.bodyParts),
         benefits: stringToArray(newAsana.benefits),
-        steps: stringToArray(newAsana.steps)
+        steps: stringToArray(newAsana.steps),
       };
-
-      const response = await fetch('http://localhost:5050/asanas', {
-        method: 'POST',
+      const response = await fetch(API_URL, {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify(formattedAsana)
+        body: JSON.stringify(formattedAsana),
       });
       const data = await response.json();
       if (data.success) {
-        handleSuccess('Asana added successfully');
+        handleSuccess("Asana added successfully");
         setNewAsana({
-          name: '', bodyParts: '', difficulty: '', duration: '',
-          benefits: '', steps: '', image: '', video: ''
+          name: "",
+          bodyParts: "",
+          benefits: "",
+          steps: "",
+          image: "",
         });
         fetchAsanas();
+      } else {
+        handleError(data.message || "Failed to add asana");
       }
     } catch {
-      handleError('Failed to add asana');
+      handleError("Failed to add asana");
     }
   };
 
+  // --- FIXED DELETE FUNCTION ---
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this asana?')) {
-      try {
-        const response = await fetch(`http://localhost:5050/asanas/${id}`, {
-          method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
-        });
-        const data = await response.json();
-        if (data.success) {
-          handleSuccess('Asana deleted successfully');
-          fetchAsanas();
-        }
-      } catch {
-        handleError('Failed to delete asana');
+    if (!window.confirm("Are you sure you want to delete this asana?")) return;
+    try {
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await response.json();
+      if (data.success) {
+        handleSuccess("Asana deleted successfully");
+        setAsanas(asanas.filter((a) => a._id !== id));
+      } else {
+        handleError(data.message || "Failed to delete asana");
       }
+    } catch {
+      handleError("Failed to delete asana");
     }
   };
 
-  useEffect(() => {
-    fetchAsanas();
-  }, []);
+  // --- EDIT HANDLERS ---
+  const startEdit = (asana) => {
+    setEditingId(asana._id);
+    setEditAsana({
+      name: asana.name,
+      bodyParts: asana.bodyParts.join(", "),
+      benefits: asana.benefits.join(", "),
+      steps: asana.steps.join(", "),
+      image: asana.image,
+    });
+  };
+
+  const handleEditChange = (e) => {
+    setEditAsana({ ...editAsana, [e.target.name]: e.target.value });
+  };
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const formattedAsana = {
+        ...editAsana,
+        bodyParts: stringToArray(editAsana.bodyParts),
+        benefits: stringToArray(editAsana.benefits),
+        steps: stringToArray(editAsana.steps),
+      };
+      const response = await fetch(`${API_URL}/${editingId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(formattedAsana),
+      });
+      const data = await response.json();
+      if (data.success) {
+        handleSuccess("Asana updated successfully");
+        setEditingId(null);
+        fetchAsanas();
+      } else {
+        handleError(data.message || "Failed to update asana");
+      }
+    } catch {
+      handleError("Failed to update asana");
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-100 p-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-extrabold text-green-800">Asanas Management</h1>
-          <Link to="/admin" className="text-green-600 hover:text-green-800 transition font-medium">
-            ← Back to Dashboard
-          </Link>
-        </div>
+    <div className="p-4">
+      <AdminBackButton />
+      <h2 className="text-2xl font-bold mb-4">Manage Asanas</h2>
+      <form onSubmit={handleAddAsana} className="mb-6 space-y-2">
+        <input
+          className="input"
+          name="name"
+          placeholder="Name"
+          value={newAsana.name}
+          onChange={(e) => setNewAsana({ ...newAsana, name: e.target.value })}
+          required
+        />
+        <input
+          className="input"
+          name="bodyParts"
+          placeholder="Body Parts (comma separated)"
+          value={newAsana.bodyParts}
+          onChange={(e) =>
+            setNewAsana({ ...newAsana, bodyParts: e.target.value })
+          }
+          required
+        />
+        <input
+          className="input"
+          name="benefits"
+          placeholder="Benefits (comma separated)"
+          value={newAsana.benefits}
+          onChange={(e) =>
+            setNewAsana({ ...newAsana, benefits: e.target.value })
+          }
+          required
+        />
+        <input
+          className="input"
+          name="steps"
+          placeholder="Steps (comma separated)"
+          value={newAsana.steps}
+          onChange={(e) =>
+            setNewAsana({ ...newAsana, steps: e.target.value })
+          }
+          required
+        />
+        <input
+          className="input"
+          name="image"
+          placeholder="Image URL"
+          value={newAsana.image}
+          onChange={(e) =>
+            setNewAsana({ ...newAsana, image: e.target.value })
+          }
+        />
+        <PrimaryButton type="submit">Add Asana</PrimaryButton>
+      </form>
 
-        {/* Add Asana Form */}
-        <div className="bg-white rounded-xl shadow-lg p-8 mb-10">
-          <h2 className="text-2xl font-semibold mb-6 text-gray-800">Add New Asana</h2>
-          <form onSubmit={handleAddAsana} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <input type="text" placeholder="Asana Name" className="input" value={newAsana.name} onChange={(e) => setNewAsana({ ...newAsana, name: e.target.value })} required />
-              <input type="text" placeholder="Body Parts (comma-separated)" className="input" value={newAsana.bodyParts} onChange={(e) => setNewAsana({ ...newAsana, bodyParts: e.target.value })} required />
-              <input type="text" placeholder="Difficulty" className="input" value={newAsana.difficulty} onChange={(e) => setNewAsana({ ...newAsana, difficulty: e.target.value })} />
-              <input type="text" placeholder="Duration" className="input" value={newAsana.duration} onChange={(e) => setNewAsana({ ...newAsana, duration: e.target.value })} />
-              <input type="text" placeholder="Benefits (comma-separated)" className="input" value={newAsana.benefits} onChange={(e) => setNewAsana({ ...newAsana, benefits: e.target.value })} />
-              <input type="text" placeholder="Image URL" className="input" value={newAsana.image} onChange={(e) => setNewAsana({ ...newAsana, image: e.target.value })} />
-              <input type="text" placeholder="Video URL" className="input" value={newAsana.video} onChange={(e) => setNewAsana({ ...newAsana, video: e.target.value })} />
-              <textarea placeholder="Steps (comma-separated)" className="textarea md:col-span-2" value={newAsana.steps} onChange={(e) => setNewAsana({ ...newAsana, steps: e.target.value })}></textarea>
-            </div>
-            <PrimaryButton type="submit">Add Asana</PrimaryButton>
-          </form>
-        </div>
-
-        {/* Asanas List */}
-        <div className="bg-white rounded-xl shadow-lg p-8">
-          <h2 className="text-2xl font-semibold mb-6 text-gray-800">Current Asanas</h2>
-          {asanas.length === 0 ? (
-            <p className="text-gray-500">No asanas available. Please add one above.</p>
+      <div className="grid gap-4">
+        {asanas.map((asana) =>
+          editingId === asana._id ? (
+            <form
+              key={asana._id}
+              onSubmit={handleEditSubmit}
+              className="border p-4 rounded bg-gray-50"
+            >
+              <input
+                className="input mb-2"
+                name="name"
+                value={editAsana.name}
+                onChange={handleEditChange}
+                required
+              />
+              <input
+                className="input mb-2"
+                name="bodyParts"
+                value={editAsana.bodyParts}
+                onChange={handleEditChange}
+                required
+              />
+              <input
+                className="input mb-2"
+                name="benefits"
+                value={editAsana.benefits}
+                onChange={handleEditChange}
+                required
+              />
+              <input
+                className="input mb-2"
+                name="steps"
+                value={editAsana.steps}
+                onChange={handleEditChange}
+                required
+              />
+              <input
+                className="input mb-2"
+                name="image"
+                value={editAsana.image}
+                onChange={handleEditChange}
+              />
+              <div className="flex gap-2">
+                <PrimaryButton type="submit">Save</PrimaryButton>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setEditingId(null)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {asanas.map((asana) => (
-                <div key={asana._id} className="bg-green-50 border border-green-100 rounded-xl p-5 hover:shadow-xl transition">
-                  <img src={asana.image} alt={asana.name} className="w-full h-48 object-cover rounded-md mb-3" />
-                  <h3 className="font-bold text-lg text-green-900">{asana.name}</h3>
-                  <p className="text-sm text-gray-700 mt-1">Difficulty: {asana.difficulty}</p>
-                  <p className="text-sm text-gray-700">Duration: {asana.duration}</p>
-                  <div className="mt-2">
-                    <h4 className="font-semibold text-sm text-green-800">Body Parts:</h4>
-                    <p className="text-sm text-gray-600">{asana.bodyParts.join(', ')}</p>
-                  </div>
-                  <button onClick={() => handleDelete(asana._id)} className="mt-4 text-red-500 hover:text-red-700 text-sm font-medium">
-                    Delete
-                  </button>
-                </div>
-              ))}
+            <div
+              key={asana._id}
+              className="border p-4 rounded flex flex-col md:flex-row md:items-center md:justify-between bg-white"
+            >
+              <div>
+                <h3 className="font-bold">{asana.name}</h3>
+                <p>
+                  <span className="font-semibold">Body Parts:</span>{" "}
+                  {asana.bodyParts.join(", ")}
+                </p>
+                <p>
+                  <span className="font-semibold">Benefits:</span>{" "}
+                  {asana.benefits.join(", ")}
+                </p>
+                <p>
+                  <span className="font-semibold">Steps:</span>{" "}
+                  {asana.steps.join(", ")}
+                </p>
+                {asana.image && (
+                  <img
+                    src={asana.image}
+                    alt={asana.name}
+                    className="w-32 h-20 object-cover mt-2 rounded"
+                  />
+                )}
+              </div>
+              <div className="flex gap-2 mt-2 md:mt-0">
+                <PrimaryButton onClick={() => startEdit(asana)}>
+                  Edit
+                </PrimaryButton>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => handleDelete(asana._id)}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-          )}
-        </div>
+          )
+        )}
       </div>
     </div>
   );
-}
+};
 
 export default AdminAsanas;
+// ...existing code...
