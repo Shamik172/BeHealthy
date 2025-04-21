@@ -10,6 +10,8 @@ const SearchBar = ({
   userLocation,
   provider,
   calculateDistance,
+  errorMsg,
+  setErrorMsg,
 }) => {
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -18,31 +20,50 @@ const SearchBar = ({
     return () => clearTimeout(delayDebounceFn);
   }, [searchText]);
 
+  console.log("user loc searchbar: ",userLocation)
   const handleSearch = async (text) => {
     if (!text || !userLocation) return;
-
+  
     try {
       const res = await provider.search({ query: text });
-      const filteredResults = res.filter((result) => {
+  
+      const nearbyResults = [];
+      const farResults = [];
+  
+      res.forEach((result) => {
         const lat = parseFloat(result.y || result.raw?.lat);
         const lon = parseFloat(result.x || result.raw?.lon);
-        if (isNaN(lat) || isNaN(lon)) return false;
-
+        if (isNaN(lat) || isNaN(lon)) return;
+  
         const distance = calculateDistance(
           userLocation.lat,
           userLocation.lng,
           lat,
           lon
         );
-        return distance <= 10;
+  
+        if (distance <= 10) {
+          nearbyResults.push(result);
+        } else {
+          farResults.push(result);
+        }
       });
-
-      setSearchResults(filteredResults);
+  
+      if (nearbyResults.length === 0) {
+        setErrorMsg(
+          "Venue location is more than 10km. Please choose a location within 10km."
+        );
+      } else {
+        setErrorMsg("");
+      }
+  
+      setSearchResults(nearbyResults);
     } catch (error) {
       console.error(error);
       alert("Error searching location.");
     }
   };
+  
 
   return (
     <div className="w-full max-w-md mx-auto">

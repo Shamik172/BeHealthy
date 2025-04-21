@@ -9,7 +9,10 @@ const VenueList = ({ venues, handleSelectSlot, getSlotCount, userSelectedVenues 
       </div>
 
       {venues.length === 0 ? (
-        <p className="text-gray-500 text-lg">No venues added yet. Search or click to add!</p>
+        <p className="text-center text-gray-500 text-lg italic bg-yellow-0 px-4 py-3 rounded-md border border-yellow-300 shadow-sm">
+        🚫 No venues added yet for <span className="font-semibold text-yellow-700">Today</span>. Search or click to add!
+      </p>
+      
       ) : (
         <ul className="space-y-4">
           {venues.map((venue) => (
@@ -39,7 +42,7 @@ const VenueList = ({ venues, handleSelectSlot, getSlotCount, userSelectedVenues 
                     <button
                       className="bg-blue-200 text-blue-800 px-3 py-1.5 rounded-lg shadow hover:bg-blue-300 transition text-sm"
                       onClick={() => handleSelectSlot(venue._id, "Morning")}
-                      disabled={selectedVenues["Morning"]?.length > 0 || selectedVenues["Evening"]?.length > 0}
+                      // disabled={selectedVenues["Morning"]?.length > 0 || selectedVenues["Evening"]?.length > 0}
                     >
                       🌅 Morning
                     </button>
@@ -52,7 +55,7 @@ const VenueList = ({ venues, handleSelectSlot, getSlotCount, userSelectedVenues 
                     <button
                       className="bg-purple-200 text-purple-800 px-3 py-1.5 rounded-lg shadow hover:bg-purple-300 transition text-sm"
                       onClick={() => handleSelectSlot(venue._id, "Evening")}
-                      disabled={selectedVenues["Evening"]?.length > 0 || selectedVenues["Morning"]?.length > 0}
+                      // disabled={selectedVenues["Evening"]?.length > 0 || selectedVenues["Morning"]?.length > 0}
                     >
                       🌇 Evening
                     </button>
