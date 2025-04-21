@@ -6,11 +6,8 @@ const cors= require("cors");
 
 const AuthRouter = require('./Routes/AuthRouter') ;
 const ContactUsRouter= require('./Routes/ContactUsRouter');
-// const AsanasRouter = require('./Routes/AsanasRouter') ;
 const AsanasRouter =require('./Routes/AsanasRouter');
-
-
-
+const UsersRouter = require('./Routes/UsersRouter'); // <-- Add this line
 
 require('dotenv').config() ;
 require('./Models/db') ;
@@ -24,16 +21,10 @@ app.get('/',(req , res)=>{
     res.send("Server is running...") ;
 });
 
-// app.use('/asanas',(req, res)=>{
-//     res.send("Asanas is running...") ;
-// })
-
 app.use('/auth' , AuthRouter);
-
-
 app.use('/contactus', ContactUsRouter) ;
-
 app.use('/asanas', AsanasRouter) ;
+app.use('/users', UsersRouter); // <-- Add this line
 
 app.listen(PORT , ()=>{
    console.log(`Server is running on PORT : => ${PORT}`);
