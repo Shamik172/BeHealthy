@@ -1,10 +1,10 @@
 const bcrypt =  require('bcryptjs');
 const jwt =  require('jsonwebtoken');
-const userModel =  require('../models/UserModel.js');
-const transporter =  require('../config/nodemailer.js');
+const userModel =require("../Models/User.js");
+const transporter = require('../config/nodemailer.js');
 // const { EMAIL_VERIFY_TEMPLATE , PASSWORD_RESET_TEMPLATE } =  require('../config/emailTemplates.js');
 
-export const register = async (req, res) => {
+exports.register = async (req, res) => {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
@@ -78,7 +78,7 @@ export const register = async (req, res) => {
 }
 
 
-export const login = async (req, res) => {
+exports.login = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -144,7 +144,7 @@ export const login = async (req, res) => {
 }
 
 
-export const logout = async (req, res) => {
+exports.logout = async (req, res) => {
 
     try {
         res.clearCookie('token', {
@@ -169,7 +169,7 @@ export const logout = async (req, res) => {
 }
 
 
-export const sendVerifyOtp = async (req, res) => {
+exports.sendVerifyOtp = async (req, res) => {
     const userId = req.user?.id;
 
     if (!userId) {
@@ -233,7 +233,7 @@ export const sendVerifyOtp = async (req, res) => {
 
 
 
-export const verifyEmail = async (req, res) => {
+exports.verifyEmail = async (req, res) => {
     const { otp } = req.body;
     const userId = req.user?.id;
 
@@ -300,7 +300,7 @@ export const verifyEmail = async (req, res) => {
 }
 
 
-export const isAuthenticated = async (req, res) => {
+exports.isAuthenticated = async (req, res) => {
 
     try {
         return res.status(200).json({
@@ -319,7 +319,7 @@ export const isAuthenticated = async (req, res) => {
 }
 
 
-export const sendResetOtp = async (req, res) => {
+exports.sendResetOtp = async (req, res) => {
     const { email } = req.body;
     
 
@@ -377,7 +377,7 @@ export const sendResetOtp = async (req, res) => {
     }
 }
 
-export const verifyResetPasswordOTP = async (req, res) => {
+exports.verifyResetPasswordOTP = async (req, res) => {
     const { email, otp } = req.body;
   
     if (!email || !otp) {
@@ -426,7 +426,7 @@ export const verifyResetPasswordOTP = async (req, res) => {
 
 
 
-export const resetPassword = async (req, res) => {
+exports.resetPassword = async (req, res) => {
 
     const { email,newPassword } = req.body;
 

@@ -33,7 +33,7 @@ app.use('/user',UserRoutes) ;
 
 app.use('/contactus', ContactUsRouter) ;
 app.use('/asanas', AsanasRouter) ;
-app.use('/users', UsersRouter); // <-- Add this line
+// app.use('/users', UsersRouter); // <-- Add this line
 
 app.use("/reviews",ReviewRoutes);
 

@@ -16,7 +16,7 @@ import Disease from "./components/asanas/diseases/Disease";
 
 import Footer from "./components/footer/Footer";
 import YogaVenuePage from "./components/findyogamate/YogaVenuePage";
-import '@fortawesome/fontawesome-free/css/all.min.css';
+// import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
 // Notification components
@@ -28,7 +28,6 @@ import NotificationButton from "./Testx/NotificationButton";
 import AuthPage from "./components/auth/AuthPage";
 import EmailVerify from "./components/auth/EmailVerify";
 import ResetPassword from "./components/auth/ResetPassword";
-import MusicPlayer from "./components/music/MusicPlayer";
 import QuoteMarquee from "./components/quoteTicker/QuoteTicker";
 import Review from "./components/reviews/Review";
 
@@ -69,7 +68,6 @@ function App() {
               <Route path="/test" element={<YogaVenuePage />} />
             </Routes>
           </main>
-          <MusicPlayer />
           <Footer />
         </div>
       </NotificationProvider>

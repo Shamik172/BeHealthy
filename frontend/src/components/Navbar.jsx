@@ -4,12 +4,14 @@ import { AppContent } from "../context/AppContext";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { MdMenu, MdClose } from "react-icons/md";
+import MusicPlayer from "./music/MusicPlayer";
 
 function Navbar() {
   const { userData, setUserData, backendUrl, setIsLoggedin } = useContext(AppContent);
   const [darkMode, setDarkMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isMusicPlayerVisible, setIsMusicPlayerVisible] = useState(true);  // State to control music player visibility
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -126,6 +128,15 @@ function Navbar() {
               </button>
             )}
 
+            {/* Toggle Music Player Visibility */}
+            <button
+              onClick={() => setIsMusicPlayerVisible(!isMusicPlayerVisible)}
+              className="text-white text-2xl transition-transform hover:scale-125 hover:text-yellow-300 duration-300"
+              title={isMusicPlayerVisible ? "Hide Music Player" : "Show Music Player"}
+            >
+              🎶
+            </button>
+
             {/* Mobile Toggle */}
             <button onClick={toggleSidebar} className="sm:hidden text-white text-3xl focus:outline-none">
               {sidebarOpen ? <MdClose /> : <MdMenu />}
@@ -171,6 +182,9 @@ function Navbar() {
           )}
         </div>
       </div>
+
+      {/* Music Player */}
+      {isMusicPlayerVisible && <MusicPlayer />}
     </>
   );
 }

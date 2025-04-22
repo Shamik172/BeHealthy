@@ -1,5 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
+import { Rnd } from 'react-rnd';
+import {
+  FaBackward, FaForward, FaPause, FaPlay, FaRandom,
+  FaRedo, FaVolumeMute, FaVolumeUp, FaSun, FaMoon, FaTimes
+} from 'react-icons/fa';
 import song1 from './song1.mp3';
 import song2 from './song2.mp3';
 import song3 from './song3.mp3';
@@ -19,192 +24,204 @@ const MusicPlayer = () => {
   const [isMuted, setIsMuted] = useState(false);
   const [isRepeating, setIsRepeating] = useState(false);
   const [isShuffling, setIsShuffling] = useState(false);
-
+  const [isDarkMode, setIsDarkMode] = useState(false); // Theme state
+  const [isVisible, setIsVisible] = useState(true); // Visibility state for the player
   const controls = useAnimation();
 
+  // Ensuring volume/mute updates correctly
   useEffect(() => {
-    if (isPlaying) {
-      controls.start({
-        backgroundColor: [
-          "#15803d", // green-700
-          "#166534", // slightly darker
-          "#14532d", // green-800
-          "#15803d", // back to green-700
-        ],
-        transition: {
-          duration: 8,
-          repeat: Infinity,
-          repeatType: "loop",
-        },
-      });
-    } else {
-      controls.start({
-        backgroundColor: "#15803d", // static green-700
-        transition: { duration: 1 },
-      });
+    if (audioRef.current) {
+      audioRef.current.volume = isMuted ? 0 : volume;
     }
-  }, [isPlaying, controls]);
-
-  useEffect(() => {
-    audioRef.current.volume = isMuted ? 0 : volume;
   }, [volume, isMuted]);
 
+  // Update progress bar as audio plays
   useEffect(() => {
     const audio = audioRef.current;
-
     const updateProgress = () => {
       setProgress((audio.currentTime / audio.duration) * 100 || 0);
     };
 
-    audio.addEventListener('timeupdate', updateProgress);
-    audio.addEventListener('ended', handleNext);
+    // Adding event listeners for timeupdate and ended events
+    if (audio) {
+      audio.addEventListener('timeupdate', updateProgress);
+      audio.addEventListener('ended', handleNext);
+    }
 
     return () => {
-      audio.removeEventListener('timeupdate', updateProgress);
-      audio.removeEventListener('ended', handleNext);
+      if (audio) {
+        audio.removeEventListener('timeupdate', updateProgress);
+        audio.removeEventListener('ended', handleNext);
+      }
     };
   }, [currentTrackIndex]);
 
-  const handlePlayPause = () => {
+  // Play/pause logic with state update
+  useEffect(() => {
     const audio = audioRef.current;
-    if (isPlaying) {
-      audio.pause();
-    } else {
-      audio.play();
+    if (audio) {
+      if (isPlaying) {
+        audio.play().catch((error) => {
+          console.error("Error playing audio:", error);
+          setIsPlaying(false);
+        });
+      } else {
+        audio.pause();
+      }
     }
-    setIsPlaying(!isPlaying);
+  }, [isPlaying, currentTrackIndex]);
+
+  // Handle Play/Pause button click
+  const handlePlayPause = () => {
+    setIsPlaying((prev) => !prev); // Toggle play/pause
   };
 
+  // Handle next track (shuffle or sequential)
   const handleNext = () => {
-    if (isShuffling) {
-      setCurrentTrackIndex(Math.floor(Math.random() * tracks.length));
-    } else {
-      setCurrentTrackIndex((prev) => (prev + 1) % tracks.length);
-    }
+    const next = isShuffling
+      ? Math.floor(Math.random() * tracks.length)
+      : (currentTrackIndex + 1) % tracks.length;
+    setCurrentTrackIndex(next);
     setIsPlaying(true);
   };
 
+  // Handle previous track
   const handlePrev = () => {
     setCurrentTrackIndex((prev) => (prev - 1 + tracks.length) % tracks.length);
     setIsPlaying(true);
   };
 
+  // Progress change
   const handleProgressChange = (e) => {
     const value = e.target.value;
-    const audio = audioRef.current;
-    audio.currentTime = (audio.duration * value) / 100;
+    if (audioRef.current) {
+      audioRef.current.currentTime = (audioRef.current.duration * value) / 100;
+    }
     setProgress(value);
   };
 
-  useEffect(() => {
-    if (isPlaying) {
-      audioRef.current.play().catch(() => setIsPlaying(false));
-    } else {
-      audioRef.current.pause();
-    }
-  }, [currentTrackIndex]);
-
-  const handleRepeatToggle = () => {
-    setIsRepeating(!isRepeating);
-    audioRef.current.loop = !audioRef.current.loop;
+  // Toggle mute state
+  const toggleMute = () => setIsMuted((prev) => !prev);
+  
+  // Toggle repeat state
+  const toggleRepeat = () => {
+    audioRef.current.loop = !isRepeating;
+    setIsRepeating((prev) => !prev);
   };
+  
+  // Toggle shuffle state
+  const toggleShuffle = () => setIsShuffling((prev) => !prev);
 
-  const handleMuteToggle = () => {
-    setIsMuted(!isMuted);
-  };
+  // Toggle dark mode
+  const toggleTheme = () => setIsDarkMode((prev) => !prev);
 
-  const handleShuffleToggle = () => {
-    setIsShuffling(!isShuffling);
-  };
+  // Close player visibility
+  const closePlayer = () => setIsVisible(false);
 
   return (
-    <motion.div
-      animate={controls}
-      className="w-full fixed bottom-0 z-50 text-white px-4 py-3 shadow-xl"
-    >
-      <audio ref={audioRef} src={tracks[currentTrackIndex].file} />
-
-      <div className="flex flex-col w-full items-center">
-        {/* Controls Row */}
-        <div className="w-full flex justify-between items-center gap-4 flex-wrap sm:flex-nowrap">
-          <div className="flex items-center gap-3 min-w-[150px]">
-            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-green-700 font-bold">
-              {tracks[currentTrackIndex].name[0]}
-            </div>
-            <p className="text-sm font-semibold">{tracks[currentTrackIndex].name}</p>
-          </div>
-
-          <div className="flex items-center gap-5">
-            <button onClick={handlePrev} className="hover:text-yellow-300 text-lg">⏮️</button>
-            <button
-              onClick={handlePlayPause}
-              className="bg-white text-green-700 px-4 py-1 rounded-full shadow hover:bg-yellow-300 hover:text-green-800"
+    isVisible && (
+      <Rnd
+        default={{
+          x: window.innerWidth - 380, // Start at bottom-right corner
+          y: window.innerHeight - 240,
+          width: 380,
+          height: 240,
+        }}
+        minWidth={300}
+        minHeight={200}
+        bounds="window"
+        dragHandleClassName="handle"
+        className="z-[1000] fixed"
+      >
+        <motion.div
+          animate={controls}
+          className={`rounded-2xl shadow-xl text-white p-4 w-full h-full flex flex-col justify-between overflow-hidden font-mono border-2 border-white/20 backdrop-blur-md ${isDarkMode ? 'bg-black/70' : 'bg-white/50'}`}
+        >
+          {/* Background Video */}
+          <div className="absolute top-0 left-0 w-full h-full">
+            <video
+              autoPlay
+              loop
+              muted
+              className="w-full h-full object-cover opacity-20"
             >
-              {isPlaying ? '⏸️' : '▶️'}
-            </button>
-            <button onClick={handleNext} className="hover:text-yellow-300 text-lg">⏭️</button>
+              <source src="your-background-video.mp4" type="video/mp4" />
+            </video>
           </div>
 
-          <div className="flex items-center gap-2 min-w-[100px]">
-            <span className="text-sm">🔊</span>
+          <audio ref={audioRef} src={tracks[currentTrackIndex].file} />
+
+          <div className="handle cursor-move text-center font-bold text-lg mb-2 tracking-wider text-purple-100">
+            🎵 {tracks[currentTrackIndex].name}
+          </div>
+
+          <div className="flex items-center justify-center gap-4">
+            <button onClick={handlePrev}><FaBackward /></button>
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={handlePlayPause}
+              className="bg-white text-purple-800 p-2 rounded-full"
+            >
+              {isPlaying ? <FaPause /> : <FaPlay />}
+            </motion.button>
+            <button onClick={handleNext}><FaForward /></button>
+          </div>
+
+          <div className="mt-2 w-full h-2 bg-purple-200/30 rounded-full relative">
+            <div
+              style={{ width: `${progress}%` }}
+              className="absolute h-2 bg-yellow-400 rounded-full top-0 left-0"
+            />
             <input
               type="range"
               min="0"
-              max="1"
-              step="0.01"
-              value={volume}
-              onChange={(e) => setVolume(parseFloat(e.target.value))}
-              className="accent-yellow-300 w-24"
+              max="100"
+              value={progress}
+              onChange={handleProgressChange}
+              className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
             />
           </div>
 
-          <div className="flex items-center gap-5">
-            <button
-              onClick={handleRepeatToggle}
-              className={`text-lg ${isRepeating ? 'text-yellow-300' : 'text-white'}`}
-            >
-              🔁
-            </button>
-            <button
-              onClick={handleMuteToggle}
-              className={`text-lg ${isMuted ? 'text-yellow-300' : 'text-white'}`}
-            >
-              🔇
-            </button>
-            <button
-              onClick={handleShuffleToggle}
-              className={`text-lg ${isShuffling ? 'text-yellow-300' : 'text-white'}`}
-            >
-              🔀
-            </button>
+          <div className="flex justify-between mt-2 items-center">
+            <div className="flex items-center gap-2">
+              {isMuted ? (
+                <FaVolumeMute onClick={toggleMute} className="cursor-pointer" />
+              ) : (
+                <FaVolumeUp onClick={toggleMute} className="cursor-pointer" />
+              )}
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={volume}
+                onChange={(e) => setVolume(parseFloat(e.target.value))}
+                className="accent-yellow-300"
+              />
+            </div>
+            <div className="flex gap-3">
+              <button onClick={toggleRepeat} className={isRepeating ? "text-yellow-300" : ""}><FaRedo /></button>
+              <button onClick={toggleShuffle} className={isShuffling ? "text-yellow-300" : ""}><FaRandom /></button>
+            </div>
           </div>
-        </div>
 
-        {/* Wavy Progress SVG */}
-        <div className="w-full mt-2 h-10 relative overflow-hidden">
-          <svg
-            viewBox="0 0 1000 40"
-            preserveAspectRatio="none"
-            className="w-full h-full absolute z-0"
+          <button
+            onClick={toggleTheme}
+            className="absolute top-2 right-2 text-xl text-purple-100"
           >
-            <path
-              d={`M0,20 Q250,0 500,20 T1000,20`}
-              stroke="#facc15"
-              strokeWidth="4"
-              fill="none"
-              style={{
-                strokeDasharray: '1000',
-                strokeDashoffset: `${1000 - (progress / 100) * 1000}`,
-                transition: 'stroke-dashoffset 0.1s linear',
-              }}
-            />
-          </svg>
-          <div className="absolute top-0 left-0 w-full h-full bg-transparent z-10 flex items-center justify-center pointer-events-none">
-            <p className="text-xs text-white">{Math.floor(progress)}%</p>
-          </div>
-        </div>
-      </div>
-    </motion.div>
+            {isDarkMode ? <FaSun /> : <FaMoon />}
+          </button>
+
+          {/* Close Button */}
+          <button
+            onClick={closePlayer}
+            className="absolute top-2 left-2 text-xl text-white"
+          >
+            <FaTimes />
+          </button>
+        </motion.div>
+      </Rnd>
+    )
   );
 };
 
