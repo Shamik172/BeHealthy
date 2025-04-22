@@ -2,8 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 const Asanas = require('../Models/Asanas');
-const auth = require('../Middlewares/Auth');
-const admin = require('../Middlewares/Admin');
+// const auth = require('../Middlewares/Auth');
+// const admin = require('../Middlewares/Admin');
 
 const { getAsanasByBodyPart } = require('../Controllers/AsanasController.js');
 const AsanasModel = require('../Models/Asanas');
@@ -21,8 +21,8 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Add new asana (admin only)
-router.post('/', auth, admin, async (req, res) => {
+// Add new asana (open for now)
+router.post('/', async (req, res) => {
     try {
         const newAsana = new Asanas(req.body);
         await newAsana.save();
@@ -38,8 +38,28 @@ router.post('/', auth, admin, async (req, res) => {
     }
 });
 
-// Delete asana (admin only)
-router.delete('/:id', auth, admin, async (req, res) => {
+// Update asana (open for now)
+router.put('/:id', async (req, res) => {
+    try {
+        const updatedAsana = await Asanas.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
+        if (!updatedAsana) {
+            return res.status(404).json({ success: false, message: 'Asana not found' });
+        }
+        res.json({ success: true, message: 'Asana updated successfully', asana: updatedAsana });
+    } catch (error) {
+        res.status(500).json({ 
+            success: false, 
+            message: 'Error updating asana' 
+        });
+    }
+});
+
+// Delete asana (open for now)
+router.delete('/:id', async (req, res) => {
     try {
         await Asanas.findByIdAndDelete(req.params.id);
         res.json({ 
@@ -58,16 +78,13 @@ router.delete('/:id', auth, admin, async (req, res) => {
 router.get('/by-body-part', async (req, res) => {
     const bodyPart = req.query.bodyPart; 
     try {
-        const { bodyPart } = req.query;
         let asanas;
-    
         if (bodyPart) {
           asanas = await Asanas.find({ bodyParts: bodyPart });
         } else {
         
           asanas = await Asanas.find();
         }
-    
         res.status(200).json(asanas);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -90,8 +107,6 @@ router.get("/by-disease", async (req, res) => {
   }
 });
 
-
-
-// router.get('/by-body-parts', getAsanasByBodyPart) ;
+router.get('/by-body-parts', getAsanasByBodyPart);
 
 module.exports = router;

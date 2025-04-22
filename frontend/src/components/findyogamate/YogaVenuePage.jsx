@@ -1,108 +1,122 @@
-import React, { useEffect, useState } from "react";
-import MapComponent from "../findyogamate/MapComponent";
+import React, { useState } from "react";
+import ManualLocationInput from "./yogavenuehelper/ManualLocationInput";
+import SearchBar from "./yogavenuehelper/SearchBar";
+import VenueSelectionCard from "./yogavenuehelper/VenueSelectionCard";
+import VenueList from "./yogavenuehelper/VenueList";
+import MapComponent from "./MapComponent";
+import { useLocation } from "./yogavenuehelper/useLocation";
+import { calculateDistance } from "./yogavenuehelper/CalculateDistance";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
+import Header from "./yogavenuehelper/Header";
+import LocationDisplay from "./yogavenuehelper/LocationDisplay";
+import { MdWarning } from "react-icons/md"; // Importing the warning icon from react-icons
 
-const calculateDistance = (lat1, lon1, lat2, lon2) => {
-  const R = 6371; // Earth radius in km
-  const dLat = (lat2 - lat1) * (Math.PI / 180);
-  const dLon = (lon2 - lon1) * (Math.PI / 180);
-  const a =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos(lat1 * (Math.PI / 180)) *
-      Math.cos(lat2 * (Math.PI / 180)) *
-      Math.sin(dLon / 2) ** 2;
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c; // Distance in km
-};
+const provider = new OpenStreetMapProvider();
 
-const YogaVenuePage = () => {
+const YogaVenue = () => {
   const [userLocation, setUserLocation] = useState(null);
-  const [venues, setVenues] = useState([]);
+  const [address, setAddress] = useState({});  //  Added this here for passing address to LocationDisplay
+  const {
+    locationDenied,
+    locationName,
+    setLocationName,
+    manualLocationText,
+    setManualLocationText,
+    manualLocationResults,
+    handleManualLocationSearch,
+    selectManualLocation,
+    setManualLocationResults,
+  } = useLocation({setUserLocation,setAddress});
+
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(null);
-  const [locationDenied, setLocationDenied] = useState(false);
-  const [manualLocationText, setManualLocationText] = useState("");
-  const [manualLocationResults, setManualLocationResults] = useState([]);
   const [selectedSlot, setSelectedSlot] = useState("");
   const [showSlotSelection, setShowSlotSelection] = useState(false);
-  const [selections, setSelections] = useState([]);
+  const [venues, setVenues] = useState([]);
   const [message, setMessage] = useState("");
+  const [distanceToVenue, setDistanceToVenue] = useState(null);
+  const [selectedVenueName, setSelectedVenueName] = useState("");
+  const [userSelectedVenues, setUserSelectedVenues] = useState({
+    Morning: [],
+    Evening: [],
+  });
+  const [errorMsg, setErrorMsg] = useState(""); // Added error message state if distance more than 10km
 
-  const provider = new OpenStreetMapProvider();
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setUserLocation({
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude,
-        });
-      },
-      () => {
-        setLocationDenied(true);
-      }
-    );
-  }, []);
-
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      handleSearch(searchText);
-    }, 400);
-    return () => clearTimeout(delayDebounceFn);
-  }, [searchText]);
-
-  const handleSearch = async (text) => {
-    if (!text || !userLocation) return;
-    try {
-      const res = await provider.search({ query: text });
-      const filteredResults = res.filter((result) => {
-        const lat = parseFloat(result.y || result.raw?.lat);
-        const lon = parseFloat(result.x || result.raw?.lon);
-        if (isNaN(lat) || isNaN(lon)) return false;
-        const distance = calculateDistance(
-          userLocation.lat,
-          userLocation.lng,
-          lat,
-          lon
-        );
-        return distance <= 10;
-      });
-      setSearchResults(filteredResults);
-    } catch (error) {
-      console.error(error);
-      alert("Error searching location.");
-    }
-  };
 
   const handleSelectLocation = (location) => {
-    const lat = parseFloat(location.y || location.raw?.lat);
-    const lng = parseFloat(location.x || location.raw?.lon);
-    const name = location.label;
+    const lat = location.y || location.lat;
+    const lng = location.x || location.lng;
 
-    if (isNaN(lat) || isNaN(lng)) {
-      alert("Invalid location coordinates. Please try again.");
-      return;
-    }
+    const distance = calculateDistance(
+      userLocation.lat,
+      userLocation.lng,
+      lat,
+      lng
+    );
 
-    setSelectedLocation({ name, lat, lng });
-    setSearchResults([]);
+    setSelectedLocation({
+      ...location,
+      lat,
+      lng,
+      distanceToVenue: distance, // Add the distance to the location data
+    });
+    setDistanceToVenue(distance);
+    setSelectedVenueName(location.label || location.name || "Selected Venue");
+    setShowSlotSelection(false);
+    setSelectedSlot(null);
+    setSearchText("");
   };
 
   const handleSlotSelection = (slot) => {
-    // console.log(venues);
-
-    // {getSlotCount(venues[venues.length - 1], slot)}
     setSelectedSlot(slot);
-    // setShowSlotSelection(false);
   };
 
-  const handleAddVenue = async () => {
-    if (!selectedSlot || !selectedLocation) {
-      alert("Please select a location and a time slot.");
+  const handleAddVenue = () => {
+    // Ensure both venue and slot are selected
+    if (!selectedLocation || !selectedSlot) {
+      setMessage("Please select a venue and a slot.");
       return;
     }
 
+    const venueKey = `${selectedLocation.lat}-${selectedLocation.lng}`;
+
+    // Get the user's selected venues for the current slot (e.g., Morning or Evening)
+    const existingVenueKeysForSlot = userSelectedVenues[selectedSlot] || [];
+
+    // Prevent selecting a different venue for the same slot
+    if (
+      existingVenueKeysForSlot.length > 0 &&
+      !existingVenueKeysForSlot.includes(venueKey)
+    ) {
+      setMessage(
+        <div className="flex items-center bg-yellow-100 text-yellow-800 p-4 rounded-lg shadow-md mb-4">
+          <MdWarning className="w-6 h-6 mr-3" />
+          <p className="text-sm">
+            You’ve already selected a venue for{" "}
+            <span className="font-bold text-blue-500">{selectedSlot}</span>.
+            Only one venue per slot is allowed.
+          </p>
+        </div>
+      );
+      return;
+    }
+
+    // Prevent re-selecting the same venue for the same slot again
+    if (existingVenueKeysForSlot.includes(venueKey)) {
+      setMessage(
+        <div className="flex items-center bg-yellow-100 text-yellow-800 p-4 rounded-lg shadow-md mb-4">
+          <MdWarning className="w-6 h-6 mr-3" />
+          <p className="text-sm">
+            You've already selected this venue for{" "}
+            <span className="font-bold text-blue-500">{selectedSlot}</span>.
+          </p>
+        </div>
+      );
+      return;
+    }
+
+    // Calculate the distance between the user and the selected venue
     const distance = calculateDistance(
       userLocation.lat,
       userLocation.lng,
@@ -110,345 +124,198 @@ const YogaVenuePage = () => {
       selectedLocation.lng
     );
 
-    // if (distance > 10) {
-    //   alert("Selected location is more than 10km away. Please select a venue closer to your location.");
-    //   return;
-    // }
-
-    // if (distance > 5 && distance <= 10) {
-    //   const confirmAdd = window.confirm(
-    //     `The selected location is ${distance.toFixed(2)} km away, which is more than 5km. Are you sure you want to add it?`
-    //   );
-    //   if (!confirmAdd) return;
-    // }
-
-    // Inside your component
-    const newVenueId = `${selectedLocation.lat}_${selectedLocation.lng}_${selectedSlot}`;
-
-    // Check if the venue with same slot already exists
-    const venueExists = venues.some((venue) => {
-      const hasSlot =
-        selectedSlot === "Evening" ? venue.evening === 1 : venue.morning === 1;
-      return `${venue._id}_${selectedSlot}` === newVenueId && hasSlot;
-    });
-
-    if (venueExists) {
-      setMessage("You already chose that slot and venue.");
-    } else {
-      const baseVenueId = `${selectedLocation.lat}_${selectedLocation.lng}`;
-      const oldVenue = venues.filter((venue) => venue._id === baseVenueId);
-
-      if (oldVenue.length === 0) {
-        const newVenue = {
-          _id: baseVenueId,
-          name: selectedLocation.name,
-          lat: selectedLocation.lat,
-          lng: selectedLocation.lng,
-          evening: selectedSlot === "Evening" ? 1 : 0,
-          morning: selectedSlot === "Morning" ? 1 : 0,
-          users: [],
-        };
-
-        setVenues((prev) => [...prev, newVenue]);
-        handleSelectSlot(newVenue._id, selectedSlot);
-      } else {
-        if (selectedSlot === "Evening") {
-          oldVenue[0].evening = 1;
-        } else {
-          oldVenue[0].morning = 1;
-        }
-
-        handleSelectSlot(oldVenue[0]._id, selectedSlot);
-      }
-
-      setMessage("");
-    }
-
-    // Reset UI selections
-    setSelectedLocation(null);
-    setSelectedSlot("");
-    setShowSlotSelection(false);
-  };
-
-  const handleSelectSlot = (venueId, slot) => {
-    const today = new Date().toISOString().slice(0, 10);
-
-    // Prevent multiple selections for same venue + slot + day
-    const alreadySelected = selections.some(
-      (s) => s.venueId === venueId && s.slot === slot && s.date === today
+    // Check if the venue already exists in the venues list
+    const existingVenueIndex = venues.findIndex(
+      (v) => v.lat === selectedLocation.lat && v.lng === selectedLocation.lng
     );
 
-    if (!alreadySelected) {
-      setSelections((prev) => [...prev, { venueId, slot, date: today }]);
+    // Clone the venues array for updates
+    let updatedVenues = [...venues];
+
+    if (existingVenueIndex !== -1) {
+      // If the venue already exists, increment the count for the selected slot
+      const updatedVenue = { ...updatedVenues[existingVenueIndex] };
+      updatedVenue[selectedSlot] = (updatedVenue[selectedSlot] || 0) + 1;
+      updatedVenues[existingVenueIndex] = updatedVenue;
+    } else {
+      // If it's a new venue, add it with the slot count initialized
+      const newVenue = {
+        _id: Date.now().toString(),
+        name: selectedLocation.label,
+        lat: selectedLocation.lat,
+        lng: selectedLocation.lng,
+        Morning: selectedSlot === "Morning" ? 1 : 0,
+        Evening: selectedSlot === "Evening" ? 1 : 0,
+        distance,
+      };
+      updatedVenues.push(newVenue);
     }
+
+    // Update the list of all venues
+    setVenues(updatedVenues);
+
+    // Track which venue the user selected for each slot
+    setUserSelectedVenues((prev) => ({
+      ...prev,
+      [selectedSlot]: [...(prev[selectedSlot] || []), venueKey],
+    }));
+
+    // Reset UI selections and messages
+    setMessage("");
+    setSelectedLocation(null);
+    setSelectedSlot("");
+    setDistanceToVenue(null);
+    setSelectedVenueName("");
   };
 
-  const getSlotCount = (venue, slot) => {
-    // console.log(venue);
-    const today = new Date().toISOString().slice(0, 10);
-    return selections.filter(
-      (s) => s.venueId === venue._id && s.slot === slot && s.date === today
-    ).length;
-  };
+  const getSlotCount = (venue, slot) => venue?.[slot] || 0;
 
-  const handleManualLocationSearch = async (text) => {
-    try {
-      const res = await provider.search({ query: text });
-      setManualLocationResults(res);
-    } catch (error) {
-      console.error(error);
-      alert("Error fetching manual location.");
+  const handleSelectSlot = (venueId, slot) => {
+    // Find the venue by ID
+    const venue = venues.find((v) => v._id === venueId);
+    console.log("ven: ", venue);
+    const venueKey = `${venue.lat}-${venue.lng}`; // Use lat-lng as a unique key
+    console.log(venueKey);
+
+    const otherSlot = slot === "Morning" ? "Evening" : "Morning"; // Get the other slot
+
+    // Get currently selected venues for morning and evening (if any)
+    const morningVenueKey = userSelectedVenues["Morning"]?.[0];
+    const eveningVenueKey = userSelectedVenues["Evening"]?.[0];
+
+    // CASE 1: Slot already chosen with a *different venue* — Block selection
+    if (
+      userSelectedVenues[slot]?.length > 0 && // Slot already selected
+      !userSelectedVenues[slot].includes(venueKey) // But not by this venue
+    ) {
+      setMessage(
+        <div className="flex items-center bg-yellow-100 text-yellow-800 p-4 rounded-lg shadow-md mb-4">
+          <MdWarning className="w-6 h-6 mr-3" />
+          <p className="text-sm">
+            You've already selected <b>{slot}</b> for a different venue.
+          </p>
+        </div>
+      );
+      return; // Prevent the action
     }
-  };
 
-  const selectManualLocation = (loc) => {
-    setUserLocation({ lat: loc.y, lng: loc.x });
-    setLocationDenied(false);
-    setManualLocationText("");
-    setManualLocationResults([]);
-  };
+    // CASE 2: Other slot already chosen with a *different venue* — Block selection
+    if (
+      userSelectedVenues[otherSlot]?.length > 0 && // Other slot already selected
+      userSelectedVenues[otherSlot][0] !== venueKey // But not by this venue
+    ) {
+      setMessage(
+        <div className="flex items-center bg-yellow-100 text-yellow-800 p-4 rounded-lg shadow-md mb-4">
+          <MdWarning className="w-6 h-6 mr-3" />
+          <p className="text-sm">
+            You already chose the slot for <b>this venue</b>.
+          </p>
+        </div>
+      );
+      return; // Prevent the action
+    }
 
-  const handleLocationSelect = (location) => {
-    setSelectedLocation(location);
-    setShowSlotSelection(false); // important!
-    setSelectedSlot(null); // optional: reset previous slot
+    // CASE 3: Slot already selected by the same venue — Warn again
+    if (userSelectedVenues[slot]?.includes(venueKey)) {
+      setMessage(
+        <div className="flex items-center bg-yellow-100 text-yellow-800 p-4 rounded-lg shadow-md mb-4">
+          <MdWarning className="w-6 h-6 mr-3" />
+          <p className="text-sm">
+            You've already selected this venue for <b>{slot}</b>.
+          </p>
+        </div>
+      );
+      return; // Prevent duplicate count
+    }
+
+    // CASE 4: All conditions satisfied — Proceed with selection
+
+    // Add venueKey to the selected slot
+    setUserSelectedVenues((prev) => ({
+      ...prev,
+      [slot]: [...(prev[slot] || []), venueKey],
+    }));
+
+    // Update venue's slot count
+    const updatedVenues = venues.map((v) =>
+      v._id === venueId
+        ? {
+            ...v,
+            [slot]: (v[slot] || 0) + 1,
+          }
+        : v
+    );
+
+    console.log("venues: ", venues);
+    console.log("Updated venues: ", updatedVenues);
+    setVenues(updatedVenues); // Update state
+    console.log("Updated venues state: ", updatedVenues);
+    setMessage(""); // Clear any previous warning message
   };
 
   return (
     <div className="p-4 space-y-6">
       {userLocation ? (
-        <div className="text-green-700 font-semibold">
-          Your location is: Lat {userLocation.lat.toFixed(4)}, Lng{" "}
-          {userLocation.lng.toFixed(4)}
+        <div className="flex justify-center mb-6">
+          <LocationDisplay address={address} />
         </div>
       ) : locationDenied ? (
-        <div>
-          <p className="text-red-600 font-medium">
-            You didn't allow location. Please enter your location manually:
-          </p>
-          <input
-            type="text"
-            value={manualLocationText}
-            onChange={(e) => {
-              setManualLocationText(e.target.value);
-              handleManualLocationSearch(e.target.value);
-            }}
-            placeholder="Enter your location..."
-            className="border p-2 w-full max-w-md mt-2"
-          />
-          {manualLocationResults.length > 0 && (
-            <ul className="mt-2 bg-white shadow rounded max-w-md">
-              {manualLocationResults.map((res) => (
-                <li
-                  key={res.place_id}
-                  onClick={() => selectManualLocation(res)}
-                  className="p-2 cursor-pointer hover:bg-gray-100"
-                >
-                  {res.label}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        <ManualLocationInput
+          setUserLocation={setUserLocation}              // passed for manualLocationInput
+          setAddress={setAddress}                        // passed for manualLocationInput
+          setLocationName={setLocationName}              // passed for manualLocationInput
+        />
       ) : (
         <p>Fetching your location...</p>
       )}
 
+      
       {userLocation && (
         <>
-          <h1 className="text-2xl font-bold">Nearby Yoga Venues</h1>
+          <Header />
 
-          <input
-            type="text"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            placeholder="Search for a location..."
-            className="border p-2 w-full max-w-md"
+          <SearchBar
+            searchText={searchText}
+            setSearchText={setSearchText}
+            setSearchResults={setSearchResults}
+            searchResults={searchResults}
+            handleSelectLocation={handleSelectLocation}
+            userLocation={userLocation}
+            provider={provider}
+            calculateDistance={calculateDistance}
+            errorMsg={errorMsg}
+            setErrorMsg={setErrorMsg}
           />
 
-          {searchResults.length > 0 && (
-            <ul className="mt-2 space-y-1">
-              {searchResults.map((result) => (
-                <li
-                  key={`${result.label}-${result.x}-${result.y}`}
-                  onClick={() => handleSelectLocation(result)}
-                  className="cursor-pointer text-blue-500 hover:text-blue-700"
-                >
-                  {result.label}
-                </li>
-              ))}
-            </ul>
+          {errorMsg && (
+            <p className="text-red-600 text-sm mt-2 text-center">{errorMsg}</p>
           )}
 
-          {selectedLocation && (
-            <div className="bg-gray-100 p-4 rounded shadow mt-4">
-              <p className="mb-2 font-semibold text-blue-700">
-                Your chosen venue is:{" "}
-                {calculateDistance(
-                  userLocation.lat,
-                  userLocation.lng,
-                  selectedLocation.lat,
-                  selectedLocation.lng
-                ).toFixed(2)}{" "}
-                km away
-              </p>
 
-              <p className="mb-2 font-semibold">
-                Your chosen location is: {selectedLocation.name}
-              </p>
+          <VenueSelectionCard
+            selectedLocation={selectedLocation}
+            userLocation={userLocation}
+            selectedSlot={selectedSlot}
+            handleSlotSelection={handleSlotSelection}
+            handleAddVenue={handleAddVenue}
+            showSlotSelection={showSlotSelection}
+            setShowSlotSelection={setShowSlotSelection}
+            setSelectedLocation={setSelectedLocation}
+            distanceToVenue={distanceToVenue}
+            selectedVenueName={selectedVenueName}
+          />
 
-              {/* Distance logic */}
-              {calculateDistance(
-                userLocation.lat,
-                userLocation.lng,
-                selectedLocation.lat,
-                selectedLocation.lng
-              ) > 10 ? (
-                <div>
-                  iconSize: [20, 20], iconAnchor: [15, 30],
-                  <p>
-                    Your chosen venue is more than 10 km away. Please enter a
-                    nearer venue.
-                  </p>
-                </div>
-              ) : calculateDistance(
-                  userLocation.lat,
-                  userLocation.lng,
-                  selectedLocation.lat,
-                  selectedLocation.lng
-                ) >= 5 && !showSlotSelection ? (
-                <div>
-                  <p>
-                    Your chosen venue is{" "}
-                    {calculateDistance(
-                      userLocation.lat,
-                      userLocation.lng,
-                      selectedLocation.lat,
-                      selectedLocation.lng
-                    ).toFixed(2)}{" "}
-                    km away. Do you want to continue?
-                  </p>
-                  <button
-                    className="mt-2 bg-blue-600 text-white px-3 py-1 rounded"
-                    onClick={() => setShowSlotSelection(true)}
-                  >
-                    Yes
-                  </button>
-                  <button
-                    className="mt-2 bg-red-600 text-white px-3 py-1 rounded"
-                    onClick={() => {
-                      setSelectedLocation(null);
-                      setShowSlotSelection(false);
-                    }}
-                  >
-                    No
-                  </button>
-                </div>
-              ) : (
-                <div>
-                  <div className="mb-2">
-                    <p className="font-semibold mb-1">Select your slot:</p>
-                    <div className="flex gap-2">
-                      <button
-                        className={`px-3 py-1 rounded ${
-                          selectedSlot === "Morning"
-                            ? "bg-blue-600 text-white"
-                            : "bg-blue-300"
-                        }`}
-                        onClick={() => handleSlotSelection("Morning")}
-                      >
-                        Morning
-                      </button>
-                      <button
-                        className={`px-3 py-1 rounded ${
-                          selectedSlot === "Evening"
-                            ? "bg-green-600 text-white"
-                            : "bg-green-300"
-                        }`}
-                        onClick={() => handleSlotSelection("Evening")}
-                      >
-                        Evening
-                      </button>
-                    </div>
-                  </div>
+          {/* if venue location is more than 10km show the warning message from handleSearch in SearchBar */}
+          {message && <div className="text-red-500">{message}</div>}
 
-                  <button
-                    className="mt-2 bg-indigo-600 text-white px-3 py-1 rounded"
-                    onClick={handleAddVenue}
-                  >
-                    Add Venue
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
+          <VenueList
+            venues={venues}
+            handleSelectSlot={handleSelectSlot}
+            getSlotCount={getSlotCount}
+            userSelectedVenues={userSelectedVenues} // so that morning and evening count reflected on venueList could be passed to mapComponent
+            address={address} // PASS IT HERE
+          />
 
-          {message && <div className="text-red-500 mb-2">{message}</div>}
-
-          {/* Display added venues */}
-          <div className="mt-4">
-            <h2 className="font-semibold text-lg mb-2">Added Venues:</h2>
-            {venues.length === 0 ? (
-              <p className="text-gray-500">
-                No venues yet. Search or click to add!
-              </p>
-            ) : (
-              <ul className="space-y-2">
-                {venues.map((venue) => (
-                  <li key={venue._id} className="bg-white p-3 shadow rounded">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                      <strong className="block mb-2 sm:mb-0">
-                        {venue.name}
-                      </strong>
-                      <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-2">
-                          <button
-                            className="bg-blue-100 text-blue-700 px-2 py-1 rounded"
-                            onClick={() =>
-                              handleSelectSlot(venue._id, "Morning")
-                            }
-                          >
-                            🌅 Morning
-                          </button>
-                          <span className="font-bold text-blue-600">
-                            {getSlotCount(venue, "Morning")}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <button
-                            className="bg-purple-100 text-purple-700 px-2 py-1 rounded"
-                            onClick={() =>
-                              handleSelectSlot(venue._id, "Evening")
-                            }
-                          >
-                            🌇 Evening
-                          </button>
-                          <span className="font-bold text-purple-600">
-                            {getSlotCount(venue, "Evening")}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-
-          {/* Map displaying venues */}
-          {/* <div className="mt-6">
-            <MapComponent
-              userLocation={userLocation}
-              venues={venues.map((venue) => ({
-                ...venue,
-                location: {
-                  lat: parseFloat(venue.lat),
-                  lng: parseFloat(venue.lng),
-                },
-              }))}
-              setVenues={setVenues}
-            />
-          </div> */}
           <div className="mt-6">
             <MapComponent
               userLocation={userLocation}
@@ -459,8 +326,10 @@ const YogaVenuePage = () => {
                   lng: parseFloat(venue.lng),
                 },
               }))}
-              setVenues={setVenues}
+              // setVenues={setVenues}
               getSlotCount={getSlotCount}
+              userSelectedVenues={userSelectedVenues} // to get morning evening count from venueList
+              userId="current-user-id"   //{auth.user._id} // or wherever you're storing the current logged-in user's ID
             />
           </div>
         </>
@@ -469,4 +338,4 @@ const YogaVenuePage = () => {
   );
 };
 
-export default YogaVenuePage;
+export default YogaVenue;

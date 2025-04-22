@@ -16,6 +16,8 @@ import Disease from "./components/asanas/diseases/Disease";
 
 import Footer from "./components/footer/Footer";
 import YogaVenuePage from "./components/findyogamate/YogaVenuePage";
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 
 // Notification components
 import { NotificationProvider } from "./NotificationContext";
