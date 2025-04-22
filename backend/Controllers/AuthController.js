@@ -2,7 +2,7 @@ const bcrypt =  require('bcryptjs');
 const jwt =  require('jsonwebtoken');
 const userModel =  require('../models/UserModel.js');
 const transporter =  require('../config/nodemailer.js');
-const { EMAIL_VERIFY_TEMPLATE , PASSWORD_RESET_TEMPLATE } =  require('../config/emailTemplates.js';
+// const { EMAIL_VERIFY_TEMPLATE , PASSWORD_RESET_TEMPLATE } =  require('../config/emailTemplates.js');
 
 export const register = async (req, res) => {
     const { name, email, password } = req.body;
