@@ -23,12 +23,14 @@ import NotificationPopup from "./components/Notification/NotificationPopup";
 import NotificationHistory from "./components/Notification/NotificatioHistory";
 import NotificationButton from "./Testx/NotificationButton";
 
-// Admin Components
-import AdminDashboard from "./components/admin/AdminDashboard";
-import AdminRoute from "./components/admin/AdminRoute";
-import AdminUsers from "./components/admin/AdminUsers";
-import AdminAsanas from "./components/admin/AdminAsanas";
-import AdminSettings from "./components/admin/AdminSettings";
+import AuthPage from "./components/auth/AuthPage";
+import EmailVerify from "./components/auth/EmailVerify";
+import ResetPassword from "./components/auth/ResetPassword";
+import MusicPlayer from "./components/music/MusicPlayer";
+import QuoteMarquee from "./components/quoteTicker/QuoteTicker";
+import Review from "./components/reviews/Review";
+
+
 
 function App() {
   return (
@@ -36,6 +38,7 @@ function App() {
       <NotificationProvider>
         <div className="flex flex-col min-h-screen">
           <Navbar />
+          <QuoteMarquee />
           <NotificationPopup />
           
           <main className="flex-grow">
@@ -44,44 +47,27 @@ function App() {
               
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/loginhome" element={<LoginHome />} />
+              {/* <Route path="/signup" element={<Signup />} /> */}
+              {/* <Route path="/loginhome" element={<LoginHome />} /> */}
               <Route path="/contactus" element={<ContactUs />} />
               <Route path="/aboutus" element={<AboutUs />} />
+              <Route path="/reviews" element={<Review/>} />
 
-              {/* <Route path="/asanas" element={<Asanas />} /> */}
+
+              <Route path="/auth" element={<AuthPage/>}/>
+              <Route path="/email-verify" element={<EmailVerify/>}/>
+              <Route path="/reset-password" element={<ResetPassword/>}/>
+
               <Route path="/bodyparts" element={<BodyParts />} />
               <Route path="/diseases" element={<Disease />} />
               <Route path="/testx" element={<NotificationButton />} />
               <Route path="/history" element={<History />} />
               <Route path="/notifications" element={<NotificationHistory />} />
-              <Route path="/testx" element={<NotificationButton />} />
+              {/* <Route path="/testx" element={<NotificationButton />} /> */}
               <Route path="/test" element={<YogaVenuePage />} />
-
-              {/* Admin Routes */}
-              {/* <Route path="/admin" element={
-                <AdminRoute>
-                  <AdminDashboard />
-                </AdminRoute>
-              } />
-              <Route path="/admin/users" element={
-                <AdminRoute>
-                  <AdminUsers />
-                </AdminRoute>
-              } />
-              <Route path="/admin/asanas" element={
-                <AdminRoute>
-                  <AdminAsanas />
-                </AdminRoute>
-              } />
-              <Route path="/admin/settings" element={
-                <AdminRoute>
-                  <AdminSettings />
-                </AdminRoute>
-              } /> */}
             </Routes>
           </main>
-
+          <MusicPlayer />
           <Footer />
         </div>
       </NotificationProvider>

@@ -1,39 +1,41 @@
 const express=require("express");
+const cors= require("cors");
+const bodyParser =require("body-parser");
+const cookieParser = require('cookie-parser');
+
+
 const app=express();
 
-const bodyParser =require("body-parser");
-const cors= require("cors");
-
-const AuthRouter = require('./Routes/AuthRouter') ;
-const ContactUsRouter= require('./Routes/ContactUsRouter');
-// const AsanasRouter = require('./Routes/AsanasRouter') ;
-const AsanasRouter =require('./Routes/AsanasRouter');
-
-
-
+const AuthRoutes = require('./Routes/AuthRoutes') ;
+const UserRoutes = require('./Routes/UserRoutes.js');
+const ContactUsRouter= require('./Routes/ContactUsRouter.js');
+const AsanasRouter =require('./Routes/AsanasRouter.js');
+// const ReviewRoutes = require("./Routes/ReviewRoutes.js");
+const ReviewRoutes = require("./Routes/ReviewRoutes.js");
 
 require('dotenv').config() ;
-require('./Models/db') ;
+require('./config/db.js') ;
 
 const PORT=process.env.PORT || 8080;
+const allowedOrigins =['http://localhost:5173'];
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({origin:allowedOrigins , credentials:true}));
 
 app.get('/',(req , res)=>{
     res.send("Server is running...") ;
 });
 
-// app.use('/asanas',(req, res)=>{
-//     res.send("Asanas is running...") ;
-// })
+app.use('/auth', AuthRoutes);
 
-app.use('/auth' , AuthRouter);
-
+app.use('/user',UserRoutes) ; 
 
 app.use('/contactus', ContactUsRouter) ;
 
 app.use('/asanas', AsanasRouter) ;
+
+app.use("/reviews",ReviewRoutes);
 
 app.listen(PORT , ()=>{
    console.log(`Server is running on PORT : => ${PORT}`);

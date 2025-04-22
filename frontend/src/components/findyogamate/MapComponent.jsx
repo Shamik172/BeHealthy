@@ -3,8 +3,6 @@ import { MapContainer, TileLayer, Marker, Popup, Tooltip, useMap,} from 'react-l
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-geosearch/dist/geosearch.css';
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
-import { FaUserAlt } from 'react-icons/fa'; // Using FaUserAlt for user location
-import { divIcon } from 'leaflet';
 import L from "leaflet";
 
 const SearchBox = ({ setVenues }) => {
@@ -54,8 +52,6 @@ const SearchBox = ({ setVenues }) => {
   return null;
 };
 
-const MapComponent = ({ venues, setVenues }) => {
-  const [userLocation, setUserLocation] = useState(null);
 const MapComponent = ({ venues, setVenues, userLocation, setUserLocation }) => {
   // const [userLocation, setUserLocation] = useState(null);
 
@@ -118,7 +114,6 @@ const MapComponent = ({ venues, setVenues, userLocation, setUserLocation }) => {
       </Marker>
 
       {/* Venue markers */}
-      {venues.map((venue) => (
       {/* {venues.map((venue) => (
         <Marker
           key={venue._id}
