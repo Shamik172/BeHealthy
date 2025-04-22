@@ -6,6 +6,7 @@ const Asanas = require('../Models/Asanas');
 // const admin = require('../Middlewares/Admin');
 
 const { getAsanasByBodyPart } = require('../Controllers/AsanasController.js');
+const AsanasModel = require('../Models/Asanas');
 
 // Get all asanas (public)
 router.get('/', async (req, res) => {
@@ -81,6 +82,7 @@ router.get('/by-body-part', async (req, res) => {
         if (bodyPart) {
           asanas = await Asanas.find({ bodyParts: bodyPart });
         } else {
+        
           asanas = await Asanas.find();
         }
         res.status(200).json(asanas);

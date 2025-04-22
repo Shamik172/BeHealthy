@@ -3,11 +3,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import yoga1 from "../assets/yoga1.jpg";
 import yoga2 from "../assets/yoga2.jpg";
 import yoga3 from "../assets/yoga3.jpg";
+import { useNavigate } from "react-router-dom";
 
 const images = [yoga1, yoga2, yoga3];
 
 function Hero() {
   const [index, setIndex] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -37,6 +39,7 @@ function Hero() {
           className="mt-5 bg-green-500 px-6 py-2 rounded-lg text-white font-semibold hover:bg-green-700 transition"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
+          onClick={() => navigate('./auth')}
         >
           Get Started
         </motion.button>
