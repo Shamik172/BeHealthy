@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ManualLocationInput from "./yogavenuehelper/ManualLocationInput";
 import SearchBar from "./yogavenuehelper/SearchBar";
 import VenueSelectionCard from "./yogavenuehelper/VenueSelectionCard";
@@ -10,24 +10,13 @@ import { OpenStreetMapProvider } from "leaflet-geosearch";
 import Header from "./yogavenuehelper/Header";
 import LocationDisplay from "./yogavenuehelper/LocationDisplay";
 import { MdWarning } from "react-icons/md"; // Importing the warning icon from react-icons
+import axios from "axios";
 
 const provider = new OpenStreetMapProvider();
 
 const YogaVenue = () => {
   const [userLocation, setUserLocation] = useState(null);
-  const [address, setAddress] = useState({});  //  Added this here for passing address to LocationDisplay
-  const {
-    locationDenied,
-    locationName,
-    setLocationName,
-    manualLocationText,
-    setManualLocationText,
-    manualLocationResults,
-    handleManualLocationSearch,
-    selectManualLocation,
-    setManualLocationResults,
-  } = useLocation({setUserLocation,setAddress});
-
+  const [address, setAddress] = useState({}); //  Added this here for passing address to LocationDisplay
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -43,6 +32,46 @@ const YogaVenue = () => {
   });
   const [errorMsg, setErrorMsg] = useState(""); // Added error message state if distance more than 10km
 
+  const {
+    locationDenied,
+    // locationName,
+    setLocationName,
+  } = useLocation({ setUserLocation, setAddress });
+
+  // Fetch venues whenever userLocation or slot changes
+  useEffect(() => {
+    if (userLocation) {
+      fetchNearbyVenues(userLocation.lat, userLocation.lng);
+    }
+  }, [userLocation]);
+
+  const fetchNearbyVenues = async (lat, lng) => {
+    try {
+      const res = await axios.get(
+        "http://localhost:5050/venue/locations/nearby",
+        {
+          params: { lat, lng },
+        }
+      );
+
+      if (res.status === 200) {
+        console.log("this is fetched data", res.data.data);
+        // const fetchedVenues = res.data.data;
+        const fetchedVenues = res.data.data.map((venue) => ({
+          ...venue,
+          lat: venue.location.coordinates[1],
+          lng: venue.location.coordinates[0],
+          name: venue.location.name,
+          distance: venue.location.distance,
+        }));
+
+        console.log("fetchedVenues (from API):", fetchedVenues);
+        setVenues(fetchedVenues);
+      }
+    } catch (error) {
+      console.error("Error fetching nearby venues:", error);
+    }
+  };
 
   const handleSelectLocation = (location) => {
     const lat = location.y || location.lat;
@@ -72,16 +101,13 @@ const YogaVenue = () => {
     setSelectedSlot(slot);
   };
 
-  const handleAddVenue = () => {
-    // Ensure both venue and slot are selected
+  const handleAddVenue = async () => {
     if (!selectedLocation || !selectedSlot) {
       setMessage("Please select a venue and a slot.");
       return;
     }
 
     const venueKey = `${selectedLocation.lat}-${selectedLocation.lng}`;
-
-    // Get the user's selected venues for the current slot (e.g., Morning or Evening)
     const existingVenueKeysForSlot = userSelectedVenues[selectedSlot] || [];
 
     // Prevent selecting a different venue for the same slot
@@ -102,7 +128,7 @@ const YogaVenue = () => {
       return;
     }
 
-    // Prevent re-selecting the same venue for the same slot again
+    // Prevent re-selecting the same venue
     if (existingVenueKeysForSlot.includes(venueKey)) {
       setMessage(
         <div className="flex items-center bg-yellow-100 text-yellow-800 p-4 rounded-lg shadow-md mb-4">
@@ -115,60 +141,205 @@ const YogaVenue = () => {
       );
       return;
     }
-
-    // Calculate the distance between the user and the selected venue
-    const distance = calculateDistance(
-      userLocation.lat,
-      userLocation.lng,
-      selectedLocation.lat,
-      selectedLocation.lng
-    );
-
-    // Check if the venue already exists in the venues list
-    const existingVenueIndex = venues.findIndex(
-      (v) => v.lat === selectedLocation.lat && v.lng === selectedLocation.lng
-    );
-
-    // Clone the venues array for updates
-    let updatedVenues = [...venues];
-
-    if (existingVenueIndex !== -1) {
-      // If the venue already exists, increment the count for the selected slot
-      const updatedVenue = { ...updatedVenues[existingVenueIndex] };
-      updatedVenue[selectedSlot] = (updatedVenue[selectedSlot] || 0) + 1;
-      updatedVenues[existingVenueIndex] = updatedVenue;
-    } else {
-      // If it's a new venue, add it with the slot count initialized
-      const newVenue = {
-        _id: Date.now().toString(),
-        name: selectedLocation.label,
-        lat: selectedLocation.lat,
-        lng: selectedLocation.lng,
-        Morning: selectedSlot === "Morning" ? 1 : 0,
-        Evening: selectedSlot === "Evening" ? 1 : 0,
-        distance,
-      };
-      updatedVenues.push(newVenue);
+    {
+      console.log("selectedLocation: ", selectedLocation);
+    }
+    {
+      console.log("selectedSlot: ", selectedSlot);
     }
 
-    // Update the list of all venues
-    setVenues(updatedVenues);
+    const url = "http://localhost:5050/venue/locations/save";
+    try {
+      const res = await axios.post(url, {
+        location: selectedLocation,
+        slot: selectedSlot,
+      });
+      console.log("location: ", selectedLocation);
+      console.log("slot: ", selectedSlot);
+      console.log("res: ", res);
 
-    // Track which venue the user selected for each slot
-    setUserSelectedVenues((prev) => ({
-      ...prev,
-      [selectedSlot]: [...(prev[selectedSlot] || []), venueKey],
-    }));
+      // Proceed only if venue saved successfully
+      if (res.status === 201 || res.status === 200) {
+        const distance = calculateDistance(
+          userLocation.lat,
+          userLocation.lng,
+          selectedLocation.lat,
+          selectedLocation.lng
+        );
 
-    // Reset UI selections and messages
-    setMessage("");
-    setSelectedLocation(null);
-    setSelectedSlot("");
-    setDistanceToVenue(null);
-    setSelectedVenueName("");
+        const existingVenueIndex = venues.findIndex(
+          (v) =>
+            v.lat === selectedLocation.lat && v.lng === selectedLocation.lng
+        );
+
+        let updatedVenues = [...venues];
+
+        if (existingVenueIndex !== -1) {
+          const updatedVenue = { ...updatedVenues[existingVenueIndex] };
+          updatedVenue[selectedSlot] = (updatedVenue[selectedSlot] || 0) + 1;
+          updatedVenues[existingVenueIndex] = updatedVenue;
+        } else {
+          const newVenue = {
+            _id: Date.now().toString(),
+            name: selectedLocation.label,
+            lat: selectedLocation.lat,
+            lng: selectedLocation.lng,
+            slotCounts: { Morning: 0, Evening: 0 },
+            // Morning: selectedSlot === "Morning" ? 1 : 0,
+            // Evening: selectedSlot === "Evening" ? 1 : 0,
+            distance,
+          };
+          updatedVenues.push(newVenue);
+        }
+
+        setVenues(updatedVenues);
+
+        setUserSelectedVenues((prev) => ({
+          ...prev,
+          [selectedSlot]: [...(prev[selectedSlot] || []), venueKey],
+        }));
+
+        // Update venueStats for the selected slot
+        const venueStatsUrl =
+          "http://localhost:5050/venue-stats/location/putlocation";
+        const venueStatsData = {
+          lat: selectedLocation.lat,
+          lon: selectedLocation.lng,
+          morningCount: selectedSlot === "Morning" ? 1 : 0, // Example of slot-based counts
+          eveningCount: selectedSlot === "Evening" ? 1 : 0,
+        };
+
+        // // Send a POST request to update the venueStats
+        // await axios.post(venueStatsUrl, venueStatsData)
+        //   .then((response) => {
+        //     console.log("Venue stats updated successfully:", response.data);
+        //   })
+        //   .catch((error) => {
+        //     console.error("Error updating venue stats:", error);
+        //   });
+
+        // Update venueStats for the selected slot
+        try {
+          // const statsUpdateRes = await axios.put(venueStatsUrl, venueStatsData);
+          const statsUpdateRes = await axios.post(venueStatsUrl, venueStatsData);
+          console.log(
+            "fetching from venueStats, Venue stats updated successfully:",
+            statsUpdateRes.data
+          );
+
+          // Use the venueId from the response
+          const venueId = statsUpdateRes.data?.venueId;
+          console.log("Venue ID (lat-lon):", venueId);
+
+          if (venueId) {
+            try {
+              const statsFetchRes = await axios.get(
+                `http://localhost:5050/venue-stats/location/getlocation`,
+                {
+                  params: {
+                    lat: selectedLocation.lat,
+                    lon: selectedLocation.lng,
+                  },
+                }
+              );
+              const { morningCount, eveningCount } = statsFetchRes.data;
+              console.log("Fetched slot counts:", {
+                morningCount,
+                eveningCount,
+              });
+
+              // Update the venue in your local state
+              const getVenueId = (lat, lng) => `${lat}-${lng}`;
+              const updatedVenuesWithStats = updatedVenues.map((venue) =>
+                // `${venue.lat}-${venue.lng}` === venueId  // Compare based on lat-lon combination
+                getVenueId(venue.lat, venue.lng) === venueId
+                  ? {
+                      ...venue,
+                      slotCounts: {
+                        Morning: morningCount,
+                        Evening: eveningCount,
+                      },
+                    }
+                  : venue
+              );
+              setVenues(updatedVenuesWithStats);
+              console.log(
+                "Updated venues with stats: ",
+                updatedVenuesWithStats
+              );
+            } catch (err) {
+              console.error("Failed to fetch venue stats after update:", err);
+            }
+          }
+        } catch (error) {
+          console.error("Error updating venue stats:", error);
+        }
+
+        setMessage("");
+        setSelectedLocation(null);
+        setSelectedSlot("");
+        setDistanceToVenue(null);
+        setSelectedVenueName("");
+      }
+    } catch (err) {
+      console.error("Error in venue submission:", err);
+
+      // If location already exists (handled by backend) and is valid:
+      if (err.response && err.response.status === 400) {
+        const message = err.response.data.message;
+        if (message === "Location already exists") {
+          console.log("Venue exists, proceeding with local update...");
+
+          const distance = calculateDistance(
+            userLocation.lat,
+            userLocation.lng,
+            selectedLocation.lat,
+            selectedLocation.lng
+          );
+
+          const existingVenueIndex = venues.findIndex(
+            (v) =>
+              v.lat === selectedLocation.lat && v.lng === selectedLocation.lng
+          );
+
+          let updatedVenues = [...venues];
+
+          if (existingVenueIndex !== -1) {
+            const updatedVenue = { ...updatedVenues[existingVenueIndex] };
+            updatedVenue[selectedSlot] = (updatedVenue[selectedSlot] || 0) + 1;
+            updatedVenues[existingVenueIndex] = updatedVenue;
+          } else {
+            const newVenue = {
+              _id: Date.now().toString(),
+              name: selectedLocation.label,
+              lat: selectedLocation.lat,
+              lng: selectedLocation.lng,
+              // Morning: selectedSlot === "Morninvg" ? 1 : 0,
+              // Evening: selectedSlot === "Evening" ? 1 : 0,
+              distance,
+            };
+            updatedVenues.push(newVenue);
+          }
+
+          setVenues(updatedVenues);
+          setUserSelectedVenues((prev) => ({
+            ...prev,
+            [selectedSlot]: [...(prev[selectedSlot] || []), venueKey],
+          }));
+
+          setMessage("");
+          setSelectedLocation(null);
+          setSelectedSlot("");
+          setDistanceToVenue(null);
+          setSelectedVenueName("");
+        }
+      } else {
+        setMessage("Something went wrong. Please try again later.");
+      }
+    }
   };
 
-  const getSlotCount = (venue, slot) => venue?.[slot] || 0;
+  const getSlotCount = (venue, slot) => venue.slotCounts?.[slot] || 0;
 
   const handleSelectSlot = (venueId, slot) => {
     // Find the venue by ID
@@ -261,15 +432,14 @@ const YogaVenue = () => {
         </div>
       ) : locationDenied ? (
         <ManualLocationInput
-          setUserLocation={setUserLocation}              // passed for manualLocationInput
-          setAddress={setAddress}                        // passed for manualLocationInput
-          setLocationName={setLocationName}              // passed for manualLocationInput
+          setUserLocation={setUserLocation} // passed for manualLocationInput
+          setAddress={setAddress} // passed for manualLocationInput
+          setLocationName={setLocationName} // passed for manualLocationInput
         />
       ) : (
         <p>Fetching your location...</p>
       )}
 
-      
       {userLocation && (
         <>
           <Header />
@@ -290,7 +460,6 @@ const YogaVenue = () => {
           {errorMsg && (
             <p className="text-red-600 text-sm mt-2 text-center">{errorMsg}</p>
           )}
-
 
           <VenueSelectionCard
             selectedLocation={selectedLocation}
@@ -329,7 +498,7 @@ const YogaVenue = () => {
               // setVenues={setVenues}
               getSlotCount={getSlotCount}
               userSelectedVenues={userSelectedVenues} // to get morning evening count from venueList
-              userId="current-user-id"   //{auth.user._id} // or wherever you're storing the current logged-in user's ID
+              userId="current-user-id" //{auth.user._id} // or wherever you're storing the current logged-in user's ID
             />
           </div>
         </>

@@ -1,6 +1,13 @@
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+
+
 const VenueList = ({ venues, handleSelectSlot, getSlotCount, userSelectedVenues }) => {
   // Ensure that userSelectedVenues is always initialized
   const selectedVenues = userSelectedVenues || { Morning: [], Evening: [] };
+  // console.log("veueslist: " ,venues)
+
+  
 
   return (
     <div className="mt-6 max-w-3xl mx-auto">
