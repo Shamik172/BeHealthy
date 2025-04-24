@@ -9,7 +9,7 @@ const EmailVerify = () => {
   axios.defaults.withCredentials = true;
   const { backendUrl, isLoggedin, userData, getUserData } = useContext(AppContent);
   const inputRefs = useRef([]);
-  const navigate = () => useNavigate();
+  const navigate = useNavigate();
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();

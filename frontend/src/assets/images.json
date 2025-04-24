@@ -1,0 +1,39 @@
+[
+    {
+      "id": 1,
+      "title": "Mountain Pose",
+      "url": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga_uvuaah.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Downward Dog",
+      "url": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga3_s550i5.jpg"
+    },
+    {
+        "id": 3,
+        "title": "Mountain Pose",
+        "url": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga8_ghaewa.jpg"
+      },
+      {
+        "id": 4,
+        "title": "Downward Dog",
+        "url": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga4_uypfir.jpg"
+      },
+      {
+        "id": 5,
+        "title": "Mountain Pose",
+        "url": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503108/yoga2_ihiebp.jpg"
+      },
+      {
+        "id": 6,
+        "title": "Downward Dog",
+        "url": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745487572/lcxl8tj4mmjjcy5tvelg.jpg"
+      },
+      {
+         "id": 7,
+         "title" :"main",
+         "url":"https://res.cloudinary.com/dlixtmy1x/image/upload/v1745485089/n23nmxk6mvr9nlgnaeqm.jpg"
+      }
+    
+  ]
+  
