@@ -3,10 +3,10 @@ import { MapContainer, TileLayer, Marker, Popup, Tooltip } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from "leaflet";
 
-const MapComponent = ({ venues, userLocation, userSelectedVenues }) => {
-  console.log("venues: ", venues);
+const MapComponent = ({ venues, userLocation, getSlotCount, userSelectedVenues }) => {
+  // console.log("venues: ", venues);
   // console.log("userLocation: ", userLocation);
-  console.log("selected venues: ",userSelectedVenues);
+  // console.log("selected venues: ",userSelectedVenues);
 
   if (!userLocation) {
     return <div>Loading map...</div>;
@@ -47,8 +47,8 @@ const MapComponent = ({ venues, userLocation, userSelectedVenues }) => {
           >
             <Popup>
               <strong>{venue.name}</strong>
-              <div>🧘‍♂️ Morning: <b>{userSelectedVenues["Morning"].filter(id => id === venueKey).length}</b></div>
-              <div>🌇 Evening: <b>{userSelectedVenues["Evening"].filter(id => id === venueKey).length}</b></div>
+              <div>🧘‍♂️ Morning: <b>{getSlotCount(venue, "Morning")}</b></div>
+              <div>🌇 Evening: <b>{getSlotCount(venue, "Evening")}</b></div>
             </Popup>
           </Marker>
         );

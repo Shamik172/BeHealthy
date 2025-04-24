@@ -7,11 +7,12 @@ import { MdMenu, MdClose } from "react-icons/md";
 import MusicPlayer from "./music/MusicPlayer";
 
 function Navbar() {
-  const { userData, setUserData, backendUrl, setIsLoggedin } = useContext(AppContent);
+  const { userData, setUserData, backendUrl, setIsLoggedin } =
+    useContext(AppContent);
   const [darkMode, setDarkMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [isMusicPlayerVisible, setIsMusicPlayerVisible] = useState(true);  // State to control music player visibility
+  const [isMusicPlayerVisible, setIsMusicPlayerVisible] = useState(true); // State to control music player visibility
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -20,9 +21,13 @@ function Navbar() {
 
   const sendVerificationOtp = async () => {
     try {
-      const { data } = await axios.post(`${backendUrl}/auth/send-verify-otp`, {}, { withCredentials: true });
+      const { data } = await axios.post(
+        `${backendUrl}/auth/send-verify-otp`,
+        {},
+        { withCredentials: true }
+      );
       if (data.success) {
-        navigate('/email-verify');
+        navigate("/email-verify");
         toast.success("Verification OTP sent successfully");
       } else {
         toast.error("Verification OTP failed");
@@ -36,11 +41,15 @@ function Navbar() {
 
   const handleLogout = async () => {
     try {
-      await axios.post(`${backendUrl}/auth/logout`, {}, { withCredentials: true });
+      await axios.post(
+        `${backendUrl}/auth/logout`,
+        {},
+        { withCredentials: true }
+      );
       setUserData({});
       setIsLoggedin(false);
       toast.success("Logged out successfully");
-      navigate('/');
+      navigate("/");
     } catch (err) {
       toast.error("Logout failed");
     }
@@ -55,6 +64,7 @@ function Navbar() {
     { to: "/contactus", icon: "📞", label: "Contact Us" },
     { to: "/history", icon: "📜", label: "History" },
     { to: "/notifications", icon: "🔔", label: "Notifications" },
+    { to: "/task", icon: "🔥", label: "task" },
   ];
 
   const renderNavLink = (link, onClickExtra = () => {}) => (
@@ -74,16 +84,23 @@ function Navbar() {
 
   return (
     <>
-      <nav className={`${darkMode ? "bg-green-800" : "bg-green-600"} p-4 shadow-md z-50 relative`}>
+      <nav
+        className={`${
+          darkMode ? "bg-green-800" : "bg-green-600"
+        } p-4 shadow-md z-50 relative`}
+      >
         <div className="flex justify-between items-center w-full">
           {/* Logo */}
-          <div className="text-white text-3xl font-extrabold italic tracking-wide ml-4 cursor-pointer" onClick={() => navigate("/")}>
+          <div
+            className="text-white text-3xl font-extrabold italic tracking-wide ml-4 cursor-pointer"
+            onClick={() => navigate("/")}
+          >
             Yoga-Verse
           </div>
 
           {/* Desktop Nav */}
           <div className="space-x-8 hidden sm:flex flex-grow justify-center">
-            {navLinks.map(link => renderNavLink(link))}
+            {navLinks.map((link) => renderNavLink(link))}
           </div>
 
           {/* Right Actions */}
@@ -99,8 +116,12 @@ function Navbar() {
             {userData?.name ? (
               <div className="relative flex items-center gap-3">
                 <div className="hidden sm:flex flex-col text-right text-white">
-                  <p className="text-sm font-medium">Welcome, {userData.name}</p>
-                  {userData.email && <p className="text-xs">{userData.email}</p>}
+                  <p className="text-sm font-medium">
+                    Welcome, {userData.name}
+                  </p>
+                  {userData.email && (
+                    <p className="text-xs">{userData.email}</p>
+                  )}
                 </div>
                 <div
                   className="w-10 h-10 flex items-center justify-center bg-white text-green-700 font-bold rounded-full cursor-pointer"
@@ -113,9 +134,19 @@ function Navbar() {
                   <div className="absolute right-0 top-12 bg-white text-sm text-gray-700 shadow-lg rounded-lg w-44 p-3 z-50">
                     <ul className="space-y-2">
                       {!userData.isAccountVerified && (
-                        <li onClick={sendVerificationOtp} className="cursor-pointer hover:text-green-600">📧 Verify Email</li>
+                        <li
+                          onClick={sendVerificationOtp}
+                          className="cursor-pointer hover:text-green-600"
+                        >
+                          📧 Verify Email
+                        </li>
                       )}
-                      <li onClick={handleLogout} className="cursor-pointer hover:text-red-500">🚪 Log Out</li>
+                      <li
+                        onClick={handleLogout}
+                        className="cursor-pointer hover:text-red-500"
+                      >
+                        🚪 Log Out
+                      </li>
                     </ul>
                   </div>
                 )}
@@ -133,13 +164,18 @@ function Navbar() {
             <button
               onClick={() => setIsMusicPlayerVisible(!isMusicPlayerVisible)}
               className="text-white text-2xl transition-transform hover:scale-125 hover:text-yellow-300 duration-300"
-              title={isMusicPlayerVisible ? "Hide Music Player" : "Show Music Player"}
+              title={
+                isMusicPlayerVisible ? "Hide Music Player" : "Show Music Player"
+              }
             >
               🎶
             </button>
 
             {/* Mobile Toggle */}
-            <button onClick={toggleSidebar} className="sm:hidden text-white text-3xl focus:outline-none">
+            <button
+              onClick={toggleSidebar}
+              className="sm:hidden text-white text-3xl focus:outline-none"
+            >
               {sidebarOpen ? <MdClose /> : <MdMenu />}
             </button>
           </div>
@@ -147,10 +183,16 @@ function Navbar() {
       </nav>
 
       {/* Mobile Sidebar */}
-      <div className={`sm:hidden fixed top-0 left-0 h-full w-64 z-40 transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out ${darkMode ? "bg-green-900" : "bg-green-700"} text-white p-6`}>
+      <div
+        className={`sm:hidden fixed top-0 left-0 h-full w-64 z-40 transform ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } transition-transform duration-300 ease-in-out ${
+          darkMode ? "bg-green-900" : "bg-green-700"
+        } text-white p-6`}
+      >
         <div className="text-xl font-bold mb-6">Yoga-Verse</div>
         <div className="flex flex-col space-y-5">
-          {navLinks.map(link => renderNavLink(link, toggleSidebar))}
+          {navLinks.map((link) => renderNavLink(link, toggleSidebar))}
 
           <button
             onClick={() => {
@@ -159,16 +201,33 @@ function Navbar() {
             }}
             className="flex items-center gap-2 mt-4 hover:text-yellow-300"
           >
-            {darkMode ? "🌞" : "🌙"} <span>{darkMode ? "Light Mode" : "Dark Mode"}</span>
+            {darkMode ? "🌞" : "🌙"}{" "}
+            <span>{darkMode ? "Light Mode" : "Dark Mode"}</span>
           </button>
 
           {userData?.name ? (
             <div className="mt-6">
               <div className="text-sm font-medium">{userData.name}</div>
               {!userData.isAccountVerified && (
-                <div onClick={() => { sendVerificationOtp(); toggleSidebar(); }} className="mt-2 cursor-pointer text-yellow-300">📧 Verify Email</div>
+                <div
+                  onClick={() => {
+                    sendVerificationOtp();
+                    toggleSidebar();
+                  }}
+                  className="mt-2 cursor-pointer text-yellow-300"
+                >
+                  📧 Verify Email
+                </div>
               )}
-              <div onClick={() => { handleLogout(); toggleSidebar(); }} className="mt-2 cursor-pointer text-red-400">🚪 Log Out</div>
+              <div
+                onClick={() => {
+                  handleLogout();
+                  toggleSidebar();
+                }}
+                className="mt-2 cursor-pointer text-red-400"
+              >
+                🚪 Log Out
+              </div>
             </div>
           ) : (
             <button

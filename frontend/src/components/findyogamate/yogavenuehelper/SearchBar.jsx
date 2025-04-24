@@ -20,7 +20,7 @@ const SearchBar = ({
     return () => clearTimeout(delayDebounceFn);
   }, [searchText]);
 
-  console.log("user loc searchbar: ",userLocation)
+  // console.log("user loc searchbar: ",userLocation)
   const handleSearch = async (text) => {
     if (!text || !userLocation) return;
   
