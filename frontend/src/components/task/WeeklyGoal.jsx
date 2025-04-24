@@ -1,45 +1,89 @@
-import { AchievementSpotlight } from "./AchievementSpotlight";
-import { QuickStart } from "./QuickStart";
 
-export const WeeklyGoal = ({ darkMode, achievements }) => {
+import React, { useState } from "react";
+import { AchievementBadge } from "./AchievementBadge";
+
+export const WeeklyGoal = ({ darkMode, achievements, onGoalChange }) => {
+  const [newGoal, setNewGoal] = useState(achievements.weeklyGoal); // Initialize with current goal
+  const weeklyProgress =
+    achievements.weeklyGoal > 0
+      ? (achievements.totalDays / achievements.weeklyGoal) * 100
+      : 0;
+
+  const bgColorClass = darkMode ? "bg-gray-800" : "bg-white";
+  const textColorClass = darkMode ? "text-white" : "text-gray-800";
+
+  const handleGoalInputChange = (e) => {
+    const value = parseInt(e.target.value, 10);
+    setNewGoal(value);
+  };
+
+  const handleGoalSubmit = () => {
+    if (typeof onGoalChange === "function") {
+      onGoalChange(newGoal);
+    }
+  };
+
   return (
-    <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-      {/* Weekly Goal Setter */}
-      <div
-        className={`p-6 rounded-2xl shadow-lg ${
-          darkMode ? "bg-gray-800" : "bg-green-50"
-        }`}
-      >
-        <h3
-          className={`text-xl font-semibold mb-4 ${
-            darkMode ? "text-green-400" : "text-green-700"
-          }`}
+    <div className={`shadow-md rounded-lg p-4 ${bgColorClass}`}>
+      <h2 className={`text-lg font-semibold mb-4 ${textColorClass}`}>
+        Weekly Goal
+      </h2>
+      <div className="flex items-center justify-between mb-4">
+        <AchievementBadge
+          icon="🎯"
+          value={achievements.weeklyGoal}
+          label="Current Goal"
+          darkMode={darkMode}
+        />
+        <AchievementBadge
+          icon="📅"
+          value={achievements.totalDays}
+          label="Days Done"
+          darkMode={darkMode}
+        />
+      </div>
+
+      {/* <div className="mb-4">
+        <label
+          htmlFor="new-goal"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-300"
         >
-          Weekly Goal Settings
-        </h3>
-        <div className="flex items-center space-x-4">
+          Set New Goal:
+        </label>
+        <div className="mt-1 relative rounded-md shadow-sm">
           <input
             type="number"
-            value={achievements.weeklyGoal}
-            onChange={(e) =>
-              setAchievements((prev) => ({
-                ...prev,
-                weeklyGoal: Math.max(1, parseInt(e.target.value)),
-              }))
-            }
-            className={`w-20 p-2 rounded-lg border ${
-              darkMode
-                ? "bg-gray-700 border-green-600 text-green-400"
-                : "bg-white border-green-300 text-green-700"
-            }`}
+            name="new-goal"
+            id="new-goal"
+            className="focus:ring-green-500 focus:border-green-500 block w-full pr-10 sm:text-sm border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            value={newGoal}
+            onChange={handleGoalInputChange}
           />
-          <span className={`${darkMode ? "text-gray-400" : "text-green-600"}`}>
-            Days per week
-          </span>
+          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none dark:text-gray-400">
+            days
+          </div>
         </div>
+        <button
+          onClick={handleGoalSubmit}
+          className="mt-2 py-2 px-4 rounded-md font-semibold text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors duration-200"
+        >
+          Update Goal
+        </button>
+      </div> */}
+
+      <div className="w-full bg-green-100 rounded-full h-4">
+        <div
+          className="bg-green-500 h-4 rounded-full transition-all duration-500"
+          style={{ width: `${weeklyProgress}%` }}
+        ></div>
       </div>
-      <QuickStart darkMode={darkMode} />
-      <AchievementSpotlight darkMode={darkMode} achievements={achievements} />
+      <p
+        className={`text-sm mt-2 text-gray-600 ${
+          darkMode ? "text-gray-400" : ""
+        }`}
+      >
+        {achievements.totalDays} of {achievements.weeklyGoal} days completed
+      </p>
     </div>
   );
 };

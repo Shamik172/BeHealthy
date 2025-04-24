@@ -1,52 +1,62 @@
+import { useEffect, useState } from "react";
+import { Button } from "./Button";
+
 export const YogaPoseCard = ({
-  pose, // Ensure this is a single pose object
+  pose,
   onComplete,
   isCompleted,
   darkMode,
   startSession,
 }) => {
-  // Add null checks and default values
-  if (!pose) return <div>No yoga pose scheduled for today</div>;
+  const [completed, setCompleted] = useState(isCompleted);
+  const [buttonText, setButtonText] = useState("Complete");
+
+  useEffect(() => {
+    setCompleted(isCompleted);
+    setButtonText(isCompleted ? "Completed" : "Complete");
+  }, [isCompleted]);
+
+  const handleComplete = () => {
+    if (!completed) {
+      setCompleted(true);
+      setButtonText("Completed");
+      onComplete();
+    }
+  };
+
+  if (!pose)
+    return (
+      <div className="text-center py-4">No yoga pose scheduled for today</div>
+    );
+
+  const cardBgColorClass = darkMode
+    ? "bg-gray-800 text-white"
+    : "bg-white text-gray-700";
+  const tagColorClass = darkMode
+    ? "text-gray-400 bg-gray-700"
+    : "text-gray-700 bg-green-100";
 
   return (
     <div
-      className={`group relative p-6 rounded-xl shadow-lg transition-all ${
-        darkMode ? "bg-gray-700" : "bg-white"
-      }`}
+      className={`rounded-xl shadow-md border overflow-hidden ${cardBgColorClass}`}
     >
-      <div className="flex justify-between items-start mb-4">
-        <h3
-          className={`text-xl font-bold ${
-            darkMode ? "text-green-400" : "text-green-700"
-          }`}
-        >
+      <div className="px-6 py-4">
+        <div className="font-bold text-xl mb-2">
           {pose?.pose || "Daily Yoga Practice"}
-        </h3>
+        </div>
+        <p className="text-base">
+          {pose?.instructions || "Start your practice..."}
+        </p>
+      </div>
+      <div className="px-6 py-4 flex items-center justify-between">
         <span
-          className={`text-sm px-2 py-1 rounded ${
-            darkMode
-              ? "bg-green-900 text-green-400"
-              : "bg-green-100 text-green-700"
-          }`}
+          className={`inline-block rounded-full px-3 py-1 text-sm font-semibold ${tagColorClass}`}
         >
           {pose?.duration || "15 mins"}
         </span>
-      </div>
-      <p className={`mb-6 ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
-        {pose?.instructions ||
-          "Start your practice with mindful breathing exercises"}
-      </p>
-      <div className="grid grid-cols-2 gap-4">
-        {/* Buttons remain the same */}
-        <button
-          className={`p-3 rounded-lg transition-all ${
-            darkMode
-              ? "bg-green-700 hover:bg-green-600 text-green-100"
-              : "bg-green-500 hover:bg-green-600 text-white"
-          }`}
-        >
-          Completed
-        </button>
+        <Button onClick={handleComplete} disabled={completed} color="green">
+          {buttonText}
+        </Button>
       </div>
     </div>
   );

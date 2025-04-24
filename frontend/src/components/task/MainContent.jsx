@@ -1,131 +1,73 @@
-import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
-import { YogaPoseCard } from "./YogaPoseCard";
 import { WeeklyPlanSection } from "./WeeklyPlanSection";
-import yogaPlans from "./yogaPlans";
 
-export const MainContent = ({ darkMode }) => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [sessionTime, setSessionTime] = useState(0);
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
+export const MainContent = ({
+  darkMode,
+  selectedDate,
+  handleDateChange,
+  yogaPlans,
+  sessionTime,
+  isYogaCompleted,
+}) => {
   const dayName = selectedDate.toLocaleDateString("en-US", { weekday: "long" });
   const dailyPose = yogaPlans.week1[dayName] || {};
 
-  const [completedDates, setCompletedDates] = useState(new Set());
-
-  useEffect(() => {
-    let interval;
-    if (sessionTime > 0) {
-      interval = setInterval(() => {
-        setSessionTime((prev) => prev - 1);
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [sessionTime]);
-
-  // Handling Yoga Complition
-  const handleYogaCompletion = () => {
-    const dateString = selectedDate.toISOString().split("T")[0];
-    setCompletedDates((prev) => {
-      const newDates = new Set(prev);
-      const isCompleted = newDates.has(dateString);
-
-      if (isCompleted) {
-        newDates.delete(dateString);
-        setAchievements((prev) => ({ ...prev, totalDays: prev.totalDays - 1 }));
-      } else {
-        newDates.add(dateString);
-        setAchievements((prev) => ({
-          ...prev,
-          totalDays: prev.totalDays + 1,
-          streak: prev.streak + 1,
-        }));
-      }
-      return newDates;
-    });
-  };
-
-  const startYogaSession = (duration) => {
-    setSessionTime(duration * 60);
-  };
-
-  const isYogaCompleted = (date) => {
-    const dateString = date.toISOString().split("T")[0];
-    return completedDates.has(dateString);
-  };
+  const calendarClass = darkMode ? "text-white" : "text-gray-700";
+  const calendarTileClass = ({ date }) =>
+    `p-2 rounded-md transition-colors duration-200 ${
+      isYogaCompleted(date)
+        ? darkMode
+          ? "bg-green-700 text-white"
+          : "bg-green-100 text-green-700"
+        : darkMode
+        ? "hover:bg-gray-700 text-gray-300"
+        : "hover:bg-green-50 text-green-700" // Light green hover
+    }`;
+  const sessionTimeColorClass = darkMode ? "text-white" : "text-gray-800";
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* Calendar Section */}
-      <div
-        className={`p-6 rounded-2xl shadow-lg ${
-          darkMode ? "bg-gray-800" : "bg-green-50"
-        }`}
-      >
-        <h2
-          className={`text-2xl font-semibold mb-4 ${
-            darkMode ? "text-green-400" : "text-green-700"
-          }`}
-        >
-          Meditation Calendar
-        </h2>
-        <Calendar
-          onChange={handleDateChange}
-          value={selectedDate}
-          tileClassName={({ date }) =>
-            `p-2 rounded-lg transition-colors ${
-              isYogaCompleted(date)
-                ? `${darkMode ? "bg-green-900" : "bg-green-200"}`
-                : `${darkMode ? "hover:bg-gray-700" : "hover:bg-green-100"}`
-            }`
-          }
-          className={darkMode ? "text-green-200" : "text-green-700"}
-        />
+      <div className="bg-white  shadow-md rounded-lg overflow-hidden">
+        <div className="ml-4">
+          <h2
+            className={`text-lg font-semibold mb-4 p-4 ${
+              darkMode ? "text-white" : "text-gray-800"
+            }`}
+          >
+            Meditation Calendar
+          </h2>
+          <div>
+            <Calendar
+              onChange={handleDateChange}
+              value={selectedDate}
+              tileClassName={calendarTileClass}
+              className={calendarClass}
+            />
+          </div>
+        </div>
       </div>
 
       {/* Daily Yoga Plan */}
-      <div
-        className={`p-6 rounded-2xl shadow-lg ${
-          darkMode ? "bg-gray-800" : "bg-green-50"
-        }`}
-      >
-        {/* Session Timer */}
-        {sessionTime > 0 && (
-          <div className="mb-6 text-center">
-            <div
-              className={`text-2xl font-bold ${
-                darkMode ? "text-green-400" : "text-green-700"
-              }`}
-            >
-              {Math.floor(sessionTime / 60)}:
-              {String(sessionTime % 60).padStart(2, "0")}
+      <div className="bg-white shadow-md rounded-lg overflow-hidden">
+        <div className="p-4">
+          {/* Session Timer */}
+          {sessionTime > 0 && (
+            <div className="mb-4 text-center">
+              <div className={`text-2xl font-bold ${sessionTimeColorClass}`}>
+                {Math.floor(sessionTime / 60)}:
+                {String(sessionTime % 60).padStart(2, "0")}
+              </div>
+              <div className="text-sm text-gray-500">Time Remaining</div>
             </div>
-            <div
-              className={`text-sm ${
-                darkMode ? "text-gray-400" : "text-gray-600"
-              }`}
-            >
-              Time Remaining
-            </div>
-          </div>
-        )}
+          )}
 
-        {/* Yoga Pose Card */}
-        <YogaPoseCard
-          pose={yogaPlans.week1[dayName]}
-          onComplete={handleYogaCompletion}
-          isCompleted={isYogaCompleted(selectedDate)}
-          darkMode={darkMode}
-          startSession={startYogaSession}
-        />
-
-        <WeeklyPlanSection
-          yogaPlans={yogaPlans.week1}
-          selectedDate={selectedDate}
-          darkMode={darkMode}
-        />
+          <WeeklyPlanSection
+            yogaPlans={yogaPlans.week1}
+            selectedDate={selectedDate}
+            darkMode={darkMode}
+          />
+        </div>
       </div>
     </div>
   );

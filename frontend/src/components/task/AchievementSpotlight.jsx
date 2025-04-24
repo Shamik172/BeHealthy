@@ -1,33 +1,25 @@
-export const AchievementSpotlight = ({ darkMode, achievements }) => {
+export const AchievementSpotlight = ({ darkMode, streak }) => {
+  const progressPercentage = Math.min((streak / 7) * 100, 100); // Cap at 100%
+
+  const bgColorClass = darkMode ? "bg-gray-800" : "bg-white";
+  const textColorClass = darkMode ? "text-white" : "text-gray-800";
+
   return (
-    <div
-      className={`p-6 rounded-2xl shadow-lg ${
-        darkMode ? "bg-gray-800" : "bg-green-50"
-      }`}
-    >
-      <h3
-        className={`text-xl font-semibold mb-4 ${
-          darkMode ? "text-green-400" : "text-green-700"
-        }`}
-      >
-        Achievement Spotlight
-      </h3>
-      <div className="space-y-3">
-        <div
-          className={`p-3 rounded-lg ${
-            darkMode ? "bg-green-900" : "bg-green-100"
-          }`}
-        >
-          <div className="text-sm font-medium text-green-600">
-            Current Streak: {achievements.streak} days 🔥
-          </div>
-          <div className="h-1 bg-green-200 rounded-full mt-2">
-            <div
-              className="h-1 bg-green-500 rounded-full"
-              style={{ width: `${(achievements.streak / 7) * 100}%` }}
-            />
-          </div>
+    <div className={`shadow-md rounded-lg p-4 ${bgColorClass}`}>
+      <h2 className={`text-lg font-semibold mb-2 ${textColorClass}`}>
+        Streak Spotlight
+      </h2>
+      <div className="flex items-center justify-between">
+        <div className="text-sm font-medium">
+          Current Streak: {streak} days 🔥
         </div>
+        <span className="text-xs text-gray-500">{streak} / 7 days</span>
+      </div>
+      <div className="w-full bg-green-100 rounded-full h-2 mt-2">
+        <div
+          className="bg-green-500 h-2 rounded-full transition-all duration-500"
+          style={{ width: `${progressPercentage}%` }}
+        ></div>
       </div>
     </div>
   );

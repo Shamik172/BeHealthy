@@ -1,27 +1,21 @@
-export const AchievementBadge = ({ icon, value, label, darkMode }) => (
-  <div
-    className={`flex items-center space-x-2 p-3 rounded-xl ${
-      darkMode ? "bg-green-900" : "bg-green-100"
-    }`}
-  >
-    <span
-      className={`text-2xl ${darkMode ? "text-green-400" : "text-green-600"}`}
+export const AchievementBadge = ({ icon, value, label, darkMode }) => {
+  const bgColorClass = darkMode ? "bg-gray-800" : "bg-white"; // White background
+  const textColorClass = darkMode ? "text-white" : "text-gray-800"; // Dark text
+  const iconColorClass = darkMode ? "text-gray-400" : "text-green-500"; // Green icon
+
+  return (
+    <div
+      className={`flex items-center space-x-2 p-2 rounded-lg ${bgColorClass} shadow-sm`}
     >
-      {icon}
-    </span>
-    <div>
-      <div
-        className={`text-xl font-bold ${
-          darkMode ? "text-green-400" : "text-green-700"
-        }`}
-      >
-        {value}
-      </div>
-      <div
-        className={`text-xs ${darkMode ? "text-green-300" : "text-green-600"}`}
-      >
-        {label}
+      <span className={`text-xl ${iconColorClass}`}>{icon}</span>
+      <div>
+        <div className={`text-lg font-semibold ${textColorClass}`}>{value}</div>
+        <div
+          className={`text-xs ${darkMode ? "text-gray-400" : "text-gray-500"}`}
+        >
+          {label}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
