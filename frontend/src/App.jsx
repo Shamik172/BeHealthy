@@ -31,7 +31,7 @@ import ResetPassword from "./components/auth/ResetPassword";
 import QuoteMarquee from "./components/quoteTicker/QuoteTicker";
 import Review from "./components/reviews/Review";
 
-
+import YogaStream from "./components/yogastreaming/YogaStream";
 
 function App() {
   return (
@@ -66,6 +66,7 @@ function App() {
               <Route path="/notifications" element={<NotificationHistory />} />
               {/* <Route path="/testx" element={<NotificationButton />} /> */}
               <Route path="/test" element={<YogaVenuePage />} />
+              <Route path="/yogastreaming" element={<YogaStream />} />
             </Routes>
           </main>
           <Footer />
