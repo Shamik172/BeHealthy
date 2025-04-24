@@ -10,6 +10,11 @@ const app=express();
 
 const AuthRoutes = require('./Routes/AuthRoutes') ;
 // const UserRoutes = require('./Routes/UserRoutes.js');
+// const ContactUsRouter= require('./Routes/ContactUsRouter.js');
+// const AsanasRouter =require('./Routes/AsanasRouter.js');
+// const ReviewRoutes = require("./Routes/ReviewRoutes.js");
+// const ReviewRoutes = require("./Routes/ReviewRoutes.js");
+// const UserRoutes = require('./Routes/UserRoutes.js');
 const ContactUsRouter= require('./Routes/ContactUsRouter.js');
 const AsanasRouter =require('./Routes/AsanasRouter.js');
 // const ReviewRoutes = require("./Routes/ReviewRoutes.js");
@@ -18,6 +23,8 @@ const AsanasRouter =require('./Routes/AsanasRouter.js');
 // const cors= require("cors");
 
 // const AuthRouter = require('./Routes/AuthRouter') ;
+// const ContactUsRouter= require('./Routes/ContactUsRouter');
+// const AsanasRouter =require('./Routes/AsanasRouter');
 // const ContactUsRouter= require('./Routes/ContactUsRouter');
 // const AsanasRouter =require('./Routes/AsanasRouter');
 const UsersRouter = require('./Routes/UsersRouter'); // <-- Add this line
