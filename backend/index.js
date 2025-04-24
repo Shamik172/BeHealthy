@@ -10,14 +10,14 @@ app.use(express.json()); // 👈 very important
 
 const AuthRoutes = require('./Routes/AuthRoutes') ;
 const UserRoutes = require('./Routes/UserRoutes.js');
-const ContactUsRouter= require('./Routes/ContactUsRouter.js');
-const AsanasRouter =require('./Routes/AsanasRouter.js');
+// const ContactUsRouter= require('./Routes/ContactUsRouter.js');
+// const AsanasRouter =require('./Routes/AsanasRouter.js');
 // const ReviewRoutes = require("./Routes/ReviewRoutes.js");
 const ReviewRoutes = require("./Routes/ReviewRoutes.js");
-const bodyParser =require("body-parser");
-const cors= require("cors");
+// const bodyParser =require("body-parser");
+// const cors= require("cors");
 
-const AuthRouter = require('./Routes/AuthRouter') ;
+// const AuthRouter = require('./Routes/AuthRouter') ;
 const ContactUsRouter= require('./Routes/ContactUsRouter');
 const AsanasRouter =require('./Routes/AsanasRouter');
 const UsersRouter = require('./Routes/UsersRouter'); // <-- Add this line
