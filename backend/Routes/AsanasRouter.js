@@ -98,7 +98,7 @@ router.get("/by-disease", async (req, res) => {
     ? { diseases: { $in: [new RegExp(disease, "i")] } } // for array matching
     : {};
     console.log(filter);
-
+    Asanas.deleteMany();
     const asanas = await Asanas.find(filter);
     res.status(200).json(asanas);
   } catch (err) {

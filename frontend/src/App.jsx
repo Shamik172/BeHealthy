@@ -1,9 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
-import Login from "./components/loginsignup/Login";
-import Signup from "./components/loginsignup/Signup";
-import LoginHome from "./components/loginsignup/LoginHome";
+
 
 import ContactUs from "./components/contactus/ContactUs";
 import AboutUs from "./components/aboutus/AboutUs";
@@ -28,8 +26,12 @@ import EmailVerify from "./components/auth/EmailVerify";
 import ResetPassword from "./components/auth/ResetPassword";
 import QuoteMarquee from "./components/quoteTicker/QuoteTicker";
 import Review from "./components/reviews/Review";
+
+//import ProfilePage from "./components/auth/ProfilePage";
+
 import Task from "./components/task/Task";
 import YogaStream from "./components/yogastreaming/YogaStream";
+
 
 // import YogaStream from "./components/yogastreaming/YogaStream";
 
@@ -47,16 +49,17 @@ function App() {
               {/* Public Routes */}
 
               <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              {/* <Route path="/signup" element={<Signup />} /> */}
-              {/* <Route path="/loginhome" element={<LoginHome />} /> */}
+             
               <Route path="/contactus" element={<ContactUs />} />
               <Route path="/aboutus" element={<AboutUs />} />
-              <Route path="/reviews" element={<Review />} />
 
-              <Route path="/auth" element={<AuthPage />} />
-              <Route path="/email-verify" element={<EmailVerify />} />
-              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/reviews" element={<Review/>} />
+
+              <Route path="/auth" element={<AuthPage/>}/>
+              <Route path="/email-verify" element={<EmailVerify/>}/>
+              <Route path="/reset-password" element={<ResetPassword/>}/>
+             // <Route path="/profile-page" element={<ProfilePage/>} />
+
 
               <Route path="/bodyparts" element={<BodyParts />} />
               <Route path="/diseases" element={<Disease />} />

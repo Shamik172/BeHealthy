@@ -9,7 +9,7 @@ const ResetPassword = () => {
   axios.defaults.withCredentials = true;
   const { backendUrl } = useContext(AppContent);
   const navigate = useNavigate();
-  const inputRefs = useRef([]);
+  const inputRefs = React.useRef([]);
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [isEmailSent, setIsEmailSent] = useState(false);
@@ -29,7 +29,7 @@ const ResetPassword = () => {
     } catch (error) {
       const errorMessage = error?.response?.data?.message || 'Error sending OTP';
       toast.error(errorMessage);
-      console.error("Reset Password Error:", errorMessage); // Optional: for debugging
+      console.error("Reset Password Error:", errorMessage); 
     }
   };
   
@@ -47,7 +47,7 @@ const ResetPassword = () => {
       if (data.success) {
         toast.success('OTP verified');
         setOtp(otpValue);
-        setIsOtpsubmitted(true);
+        setIsOtpSubmitted(true);
       } else {
         toast.error('Invalid OTP');
       }

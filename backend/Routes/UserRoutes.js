@@ -1,10 +1,9 @@
 const express = require('express');
-const router = express.Router();
+const UserRouter = express.Router();
 
-// const userAuth = require('../middleware/userAuth.js');
 const UserAuth = require('../Middlewares/UserAuth.js');
-const { getUserData } = require('../controllers/userController.js');
+const { getUserData } = require('../Controllers/UserController.js');
 
-router.get('/data', UserAuth, getUserData);
+UserRouter.get('/data', UserAuth, getUserData);
 
-module.exports = router;
+module.exports = UserRouter;

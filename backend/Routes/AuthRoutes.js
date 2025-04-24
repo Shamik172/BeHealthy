@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const AuthRoutes = express.Router();
 
 const {
     isAuthenticated,
@@ -15,21 +15,22 @@ const {
 const UserAuth = require('../Middlewares/UserAuth.js');
 
 // Test route
-router.get('/', (req, res) => {
+AuthRoutes.get('/', (req, res) => {
     res.send('Auth Router is working properly');
 });
 
 // Auth routes
-router.post('/register', register);
-router.post('/login', login);
-router.post('/logout', logout);
+AuthRoutes.post('/register', register);
+AuthRoutes.post('/login', login);
+AuthRoutes.post('/logout', logout);
 
-router.post('/send-verify-otp', UserAuth, sendVerifyOtp);
-router.post('/verify-account', UserAuth, verifyEmail);
-router.get('/is-auth', UserAuth, isAuthenticated);
+AuthRoutes.post('/send-verify-otp', UserAuth, sendVerifyOtp);
+AuthRoutes.post('/verify-account', UserAuth, verifyEmail);
+AuthRoutes.get('/is-auth', UserAuth, isAuthenticated);
 
-router.post('/send-reset-otp', sendResetOtp);
-router.post('/verify-reset-password-otp', verifyResetPasswordOTP);
-router.post('/reset-password', resetPassword);
+AuthRoutes.post('/send-reset-otp', sendResetOtp);
+AuthRoutes.post('/verify-reset-password-otp', verifyResetPasswordOTP);
 
-module.exports = router;
+AuthRoutes.post('/reset-password', resetPassword);
+
+module.exports = AuthRoutes;
