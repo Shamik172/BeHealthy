@@ -29,6 +29,7 @@ import ResetPassword from "./components/auth/ResetPassword";
 import QuoteMarquee from "./components/quoteTicker/QuoteTicker";
 import Review from "./components/reviews/Review";
 import Task from "./components/task/Task";
+import YogaStream from "./components/yogastreaming/YogaStream";
 
 // import YogaStream from "./components/yogastreaming/YogaStream";
 
