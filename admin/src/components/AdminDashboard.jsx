@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -21,6 +21,7 @@ const AdminDashboard = () => {
   const [userStats, setUserStats] = useState({ total: 0, recent: [] });
   const [asanaStats, setAsanaStats] = useState({ total: 0, recent: [] });
   const [userGrowth, setUserGrowth] = useState({ labels: [], data: [] });
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(API_USERS)
@@ -111,8 +112,18 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#18181b] via-[#312e81] to-[#0ea5e9] py-10 px-2">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-pink-500 via-indigo-500 to-blue-500 animate-gradient-x py-10 px-2">
       <div className="max-w-5xl mx-auto p-8 bg-[#232136] rounded-3xl shadow-2xl border border-[#6366f1]/30">
+        {/* Notification Icon */}
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={() => navigate("/admin/notifications")}
+            className="relative p-2 rounded-full hover:bg-indigo-900 transition"
+            title="Notifications"
+          >
+            <span role="img" aria-label="notifications" className="text-2xl">🔔</span>
+          </button>
+        </div>
         <h1 className="text-4xl font-extrabold mb-10 text-pink-400 text-center tracking-wider drop-shadow-lg">
           📊 Admin Dashboard Analytics
         </h1>

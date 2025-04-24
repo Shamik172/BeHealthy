@@ -8,6 +8,7 @@ const AuthRouter = require('./Routes/AuthRouter') ;
 const ContactUsRouter= require('./Routes/ContactUsRouter');
 const AsanasRouter =require('./Routes/AsanasRouter');
 const UsersRouter = require('./Routes/UsersRouter'); // <-- Add this line
+const NotificationsRouter = require('./Routes/NotificationsRouter');
 
 require('dotenv').config() ;
 require('./Models/db') ;
@@ -25,6 +26,7 @@ app.use('/auth' , AuthRouter);
 app.use('/contactus', ContactUsRouter) ;
 app.use('/asanas', AsanasRouter) ;
 app.use('/users', UsersRouter); // <-- Add this line
+app.use('/notifications', NotificationsRouter);
 
 app.listen(PORT , ()=>{
    console.log(`Server is running on PORT : => ${PORT}`);

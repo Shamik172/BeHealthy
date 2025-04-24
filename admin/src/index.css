@@ -11,3 +11,19 @@
     @apply p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-400 w-full min-h-[100px] resize-y;
   }
 }
+
+@keyframes gradient-x {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 6s ease-in-out infinite;
+}
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(30px);}
+  100% { opacity: 1; transform: translateY(0);}
+}
+.animate-fadeIn {
+  animation: fadeIn 0.7s cubic-bezier(.4,0,.2,1) both;
+}
