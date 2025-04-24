@@ -32,6 +32,7 @@ function Navbar() {
       } else {
         toast.error("Verification OTP failed");
       }
+      console.log("Data recived from backend after verify call : ",data);
     } catch (error) {
       console.error("Error in sendVerificationOtp @Navbar");
       toast.error("Error sending OTP");

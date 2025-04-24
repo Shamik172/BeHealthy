@@ -2,8 +2,8 @@ const express=require("express");
 const cors= require("cors");
 const bodyParser =require("body-parser");
 const cookieParser = require('cookie-parser');
+const dotenv=require('dotenv');
 const path = require("path");
-
 
 const app=express();
 
@@ -17,6 +17,7 @@ const AuthRoutes = require('./Routes/AuthRoutes') ;
 // const UserRoutes = require('./Routes/UserRoutes.js');
 const ContactUsRouter= require('./Routes/ContactUsRouter.js');
 const AsanasRouter =require('./Routes/AsanasRouter.js');
+const MusicRoutes = require('./Routes/MusicRoutes.js');
 // const ReviewRoutes = require("./Routes/ReviewRoutes.js");
 // const ReviewRoutes = require("./Routes/ReviewRoutes.js");
 // const bodyParser =require("body-parser");
@@ -32,14 +33,19 @@ const VenueRouter = require('./Routes/venueRouter'); // <-- Add this line
 const VenueStatsRoutes = require('./Routes/venueStatsRoutes'); // <-- Add this line
 const YogaStreamRoutes = require('./Routes/yogaStreamRoutes.js'); // <-- Add this line
 
+// const loadMusicData = require('./config/music.js');
+
+// loadMusicData();
+
 require('dotenv').config() ;
 require('./config/db.js') ;
+// require('./config/music.js');
 
 const PORT=process.env.PORT || 8080;
 const allowedOrigins =['http://localhost:5173'];
 
-//Middlewares
-app.use(express.json()); // 👈 very important
+app.use(express.json());
+
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors({origin:allowedOrigins , credentials:true}));
@@ -70,6 +76,8 @@ app.use('/uploads', express.static(path.join(__dirname, "uploads")));
 // app.use('/yoga-stream', express.static(path.join(__dirname, "backend", "uploads")));
 
 
+
+app.use('/music', MusicRoutes) ;
 
 app.listen(PORT , ()=>{
    console.log(`Server is running on PORT : => ${PORT}`);
