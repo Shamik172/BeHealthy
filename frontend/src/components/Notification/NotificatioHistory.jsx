@@ -22,6 +22,13 @@ const NotificationHistory = () => {
       });
   }, []);
 
+  // Mark as seen when notifications are loaded
+  useEffect(() => {
+    if (notifications.length > 0) {
+      localStorage.setItem("lastSeenNotificationId", notifications[0].id);
+    }
+  }, [notifications]);
+
   return (
     <div className="space-y-4 m-2">
       {notifications.length === 0 ? (

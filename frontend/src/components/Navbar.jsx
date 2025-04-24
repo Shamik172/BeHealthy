@@ -1,18 +1,13 @@
 import { useState } from "react";
-// <<<<<<< anantesh
-// import { Link, useLocation } from "react-router-dom";
-// import { MdMenu, MdClose } from "react-icons/md";
-// import ProfileDropdown from "./ProfileDropdown";
-// =======
-import { Link, useLocation } from "react-router-dom";
+import React from "react";
+
+import { Link, NavLink as RouterNavLink, useLocation } from "react-router-dom";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { MdMenu, MdClose } from "react-icons/md";
 import { IoMdNotificationsOutline } from "react-icons/io"; // ✅ Notification Icon
 import ProfileDropdown from "./ProfileDropdown"; // Importing the extracted dropdown
 
-// >>>>>>> main
-
-function Navbar() {
+function Navbar({ unseenCount }) {
   const [darkMode, setDarkMode] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -21,6 +16,9 @@ function Navbar() {
 
   const toggleDarkMode = () => setDarkMode(!darkMode);
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  const markNotificationsSeen = () => {
+    // Logic to mark notifications as seen
+  };
 
   return (
     <>
@@ -34,16 +32,32 @@ function Navbar() {
 
           {/* Centered Links with Increased Spacing Between Icons */}
           <div className="space-x-8 hidden sm:flex flex-grow justify-center">
-            <NavLink to="/" icon="🏠" currentPath={location.pathname}>Home</NavLink>
+            <CustomNavLink to="/" icon="🏠" currentPath={location.pathname}>Home</CustomNavLink>
             {!isLoggedIn && (
               <>
-                <NavLink to="/reviews" icon="📝" currentPath={location.pathname}>Reviews</NavLink>
-                <NavLink to="/bodyparts" icon="💪" currentPath={location.pathname}>Body Parts</NavLink>
-                <NavLink to="/diseases" icon="🦠" currentPath={location.pathname}>Diseases</NavLink>
-                <NavLink to="/aboutus" icon="ℹ️" currentPath={location.pathname}>About Us</NavLink>
-                <NavLink to="/contactus" icon="📞" currentPath={location.pathname}>Contact Us</NavLink>
-                <NavLink to="/history" icon="📜" currentPath={location.pathname}>History</NavLink>
-                <NavLink to="/notifications" icon="🔔" currentPath={location.pathname}>Notifications</NavLink>
+                <CustomNavLink to="/reviews" icon="📝" currentPath={location.pathname}>Reviews</CustomNavLink>
+                <CustomNavLink to="/bodyparts" icon="💪" currentPath={location.pathname}>Body Parts</CustomNavLink>
+                <CustomNavLink to="/diseases" icon="🦠" currentPath={location.pathname}>Diseases</CustomNavLink>
+                <CustomNavLink to="/aboutus" icon="ℹ️" currentPath={location.pathname}>About Us</CustomNavLink>
+                <CustomNavLink to="/contactus" icon="📞" currentPath={location.pathname}>Contact Us</CustomNavLink>
+                <CustomNavLink to="/history" icon="📜" currentPath={location.pathname}>History</CustomNavLink>
+                <CustomNavLink
+                  to="/notifications"
+                  icon={
+                    <span className="relative">
+                      🔔
+                      {unseenCount > 0 && (
+                        <span className="absolute -top-2 -right-3 bg-red-600 text-white text-xs font-bold rounded-full px-1.5 py-0.5 animate-fadeIn">
+                          {unseenCount}
+                        </span>
+                      )}
+                    </span>
+                  }
+                  currentPath={location.pathname}
+                  onClick={markNotificationsSeen}
+                >
+                  Notifications
+                </CustomNavLink>
               </>
             )}
           </div>
@@ -88,12 +102,6 @@ function Navbar() {
               <MobileNavLink to="/aboutus" icon="ℹ️" onClick={toggleSidebar}>About Us</MobileNavLink>
               <MobileNavLink to="/contactus" icon="📞" onClick={toggleSidebar}>Contact Us</MobileNavLink>
               <MobileNavLink to="/notifications" icon="🔔" onClick={toggleSidebar}>Notifications</MobileNavLink>
-//               <NavLink to="/notifications">
-//                 <div className="flex items-center gap-1">
-//                   <IoMdNotificationsOutline className="text-lg" />
-//                   <span>Notifications</span>
-//                 </div>
-//               </NavLink>
             </>
           )}
 
@@ -118,16 +126,17 @@ function Navbar() {
 }
 
 // Desktop NavLink with Icon
-function NavLink({ to, icon, children, currentPath }) {
+function CustomNavLink({ to, icon, children, currentPath, onClick }) {
   const isActive = currentPath === to; // Check if current path matches the link's path
   return (
-    <Link
+    <RouterNavLink
       to={to}
       className={`relative text-white text-base font-medium transition-all duration-300 ${isActive ? 'font-bold' : ''} hover:scale-110 hover:text-yellow-300 flex items-center gap-1`}
+      onClick={onClick}
     >
       <span className="text-lg">{icon}</span>
       {children}
-    </Link>
+    </RouterNavLink>
   );
 }
 
