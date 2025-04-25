@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import React, { useState, useEffect } from 'react';
-import {AppContent} from "../../context/AppContextProvider";
+// import {AppContent} from "../../context/AppContextProvider";
 import axios from 'axios';
 
 export default function ProfilePage() {

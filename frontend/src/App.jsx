@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 
-
 import ContactUs from "./components/contactus/ContactUs";
 import AboutUs from "./components/aboutus/AboutUs";
 import History from "./components/history/History";
@@ -32,15 +31,13 @@ import ResetPassword from "./components/auth/ResetPassword";
 import QuoteMarquee from "./components/quoteTicker/QuoteTicker";
 import Review from "./components/reviews/Review";
 
-
 import LiveStream from "./components/yogastreaming/LiveStream";
 import ViewLiveStream from "./components/yogastreaming/ViewLiveStream";
 import YogaUpload from "./components/yogastreaming/YogaUpload";
-//import ProfilePage from "./components/auth/ProfilePage";
+import ProfilePage from "./components/auth/ProfilePage";
 
 import Task from "./components/task/Task";
 import YogaStream from "./components/yogastreaming/YogaStream";
-
 
 
 function App() {
@@ -88,10 +85,9 @@ function App() {
               {/* Public Routes */}
 
               <Route path="/" element={<Home />} />
-             
+
               <Route path="/contactus" element={<ContactUs />} />
               <Route path="/aboutus" element={<AboutUs />} />
-
               <Route path="/reviews" element={<Review/>} />
 
               <Route path="/auth" element={<AuthPage/>}/>
@@ -99,6 +95,10 @@ function App() {
               <Route path="/reset-password" element={<ResetPassword/>}/>
               {/* <Route path="/profile-page" element={<ProfilePage/>} /> */}
 
+              <Route path="/auth" element={<AuthPage />} />
+              <Route path="/email-verify" element={<EmailVerify />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/profile-page" element={<ProfilePage />} />
 
               <Route path="/bodyparts" element={<BodyParts />} />
               <Route path="/diseases" element={<Disease />} />
