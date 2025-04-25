@@ -1,812 +1,1362 @@
 [
     {
-        "id": "asana1",
+        "id": "1",
+        "name": "Mountain Pose",
+        "sanskritName": "Tadasana",
+        "category": "Standing",
+        "bodyParts": ["Full Body", "Spine", "Core", "Legs", "Balance"],
+        "diseases": ["Anxiety", "Depression", "Hypertension"],
+        "difficulty": "Beginner",
+        "duration": {
+            "min": "30 seconds",
+            "max": "1 minute"
+        },
+        "benefits": [
+            "Improves posture",
+            "Reduces anxiety",
+            "Enhances balance",
+            "Relieves body pain",
+            "Strengthens legs and core"
+        ],
+        "steps": [
+            {
+                "title": "Stand Tall",
+                "description": "Stand with feet together, toes spread, and weight evenly distributed."
+            },
+            {
+                "title": "Engage Muscles",
+                "description": "Engage thighs, lift kneecaps, and draw tailbone slightly down."
+            },
+            {
+                "title": "Align Upper Body",
+                "description": "Lift chest, roll shoulders back, and extend arms alongside body with palms facing forward."
+            },
+            {
+                "title": "Focus and Breathe",
+                "description": "Gaze forward, lengthen spine, and breathe deeply."
+            }
+        ],
+        "commonMistakes": [
+            {
+                "mistake": "Locking knees",
+                "correction": "Keep a slight bend in knees to avoid strain."
+            },
+            {
+                "mistake": "Slouching shoulders",
+                "correction": "Roll shoulders back and down to open chest."
+            }
+        ],
+        "precautions": [
+            "Avoid if experiencing dizziness",
+            "Consult doctor for low blood pressure"
+        ],
+        "modifications": [
+            "Place feet hip-width apart for better balance",
+            "Use a wall for support if needed"
+        ],
+        "props": ["Wall"],
+        "chakra": "Root",
+        "preparatoryPoses": ["Sukhasana", "Child’s Pose"],
+        "followUpPoses": ["Uttanasana", "Vrikshasana"],
+        "breathInstructions": "Inhale to lengthen spine, exhale to ground feet.",
+        "alignmentTips": [
+            "Keep weight evenly distributed across feet",
+            "Align ears, shoulders, and hips",
+            "Engage core lightly"
+        ],
+        "image": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga6_c33ouf.jpg",
+        "video": "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4"
+    },
+    {
+        "id": "2",
         "name": "Downward-Facing Dog",
-        "bodyParts": [
-          "Shoulders",
-          "Hamstrings",
-          "Calves"
-        ],
+        "sanskritName": "Adho Mukha Svanasana",
+        "category": "Inversion",
+        "bodyParts": ["Full Body", "Shoulders", "Arms", "Back", "Hamstrings"],
+        "diseases": ["Headaches", "Anxiety", "Hypertension"],
         "difficulty": "Beginner",
-        "duration": "30-60 seconds",
+        "duration": {
+            "min": "30 seconds",
+            "max": "1 minute"
+        },
         "benefits": [
-          "Stretches hamstrings, calves, and spine",
-          "Strengthens arms and legs",
-          "Relieves stress"
+            "Relieves headaches",
+            "Reduces body pain",
+            "Improves circulation",
+            "Stretches hamstrings and back",
+            "Strengthens arms and shoulders"
         ],
         "steps": [
-          "Start on hands and knees.",
-          "Lift knees, push hips back and up.",
-          "Form an inverted V shape.",
-          "Hold and breathe deeply."
+            {
+                "title": "Start on All Fours",
+                "description": "Begin on hands and knees, wrists under shoulders, knees under hips."
+            },
+            {
+                "title": "Lift Hips",
+                "description": "Tuck toes, lift hips toward ceiling, forming an inverted V-shape."
+            },
+            {
+                "title": "Align Body",
+                "description": "Spread fingers, press palms down, and lengthen spine."
+            },
+            {
+                "title": "Relax and Breathe",
+                "description": "Soften heels toward floor, relax head, and breathe deeply."
+            }
         ],
-        "image": "/images/asanas/downward_dog.jpg",
-        "video": "/videos/downward_dog.mp4"
-      },
-      {
-        "id": "asana2",
-        "name": "Cobra Pose",
-        "bodyParts": [
-          "Back",
-          "Shoulders",
-          "Chest"
+        "commonMistakes": [
+            {
+                "mistake": "Rounding back",
+                "correction": "Lengthen spine and push hips up."
+            },
+            {
+                "mistake": "Overbending elbows",
+                "correction": "Keep arms straight but not locked."
+            }
         ],
+        "precautions": [
+            "Avoid with wrist injuries",
+            "Consult doctor for high blood pressure"
+        ],
+        "modifications": [
+            "Bend knees slightly to ease hamstring tension",
+            "Use a wall for hand support"
+        ],
+        "props": ["Wall", "Blocks"],
+        "chakra": "Solar Plexus",
+        "preparatoryPoses": ["Cat-Cow Pose", "Plank Pose"],
+        "followUpPoses": ["Uttanasana", "Child’s Pose"],
+        "breathInstructions": "Inhale to lengthen spine, exhale to deepen stretch.",
+        "alignmentTips": [
+            "Keep hands shoulder-width apart",
+            "Align hips high to form a V-shape",
+            "Relax neck and gaze toward feet"
+        ],
+        "image": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga6_c33ouf.jpg",
+        "video": "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4"
+    },
+    {
+        "id": "3",
+        "name": "Child’s Pose",
+        "sanskritName": "Balasana",
+        "category": "Restorative",
+        "bodyParts": ["Hips", "Lower Back", "Spine", "Abdomen"],
+        "diseases": ["Anxiety", "Depression", "Digestive Disorders"],
         "difficulty": "Beginner",
-        "duration": "15-30 seconds",
+        "duration": {
+            "min": "1 minute",
+            "max": "3 minutes"
+        },
         "benefits": [
-          "Opens chest and strengthens spine",
-          "Improves posture",
-          "Energizes the body"
+            "Calms mind",
+            "Reduces anxiety",
+            "Relieves lower back pain",
+            "Improves digestion",
+            "Stretches hips and spine"
         ],
         "steps": [
-          "Lie face down, hands under shoulders.",
-          "Press palms and lift upper body.",
-          "Keep elbows soft and shoulders relaxed.",
-          "Hold with deep breathing."
+            {
+                "title": "Kneel on Floor",
+                "description": "Sit on heels with knees together or apart."
+            },
+            {
+                "title": "Fold Forward",
+                "description": "Lower torso between thighs, extend arms forward or rest by sides."
+            },
+            {
+                "title": "Rest Forehead",
+                "description": "Place forehead on ground or prop for comfort."
+            },
+            {
+                "title": "Breathe Deeply",
+                "description": "Relax body and breathe slowly into abdomen."
+            }
         ],
-        "image": "/images/asanas/cobra_pose.jpg",
-        "video": "/videos/cobra_pose.mp4"
-      },
-      {
-        "id": "asana3",
-        "name": "Bridge Pose",
-        "bodyParts": [
-          "Lower Back",
-          "Glutes",
-          "Hamstrings"
+        "commonMistakes": [
+            {
+                "mistake": "Tensing shoulders",
+                "correction": "Relax shoulders away from ears."
+            },
+            {
+                "mistake": "Forcing forehead down",
+                "correction": "Use a block or blanket for support."
+            }
         ],
+        "precautions": [
+            "Avoid with knee injuries",
+            "Use props for pregnancy"
+        ],
+        "modifications": [
+            "Spread knees wider for comfort",
+            "Use bolster under torso"
+        ],
+        "props": ["Bolster", "Blanket", "Block"],
+        "chakra": "Root",
+        "preparatoryPoses": ["Cat-Cow Pose", "Sukhasana"],
+        "followUpPoses": ["Thread the Needle", "Savasana"],
+        "breathInstructions": "Inhale deeply, exhale to release tension.",
+        "alignmentTips": [
+            "Keep hips on heels",
+            "Extend arms or rest them comfortably",
+            "Use props to support forehead"
+        ],
+        "image": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga6_c33ouf.jpg",
+        "video": "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4"
+    },
+    {
+        "id": "4",
+        "name": "Standing Forward Bend",
+        "sanskritName": "Uttanasana",
+        "category": "Forward Bend",
+        "bodyParts": ["Hamstrings", "Back", "Spine", "Head"],
+        "diseases": ["Headaches", "Anxiety", "Digestive Disorders"],
         "difficulty": "Beginner",
-        "duration": "30-60 seconds",
+        "duration": {
+            "min": "30 seconds",
+            "max": "1 minute"
+        },
         "benefits": [
-          "Strengthens back and glutes",
-          "Opens chest and shoulders",
-          "Stimulates abdominal organs"
+            "Relieves headaches",
+            "Reduces stress",
+            "Improves digestion",
+            "Stretches hamstrings and back",
+            "Calms nervous system"
         ],
         "steps": [
-          "Lie on back, knees bent, feet hip-width.",
-          "Lift hips while pressing feet and arms.",
-          "Clasp hands under your back.",
-          "Hold and breathe."
+            {
+                "title": "Stand in Tadasana",
+                "description": "Begin in Mountain Pose with feet hip-width apart."
+            },
+            {
+                "title": "Hinge at Hips",
+                "description": "Fold forward at hips, bringing head toward floor."
+            },
+            {
+                "title": "Place Hands",
+                "description": "Rest hands on floor, blocks, or shins."
+            },
+            {
+                "title": "Relax and Breathe",
+                "description": "Lengthen spine on inhale, deepen fold on exhale."
+            }
         ],
-        "image": "/images/asanas/bridge_pose.jpg",
-        "video": "/videos/bridge_pose.mp4"
-      },
-      {
-        "id": "asana4",
-        "name": "Boat Pose",
-        "bodyParts": [
-          "Core",
-          "Hip Flexors"
+        "commonMistakes": [
+            {
+                "mistake": "Rounding back",
+                "correction": "Keep spine long, bend knees if needed."
+            },
+            {
+                "mistake": "Forcing head down",
+                "correction": "Let head hang naturally."
+            }
         ],
-        "difficulty": "Intermediate",
-        "duration": "20-40 seconds",
-        "benefits": [
-          "Strengthens abs and spine",
-          "Improves balance and posture",
-          "Stimulates kidneys and intestines"
+        "precautions": [
+            "Avoid with lower back injuries",
+            "Bend knees for tight hamstrings"
         ],
-        "steps": [
-          "Sit with knees bent, feet on floor.",
-          "Lift feet, extend legs at 45 degrees.",
-          "Stretch arms forward parallel to the floor.",
-          "Hold and engage core."
+        "modifications": [
+            "Bend knees slightly",
+            "Use blocks under hands"
         ],
-        "image": "/images/asanas/boat_pose.jpg",
-        "video": "/videos/boat_pose.mp4"
-      },
-      {
-        "id": "asana5",
-        "name": "Child\u2019s Pose",
-        "bodyParts": [
-          "Neck",
-          "Back",
-          "Hips"
+        "props": ["Blocks"],
+        "chakra": "Root",
+        "preparatoryPoses": ["Tadasana", "Adho Mukha Svanasana"],
+        "followUpPoses": ["Balasana", "Trikonasana"],
+        "breathInstructions": "Inhale to lengthen, exhale to fold deeper.",
+        "alignmentTips": [
+            "Hinge at hips, not waist",
+            "Keep weight slightly forward in feet",
+            "Relax neck and shoulders"
         ],
+        "image": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga6_c33ouf.jpg",
+        "video": "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4"
+    },
+    {
+        "id": "5",
+        "name": "Warrior I",
+        "sanskritName": "Virabhadrasana I",
+        "category": "Standing",
+        "bodyParts": ["Legs", "Hips", "Core", "Chest", "Balance"],
+        "diseases": ["Heart Disease", "Depression", "Hypertension"],
         "difficulty": "Beginner",
-        "duration": "1-2 minutes",
+        "duration": {
+            "min": "30 seconds",
+            "max": "1 minute"
+        },
         "benefits": [
-          "Gently stretches spine and hips",
-          "Relieves back and neck tension",
-          "Calms the mind"
+            "Strengthens legs",
+            "Improves heart health",
+            "Boosts confidence",
+            "Opens hips and chest",
+            "Enhances balance"
         ],
         "steps": [
-          "Kneel on mat, big toes touching, knees apart.",
-          "Lower torso between thighs.",
-          "Stretch arms forward or back.",
-          "Rest forehead and breathe."
+            {
+                "title": "Step Back",
+                "description": "From Tadasana, step one foot back about 3-4 feet."
+            },
+            {
+                "title": "Align Feet",
+                "description": "Front foot points forward, back foot at 45-degree angle."
+            },
+            {
+                "title": "Square Hips",
+                "description": "Bend front knee over ankle, square hips toward front."
+            },
+            {
+                "title": "Lift Arms",
+                "description": "Raise arms overhead, gaze forward, and breathe."
+            }
         ],
-        "image": "/images/asanas/child_pose.jpg",
-        "video": "/videos/child_pose.mp4"
-      },
-      {
-        "id": "asana6",
-        "name": "Eagle Arms",
-        "bodyParts": [
-          "Shoulders",
-          "Upper Back"
+        "commonMistakes": [
+            {
+                "mistake": "Knee over ankle",
+                "correction": "Align front knee directly over ankle."
+            },
+            {
+                "mistake": "Hips misaligned",
+                "correction": "Square hips toward front of mat."
+            }
         ],
-        "difficulty": "Beginner",
-        "duration": "30 seconds per side",
-        "benefits": [
-          "Improves shoulder mobility",
-          "Stretches upper back",
-          "Enhances focus"
+        "precautions": [
+            "Avoid with knee injuries",
+            "Consult doctor for heart conditions"
         ],
-        "steps": [
-          "Extend arms forward, cross right arm over left.",
-          "Bend elbows, bring palms together.",
-          "Lift elbows slightly, drop shoulders.",
-          "Hold and switch sides."
+        "modifications": [
+            "Shorten stance for stability",
+            "Rest hands on hips"
         ],
-        "image": "/images/asanas/eagle_arms.jpg",
-        "video": "/videos/eagle_arms.mp4"
-      },
-      {
-        "id": "asana7",
+        "props": ["Wall", "Chair"],
+        "chakra": "Heart",
+        "preparatoryPoses": ["Tadasana", "Anjaneyasana"],
+        "followUpPoses": ["Warrior II", "Uttanasana"],
+        "breathInstructions": "Inhale to lift chest, exhale to ground feet.",
+        "alignmentTips": [
+            "Keep front knee over ankle",
+            "Square hips and shoulders",
+            "Engage core for stability"
+        ],
+        "image": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga6_c33ouf.jpg",
+        "video": "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4"
+    },
+    {
+        "id": "6",
         "name": "Warrior II",
-        "bodyParts": [
-          "Legs",
-          "Hips",
-          "Arms"
-        ],
-        "difficulty": "Intermediate",
-        "duration": "30-60 seconds",
-        "benefits": [
-          "Strengthens legs and arms",
-          "Opens hips and chest",
-          "Improves stamina and concentration"
-        ],
-        "steps": [
-          "Step feet wide, turn right foot out, left foot slightly in.",
-          "Bend right knee, arms parallel to floor.",
-          "Gaze over right hand.",
-          "Hold and repeat on other side."
-        ],
-        "image": "/images/asanas/warrior_2.jpg",
-        "video": "/videos/warrior_2.mp4"
-      },
-      {
-        "id": "asana8",
-        "name": "Seated Forward Bend",
-        "bodyParts": [
-          "Hamstrings",
-          "Calves",
-          "Back"
-        ],
+        "sanskritName": "Virabhadrasana II",
+        "category": "Standing",
+        "bodyParts": ["Legs", "Hips", "Core", "Shoulders", "Balance"],
+        "diseases": ["Arthritis", "Depression", "Diabetes"],
         "difficulty": "Beginner",
-        "duration": "30-90 seconds",
+        "duration": {
+            "min": "30 seconds",
+            "max": "1 minute"
+        },
         "benefits": [
-          "Stretches spine and hamstrings",
-          "Stimulates liver and kidneys",
-          "Improves digestion"
+            "Strengthens legs and core",
+            "Improves stamina",
+            "Reduces body pain",
+            "Enhances balance",
+            "Boosts confidence"
         ],
         "steps": [
-          "Sit with legs extended, spine straight.",
-          "Inhale, reach arms up.",
-          "Exhale, hinge at hips and fold forward.",
-          "Hold and relax neck."
+            {
+                "title": "Step Wide",
+                "description": "From Tadasana, step feet 3-4 feet apart, arms parallel to floor."
+            },
+            {
+                "title": "Align Feet",
+                "description": "Turn front foot forward, back foot at 90 degrees, align heels."
+            },
+            {
+                "title": "Bend Front Knee",
+                "description": "Bend front knee over ankle, keep hips open to side."
+            },
+            {
+                "title": "Gaze and Breathe",
+                "description": "Extend arms, gaze over front fingers, and breathe deeply."
+            }
         ],
-        "image": "/images/asanas/seated_forward_bend.jpg",
-        "video": "/videos/seated_forward_bend.mp4"
-      },
-      {
-        "id": "asana9",
-        "name": "Plank Pose",
-        "bodyParts": [
-          "Core",
-          "Arms",
-          "Shoulders"
+        "commonMistakes": [
+            {
+                "mistake": "Front knee collapsing inward",
+                "correction": "Align knee over ankle, press outer edge of back foot."
+            },
+            {
+                "mistake": "Torso leaning forward",
+                "correction": "Keep torso upright, stack shoulders over hips."
+            }
         ],
-        "difficulty": "Beginner",
-        "duration": "30-60 seconds",
-        "benefits": [
-          "Strengthens core, arms, and shoulders",
-          "Improves posture",
-          "Boosts endurance"
+        "precautions": [
+            "Avoid with knee or hip injuries",
+            "Consult doctor for high blood pressure"
         ],
-        "steps": [
-          "Start in a push-up position.",
-          "Align shoulders over wrists.",
-          "Engage your core and hold."
+        "modifications": [
+            "Shorten stance for stability",
+            "Rest hands on hips for shoulder relief"
         ],
-        "image": "/images/asanas/plank_pose.jpg",
-        "video": "/videos/plank_pose.mp4"
-      },
-      {
-        "id": "asana10",
-        "name": "Tree Pose",
-        "bodyParts": [
-          "Legs",
-          "Core",
-          "Arms"
+        "props": ["Wall", "Chair"],
+        "chakra": "Solar Plexus",
+        "preparatoryPoses": ["Tadasana", "Warrior I"],
+        "followUpPoses": ["Trikonasana", "Uttanasana"],
+        "breathInstructions": "Inhale to open chest, exhale to ground feet.",
+        "alignmentTips": [
+            "Keep front knee over ankle",
+            "Align shoulders with hips",
+            "Engage core for stability"
         ],
-        "difficulty": "Beginner",
-        "duration": "30-60 seconds",
-        "benefits": [
-          "Improves balance",
-          "Strengthens legs and spine",
-          "Opens hips"
-        ],
-        "steps": [
-          "Stand tall, shift weight onto one leg.",
-          "Place sole of other foot on inner thigh or calf.",
-          "Bring hands to prayer position."
-        ],
-        "image": "/images/asanas/tree_pose.jpg",
-        "video": "/videos/tree_pose.mp4"
-      },
-      {
-        "id": "asana11",
+        "image": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga6_c33ouf.jpg",
+        "video": "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4"
+    },
+    {
+        "id": "7",
         "name": "Triangle Pose",
-        "bodyParts": [
-          "Hips",
-          "Hamstrings",
-          "Chest"
-        ],
-        "difficulty": "Intermediate",
-        "duration": "30-60 seconds",
-        "benefits": [
-          "Stretches hips, spine, and chest",
-          "Strengthens legs",
-          "Improves digestion"
-        ],
-        "steps": [
-          "Stand with legs wide, arms extended.",
-          "Reach forward and tilt down, hand to shin or floor.",
-          "Look up at top hand."
-        ],
-        "image": "/images/asanas/triangle_pose.jpg",
-        "video": "/videos/triangle_pose.mp4"
-      },
-      {
-        "id": "asana12",
-        "name": "Chair Pose",
-        "bodyParts": [
-          "Legs",
-          "Back",
-          "Arms"
-        ],
+        "sanskritName": "Trikonasana",
+        "category": "Standing",
+        "bodyParts": ["Side Body", "Hips", "Spine", "Core", "Balance"],
+        "diseases": ["Digestive Disorders", "Lower Back Pain", "Anxiety"],
         "difficulty": "Beginner",
-        "duration": "30-60 seconds",
+        "duration": {
+            "min": "30 seconds",
+            "max": "1 minute"
+        },
         "benefits": [
-          "Strengthens thighs and ankles",
-          "Tones the core",
-          "Improves balance"
+            "Improves digestion",
+            "Reduces lower back pain",
+            "Stretches hips and side body",
+            "Enhances balance",
+            "Relieves stress"
         ],
         "steps": [
-          "Stand with feet together.",
-          "Bend knees and raise arms overhead.",
-          "Hold and breathe."
+            {
+                "title": "Step Wide",
+                "description": "Step feet 3-4 feet apart, arms parallel to floor."
+            },
+            {
+                "title": "Align Feet",
+                "description": "Turn front foot forward, back foot at 90 degrees, align heels."
+            },
+            {
+                "title": "Reach and Tilt",
+                "description": "Extend torso over front leg, place hand on shin, block, or floor."
+            },
+            {
+                "title": "Open Chest",
+                "description": "Lift top arm, gaze up or forward, and breathe deeply."
+            }
         ],
-        "image": "/images/asanas/chair_pose.jpg",
-        "video": "/videos/chair_pose.mp4"
-      },
-      {
-        "id": "asana13",
-        "name": "Camel Pose",
-        "bodyParts": [
-          "Back",
-          "Chest",
-          "Shoulders"
+        "commonMistakes": [
+            {
+                "mistake": "Collapsing chest",
+                "correction": "Rotate chest upward, keep shoulders stacked."
+            },
+            {
+                "mistake": "Overextending front leg",
+                "correction": "Keep slight bend in front knee if needed."
+            }
         ],
-        "difficulty": "Intermediate",
-        "duration": "30-60 seconds",
-        "benefits": [
-          "Opens chest and shoulders",
-          "Improves spinal flexibility",
-          "Stimulates digestion"
+        "precautions": [
+            "Avoid with lower back injuries",
+            "Use caution with neck issues"
         ],
-        "steps": [
-          "Kneel with knees hip-width apart.",
-          "Place hands on lower back.",
-          "Lean back and reach for heels."
+        "modifications": [
+            "Rest hand on a block",
+            "Gaze forward instead of up"
         ],
-        "image": "/images/asanas/camel_pose.jpg",
-        "video": "/videos/camel_pose.mp4"
-      },
-      {
-        "id": "asana14",
-        "name": "Reclining Twist",
-        "bodyParts": [
-          "Spine",
-          "Hips",
-          "Shoulders"
+        "props": ["Block"],
+        "chakra": "Heart",
+        "preparatoryPoses": ["Warrior II", "Tadasana"],
+        "followUpPoses": ["Uttanasana", "Parsvottanasana"],
+        "breathInstructions": "Inhale to lengthen spine, exhale to deepen stretch.",
+        "alignmentTips": [
+            "Keep hips and shoulders aligned",
+            "Engage core to support spine",
+            "Distribute weight evenly between feet"
         ],
+        "image": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga6_c33ouf.jpg",
+        "video": "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4"
+    },
+    {
+        "id": "8",
+        "name": "Tree Pose",
+        "sanskritName": "Vrikshasana",
+        "category": "Balancing",
+        "bodyParts": ["Legs", "Core", "Balance", "Ankles"],
+        "diseases": ["Anxiety", "Depression", "Hypertension"],
         "difficulty": "Beginner",
-        "duration": "1-2 minutes",
+        "duration": {
+            "min": "30 seconds",
+            "max": "1 minute"
+        },
         "benefits": [
-          "Relieves spinal tension",
-          "Improves digestion",
-          "Relaxes the body"
+            "Improves focus",
+            "Reduces anxiety",
+            "Strengthens ankles and legs",
+            "Enhances balance",
+            "Boosts confidence"
         ],
         "steps": [
-          "Lie on back, bring one knee across the body.",
-          "Extend opposite arm out.",
-          "Gaze opposite to the twist."
+            {
+                "title": "Stand in Tadasana",
+                "description": "Begin in Mountain Pose, feet hip-width apart."
+            },
+            {
+                "title": "Shift Weight",
+                "description": "Shift weight to one foot, lift other foot."
+            },
+            {
+                "title": "Place Foot",
+                "description": "Place sole of lifted foot on inner thigh or calf, avoid knee."
+            },
+            {
+                "title": "Balance and Breathe",
+                "description": "Bring hands to heart or overhead, gaze forward, and breathe."
+            }
         ],
-        "image": "/images/asanas/reclining_twist.jpg",
-        "video": "/videos/reclining_twist.mp4"
-      },
-      {
-        "id": "asana15",
-        "name": "Pigeon Pose",
-        "bodyParts": [
-          "Hips",
-          "Glutes",
-          "Lower Back"
+        "commonMistakes": [
+            {
+                "mistake": "Placing foot on knee",
+                "correction": "Place foot above or below knee to avoid injury."
+            },
+            {
+                "mistake": "Leaning to one side",
+                "correction": "Engage core and align hips."
+            }
         ],
-        "difficulty": "Intermediate",
-        "duration": "1-2 minutes",
+        "precautions": [
+            "Avoid with balance issues",
+            "Use wall for support if needed"
+        ],
+        "modifications": [
+            "Keep toes on floor for support",
+            "Use a wall for balance"
+        ],
+        "props": ["Wall"],
+        "chakra": "Root",
+        "preparatoryPoses": ["Tadasana", "Sukhasana"],
+        "followUpPoses": ["Warrior I", "Uttanasana"],
+        "breathInstructions": "Inhale to lift chest, exhale to ground standing foot.",
+        "alignmentTips": [
+            "Keep hips level",
+            "Engage core for stability",
+            "Fix gaze on a point for balance"
+        ],
+        "image": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga6_c33ouf.jpg",
+        "video": "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4"
+    },
+    {
+        "id": "9",
+        "name": "Cobra Pose",
+        "sanskritName": "Bhujangasana",
+        "category": "Backbend",
+        "bodyParts": ["Spine", "Chest", "Core", "Upper Back"],
+        "diseases": ["Depression", "Asthma", "Lower Back Pain"],
+        "difficulty": "Beginner",
+        "duration": {
+            "min": "15 seconds",
+            "max": "30 seconds"
+        },
         "benefits": [
-          "Opens hip flexors",
-          "Releases lower back tension",
-          "Improves flexibility"
+            "Strengthens spine",
+            "Opens chest and lungs",
+            "Reduces depression",
+            "Relieves lower back pain",
+            "Improves posture"
         ],
         "steps": [
-          "Bring one knee forward and extend other leg back.",
-          "Square hips to the front.",
-          "Fold forward and rest."
+            {
+                "title": "Lie Prone",
+                "description": "Lie face down, legs extended, tops of feet on floor."
+            },
+            {
+                "title": "Place Hands",
+                "description": "Place palms under shoulders, elbows bent."
+            },
+            {
+                "title": "Lift Chest",
+                "description": "Press into hands, lift chest, keep legs and pelvis grounded."
+            },
+            {
+                "title": "Breathe and Hold",
+                "description": "Roll shoulders back, gaze forward, and breathe deeply."
+            }
         ],
-        "image": "/images/asanas/pigeon_pose.jpg",
-        "video": "/videos/pigeon_pose.mp4"
-      },
-      {
-        "id": "asana16",
-        "name": "Fish Pose",
-        "bodyParts": [
-          "Chest",
-          "Throat",
-          "Back"
+        "commonMistakes": [
+            {
+                "mistake": "Overarching lower back",
+                "correction": "Engage core and lengthen tailbone toward heels."
+            },
+            {
+                "mistake": "Locking elbows",
+                "correction": "Keep slight bend in elbows to protect joints."
+            }
         ],
-        "difficulty": "Intermediate",
-        "duration": "15-30 seconds",
+        "precautions": [
+            "Avoid with back injuries",
+            "Use caution during pregnancy"
+        ],
+        "modifications": [
+            "Lift chest lower for less intensity",
+            "Rest forearms on floor (Sphinx Pose)"
+        ],
+        "props": ["Blanket"],
+        "chakra": "Heart",
+        "preparatoryPoses": ["Cat-Cow Pose", "Child’s Pose"],
+        "followUpPoses": ["Downward-Facing Dog", "Balasana"],
+        "breathInstructions": "Inhale to lift chest, exhale to ground pelvis.",
+        "alignmentTips": [
+            "Keep shoulders away from ears",
+            "Engage core to protect lower back",
+            "Press evenly into palms"
+        ],
+        "image": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga6_c33ouf.jpg",
+        "video": "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4"
+    },
+    {
+        "id": "10",
+        "name": "Bridge Pose",
+        "sanskritName": "Setu Bandhasana",
+        "category": "Backbend",
+        "bodyParts": ["Spine", "Hips", "Chest", "Lower Back"],
+        "diseases": ["Depression", "Digestive Disorders", "Hypertension"],
+        "difficulty": "Beginner",
+        "duration": {
+            "min": "30 seconds",
+            "max": "1 minute"
+        },
         "benefits": [
-          "Stretches neck and chest",
-          "Relieves respiratory issues",
-          "Improves posture"
+            "Strengthens glutes and core",
+            "Opens chest",
+            "Reduces lower back pain",
+            "Improves digestion",
+            "Relieves stress"
         ],
         "steps": [
-          "Lie on back, prop chest with forearms.",
-          "Arch back and rest crown of head.",
-          "Hold gently."
+            {
+                "title": "Lie Supine",
+                "description": "Lie on back, knees bent, feet hip-width apart near hips."
+            },
+            {
+                "title": "Lift Hips",
+                "description": "Press into feet, lift hips toward ceiling."
+            },
+            {
+                "title": "Engage Core",
+                "description": "Roll shoulders under, clasp hands or keep arms by sides."
+            },
+            {
+                "title": "Breathe and Hold",
+                "description": "Keep thighs parallel, breathe deeply, and hold."
+            }
         ],
-        "image": "/images/asanas/fish_pose.jpg",
-        "video": "/videos/fish_pose.mp4"
-      },
-      {
-        "id": "asana17",
-        "name": "Crow Pose",
-        "bodyParts": [
-          "Arms",
-          "Core",
-          "Wrists"
+        "commonMistakes": [
+            {
+                "mistake": "Knees splaying outward",
+                "correction": "Keep knees hip-width apart, press inner thighs together."
+            },
+            {
+                "mistake": "Overarching lower back",
+                "correction": "Engage core and tuck tailbone slightly."
+            }
         ],
-        "difficulty": "Advanced",
-        "duration": "20-40 seconds",
+        "precautions": [
+            "Avoid with neck or back injuries",
+            "Use caution during pregnancy"
+        ],
+        "modifications": [
+            "Place block under sacrum for support",
+            "Keep lift lower for less intensity"
+        ],
+        "props": ["Block", "Blanket"],
+        "chakra": "Heart",
+        "preparatoryPoses": ["Supta Baddha Konasana", "Cat-Cow Pose"],
+        "followUpPoses": ["Savasana", "Supta Padangusthasana"],
+        "breathInstructions": "Inhale to lift hips, exhale to engage core.",
+        "alignmentTips": [
+            "Keep feet parallel and hip-width apart",
+            "Align knees over ankles",
+            "Relax neck and shoulders"
+        ],
+        "image": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga6_c33ouf.jpg",
+        "video": "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4"
+    },
+    {
+        "id": "11",
+        "name": "Seated Forward Bend",
+        "sanskritName": "Paschimottanasana",
+        "category": "Forward Bend",
+        "bodyParts": ["Hamstrings", "Spine", "Lower Back", "Abdomen"],
+        "diseases": ["Digestive Disorders", "Anxiety", "Hypertension"],
+        "difficulty": "Beginner",
+        "duration": {
+            "min": "30 seconds",
+            "max": "1 minute"
+        },
         "benefits": [
-          "Strengthens arms and wrists",
-          "Improves focus and balance",
-          "Tones core"
+            "Stretches hamstrings and spine",
+            "Improves digestion",
+            "Reduces anxiety",
+            "Relieves lower back pain",
+            "Calms the mind"
         ],
         "steps": [
-          "Start in squat, place palms on floor.",
-          "Lift hips, bend elbows.",
-          "Balance knees on arms."
+            {
+                "title": "Sit Upright",
+                "description": "Sit with legs extended forward, toes flexed, spine straight."
+            },
+            {
+                "title": "Hinge at Hips",
+                "description": "Inhale to lengthen spine, exhale to fold forward at hips."
+            },
+            {
+                "title": "Reach Forward",
+                "description": "Hold feet, shins, or thighs, keeping spine long."
+            },
+            {
+                "title": "Relax and Breathe",
+                "description": "Rest forehead toward legs, breathe deeply."
+            }
         ],
-        "image": "/images/asanas/crow_pose.jpg",
-        "video": "/videos/crow_pose.mp4"
-      },
-      {
-        "id": "asana18",
-        "name": "Lotus Pose",
-        "bodyParts": [
-          "Hips",
-          "Knees",
-          "Ankles"
+        "commonMistakes": [
+            {
+                "mistake": "Rounding back",
+                "correction": "Keep spine long, bend knees if needed."
+            },
+            {
+                "mistake": "Forcing reach",
+                "correction": "Use a strap or hold closer to body."
+            }
         ],
-        "difficulty": "Advanced",
-        "duration": "1-5 minutes",
+        "precautions": [
+            "Avoid with lower back or hamstring injuries",
+            "Use caution during pregnancy"
+        ],
+        "modifications": [
+            "Bend knees slightly",
+            "Use a strap around feet"
+        ],
+        "props": ["Strap", "Bolster"],
+        "chakra": "Root",
+        "preparatoryPoses": ["Dandasana", "Uttanasana"],
+        "followUpPoses": ["Balasana", "Savasana"],
+        "breathInstructions": "Inhale to lengthen spine, exhale to deepen fold.",
+        "alignmentTips": [
+            "Hinge at hips, not waist",
+            "Keep shoulders relaxed",
+            "Engage core lightly"
+        ],
+        "image": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga6_c33ouf.jpg",
+        "video": "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4"
+    },
+    {
+        "id": "12",
+        "name": "Half Lord of the Fishes Pose",
+        "sanskritName": "Ardha Matsyendrasana",
+        "category": "Twist",
+        "bodyParts": ["Spine", "Hips", "Abdomen", "Upper Back"],
+        "diseases": ["Digestive Disorders", "Lower Back Pain", "Anxiety"],
+        "difficulty": "Beginner",
+        "duration": {
+            "min": "30 seconds",
+            "max": "1 minute"
+        },
         "benefits": [
-          "Calms the brain",
-          "Opens hips",
-          "Promotes meditation"
+            "Improves spinal mobility",
+            "Aids digestion",
+            "Relieves lower back pain",
+            "Reduces stress",
+            "Stretches hips"
         ],
         "steps": [
-          "Sit with legs extended.",
-          "Place each foot on opposite thigh.",
-          "Rest hands on knees."
+            {
+                "title": "Sit with Legs Extended",
+                "description": "Sit with legs straight, then bend one knee and place foot outside opposite thigh."
+            },
+            {
+                "title": "Cross Leg",
+                "description": "Bend other knee, place foot near sitting bone."
+            },
+            {
+                "title": "Twist Torso",
+                "description": "Place one arm behind, hug knee with other arm, twist toward back."
+            },
+            {
+                "title": "Breathe and Lengthen",
+                "description": "Inhale to lengthen spine, exhale to deepen twist."
+            }
         ],
-        "image": "/images/asanas/lotus_pose.jpg",
-        "video": "/videos/lotus_pose.mp4"
-      },
-      {
-        "id": "asana19",
+        "commonMistakes": [
+            {
+                "mistake": "Rounding spine",
+                "correction": "Lengthen spine before twisting."
+            },
+            {
+                "mistake": "Forcing twist",
+                "correction": "Twist gently, use breath to deepen."
+            }
+        ],
+        "precautions": [
+            "Avoid with spinal injuries",
+            "Consult doctor for pregnancy"
+        ],
+        "modifications": [
+            "Sit on a blanket for elevation",
+            "Keep bottom leg extended"
+        ],
+        "props": ["Blanket"],
+        "chakra": "Solar Plexus",
+        "preparatoryPoses": ["Sukhasana", "Dandasana"],
+        "followUpPoses": ["Paschimottanasana", "Savasana"],
+        "breathInstructions": "Inhale to lengthen, exhale to twist deeper.",
+        "alignmentTips": [
+            "Keep spine tall",
+            "Align shoulders over hips",
+            "Twist from abdomen, not neck"
+        ],
+        "image": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga6_c33ouf.jpg",
+        "video": "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4"
+    },
+    {
+        "id": "13",
+        "name": "Corpse Pose",
+        "sanskritName": "Savasana",
+        "category": "Restorative",
+        "bodyParts": ["Full Body", "Head"],
+        "diseases": ["Anxiety", "Depression", "Hypertension"],
+        "difficulty": "Beginner",
+        "duration": {
+            "min": "5 minutes",
+            "max": "10 minutes"
+        },
+        "benefits": [
+            "Reduces stress and anxiety",
+            "Lowers blood pressure",
+            "Promotes relaxation",
+            "Improves sleep",
+            "Calms the mind"
+        ],
+        "steps": [
+            {
+                "title": "Lie Down",
+                "description": "Lie flat on back, legs slightly apart, arms by sides, palms up."
+            },
+            {
+                "title": "Adjust Body",
+                "description": "Close eyes, relax shoulders, and align spine."
+            },
+            {
+                "title": "Focus on Breath",
+                "description": "Breathe naturally, let body sink into floor."
+            },
+            {
+                "title": "Stay Present",
+                "description": "Remain still, focus on breath or guided relaxation."
+            }
+        ],
+        "commonMistakes": [
+            {
+                "mistake": "Tensing body",
+                "correction": "Consciously relax muscles."
+            },
+            {
+                "mistake": "Drifting to sleep",
+                "correction": "Stay mindful with gentle breath focus."
+            }
+        ],
+        "precautions": [
+            "Use props for lower back pain",
+            "Avoid if unable to lie flat comfortably"
+        ],
+        "modifications": [
+            "Place bolster under knees",
+            "Use blanket for warmth"
+        ],
+        "props": ["Bolster", "Blanket", "Eye Pillow"],
+        "chakra": "Crown",
+        "preparatoryPoses": ["Balasana", "Supta Baddha Konasana"],
+        "followUpPoses": ["Sukhasana"],
+        "breathInstructions": "Breathe naturally, focus on slow exhales.",
+        "alignmentTips": [
+            "Keep body symmetrical",
+            "Relax jaw and forehead",
+            "Let feet fall naturally"
+        ],
+        "image": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga6_c33ouf.jpg",
+        "video": "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4"
+    },
+    {
+        "id": "14",
         "name": "Cat-Cow Pose",
-        "bodyParts": [
-          "Spine",
-          "Neck",
-          "Back"
-        ],
+        "sanskritName": "Marjaryasana-Bitilasana",
+        "category": "Other",
+        "bodyParts": ["Spine", "Core", "Neck", "Upper Back"],
+        "diseases": ["Lower Back Pain", "Anxiety", "Depression"],
         "difficulty": "Beginner",
-        "duration": "1-2 minutes",
+        "duration": {
+            "min": "1 minute",
+            "max": "2 minutes"
+        },
         "benefits": [
-          "Warms up the spine",
-          "Improves flexibility",
-          "Relieves back tension"
+            "Improves spinal flexibility",
+            "Relieves lower back pain",
+            "Reduces stress",
+            "Strengthens core",
+            "Enhances coordination"
         ],
         "steps": [
-          "Start on hands and knees.",
-          "Alternate between arching and rounding the back."
+            {
+                "title": "Start on All Fours",
+                "description": "Begin on hands and knees, wrists under shoulders, knees under hips."
+            },
+            {
+                "title": "Cow Pose",
+                "description": "Inhale, drop belly, lift chest and tailbone, gaze up."
+            },
+            {
+                "title": "Cat Pose",
+                "description": "Exhale, round spine, tuck chin, draw navel in."
+            },
+            {
+                "title": "Flow with Breath",
+                "description": "Continue moving between Cat and Cow, syncing with breath."
+            }
         ],
-        "image": "/images/asanas/cat_cow_pose.jpg",
-        "video": "/videos/cat_cow_pose.mp4"
-      },
-      {
-        "id": "asana20",
-        "name": "Happy Baby",
-        "bodyParts": [
-          "Hips",
-          "Inner Thighs",
-          "Lower Back"
+        "commonMistakes": [
+            {
+                "mistake": "Overarching neck",
+                "correction": "Keep neck in line with spine."
+            },
+            {
+                "mistake": "Collapsing shoulders",
+                "correction": "Keep shoulders over wrists."
+            }
         ],
+        "precautions": [
+            "Avoid with wrist or knee injuries",
+            "Use padding for sensitive knees"
+        ],
+        "modifications": [
+            "Perform seated in a chair",
+            "Use blanket under knees"
+        ],
+        "props": ["Blanket"],
+        "chakra": "Solar Plexus",
+        "preparatoryPoses": ["Child’s Pose", "Thread the Needle"],
+        "followUpPoses": ["Adho Mukha Svanasana", "Balasana"],
+        "breathInstructions": "Inhale for Cow, exhale for Cat.",
+        "alignmentTips": [
+            "Keep wrists under shoulders",
+            "Move spine fluidly",
+            "Engage core lightly"
+        ],
+        "image": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga6_c33ouf.jpg",
+        "video": "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4"
+    },
+    {
+        "id": "15",
+        "name": "Low Lunge",
+        "sanskritName": "Anjaneyasana",
+        "category": "Standing",
+        "bodyParts": ["Hips", "Thighs", "Chest", "Core"],
+        "diseases": ["Lower Back Pain", "Anxiety", "Heart Disease"],
         "difficulty": "Beginner",
-        "duration": "1-2 minutes",
+        "duration": {
+            "min": "30 seconds",
+            "max": "1 minute"
+        },
         "benefits": [
-          "Relaxes lower back",
-          "Opens hips",
-          "Reduces stress"
+            "Stretches hips and thighs",
+            "Opens chest",
+            "Relieves lower back pain",
+            "Improves heart health",
+            "Reduces stress"
         ],
         "steps": [
-          "Lie on back, grab feet from outside.",
-          "Pull knees towards armpits.",
-          "Rock gently."
+            {
+                "title": "Step Forward",
+                "description": "From Downward Dog, step one foot between hands, lower back knee."
+            },
+            {
+                "title": "Align Hips",
+                "description": "Square hips, place hands on front knee or raise arms."
+            },
+            {
+                "title": "Lift Chest",
+                "description": "Inhale, lift chest, keep spine long."
+            },
+            {
+                "title": "Breathe and Hold",
+                "description": "Sink hips slightly, breathe deeply."
+            }
         ],
-        "image": "/images/asanas/happy_baby.jpg",
-        "video": "/videos/happy_baby.mp4"
-      },
-      {
-        "id": "asana21",
-        "name": "Supine Butterfly",
-        "bodyParts": [
-          "Hips",
-          "Groin",
-          "Thighs"
+        "commonMistakes": [
+            {
+                "mistake": "Front knee past ankle",
+                "correction": "Align knee over ankle."
+            },
+            {
+                "mistake": "Collapsing chest",
+                "correction": "Lift chest, engage core."
+            }
         ],
+        "precautions": [
+            "Avoid with knee injuries",
+            "Use padding for back knee"
+        ],
+        "modifications": [
+            "Keep hands on floor for support",
+            "Use blanket under back knee"
+        ],
+        "props": ["Blanket", "Blocks"],
+        "chakra": "Heart",
+        "preparatoryPoses": ["Adho Mukha Svanasana", "Cat-Cow Pose"],
+        "followUpPoses": ["Warrior I", "Uttanasana"],
+        "breathInstructions": "Inhale to lift chest, exhale to sink hips.",
+        "alignmentTips": [
+            "Keep front knee over ankle",
+            "Square hips forward",
+            "Lengthen spine"
+        ],
+        "image": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga6_c33ouf.jpg",
+        "video": "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4"
+    },
+    {
+        "id": "16",
+        "name": "Chair Pose",
+        "sanskritName": "Utkatasana",
+        "category": "Standing",
+        "bodyParts": ["Legs", "Core", "Spine", "Balance"],
+        "diseases": ["Arthritis", "Depression", "Diabetes"],
         "difficulty": "Beginner",
-        "duration": "2-5 minutes",
+        "duration": {
+            "min": "30 seconds",
+            "max": "1 minute"
+        },
         "benefits": [
-          "Relaxes the body",
-          "Stretches inner thighs",
-          "Stimulates abdominal organs"
+            "Strengthens legs and core",
+            "Improves balance",
+            "Boosts confidence",
+            "Enhances stamina",
+            "Relieves joint stiffness"
         ],
         "steps": [
-          "Lie back, bring soles of feet together.",
-          "Let knees fall open.",
-          "Place hands on belly."
+            {
+                "title": "Stand in Tadasana",
+                "description": "Begin in Mountain Pose, feet together or hip-width apart."
+            },
+            {
+                "title": "Bend Knees",
+                "description": "Inhale, raise arms, exhale, bend knees as if sitting in a chair."
+            },
+            {
+                "title": "Align Torso",
+                "description": "Keep spine long, chest lifted, weight in heels."
+            },
+            {
+                "title": "Hold and Breathe",
+                "description": "Engage core, gaze forward, breathe steadily."
+            }
         ],
-        "image": "/images/asanas/supine_butterfly.jpg",
-        "video": "/videos/supine_butterfly.mp4"
-      },
-      {
-        "id": "asana22",
-        "name": "Side Plank",
-        "bodyParts": [
-          "Arms",
-          "Obliques",
-          "Legs"
+        "commonMistakes": [
+            {
+                "mistake": "Knees too far forward",
+                "correction": "Shift weight to heels, keep knees over ankles."
+            },
+            {
+                "mistake": "Rounding back",
+                "correction": "Lengthen spine, lift chest."
+            }
         ],
+        "precautions": [
+            "Avoid with knee or lower back injuries",
+            "Use caution with low blood pressure"
+        ],
+        "modifications": [
+            "Keep arms at heart center",
+            "Use a wall for support"
+        ],
+        "props": ["Wall"],
+        "chakra": "Solar Plexus",
+        "preparatoryPoses": ["Tadasana", "Warrior I"],
+        "followUpPoses": ["Uttanasana", "Trikonasana"],
+        "breathInstructions": "Inhale to lift chest, exhale to deepen bend.",
+        "alignmentTips": [
+            "Keep weight in heels",
+            "Align knees over ankles",
+            "Engage core for stability"
+        ],
+        "image": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga6_c33ouf.jpg",
+        "video": "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4"
+    },
+    {
+        "id": "17",
+        "name": "Revolved Triangle Pose",
+        "sanskritName": "Parivrtta Trikonasana",
+        "category": "Twist",
+        "bodyParts": ["Spine", "Hips", "Hamstrings", "Balance"],
+        "diseases": ["Digestive Disorders", "Lower Back Pain", "Anxiety"],
         "difficulty": "Intermediate",
-        "duration": "30-60 seconds",
+        "duration": {
+            "min": "30 seconds",
+            "max": "1 minute"
+        },
         "benefits": [
-          "Strengthens obliques",
-          "Improves balance",
-          "Tones arms"
+            "Improves spinal mobility",
+            "Aids digestion",
+            "Enhances balance",
+            "Stretches hamstrings",
+            "Reduces stress"
         ],
         "steps": [
-          "Start in plank, shift weight to one side.",
-          "Stack feet and lift opposite arm.",
-          "Hold."
+            {
+                "title": "Step Wide",
+                "description": "Step feet 3-4 feet apart, arms extended."
+            },
+            {
+                "title": "Align Feet",
+                "description": "Turn front foot forward, back foot at 45-degree angle."
+            },
+            {
+                "title": "Twist and Reach",
+                "description": "Twist torso, place opposite hand on floor or block, raise other arm."
+            },
+            {
+                "title": "Breathe and Hold",
+                "description": "Lengthen spine on inhale, deepen twist on exhale."
+            }
         ],
-        "image": "/images/asanas/side_plank.jpg",
-        "video": "/videos/side_plank.mp4"
-      },
-      {
-        "id": "asana23",
-        "name": "Standing Forward Fold",
-        "bodyParts": [
-          "Hamstrings",
-          "Calves",
-          "Back"
+        "commonMistakes": [
+            {
+                "mistake": "Collapsing hips",
+                "correction": "Keep hips level, engage core."
+            },
+            {
+                "mistake": "Forcing twist",
+                "correction": "Twist gently, use block for support."
+            }
         ],
+        "precautions": [
+            "Avoid with spinal or hip injuries",
+            "Use caution with low blood pressure"
+        ],
+        "modifications": [
+            "Use block under hand",
+            "Shorten stance for balance"
+        ],
+        "props": ["Block"],
+        "chakra": "Solar Plexus",
+        "preparatoryPoses": ["Trikonasana", "Warrior II"],
+        "followUpPoses": ["Uttanasana", "Savasana"],
+        "breathInstructions": "Inhale to lengthen, exhale to twist deeper.",
+        "alignmentTips": [
+            "Keep hips level",
+            "Lengthen spine before twisting",
+            "Gaze up or forward"
+        ],
+        "image": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga6_c33ouf.jpg",
+        "video": "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4"
+    },
+    {
+        "id": "18",
+        "name": "Reclining Bound Angle Pose",
+        "sanskritName": "Supta Baddha Konasana",
+        "category": "Restorative",
+        "bodyParts": ["Hips", "Groin", "Chest", "Abdomen"],
+        "diseases": ["Anxiety", "Depression", "Digestive Disorders"],
         "difficulty": "Beginner",
-        "duration": "30-60 seconds",
+        "duration": {
+            "min": "2 minutes",
+            "max": "5 minutes"
+        },
         "benefits": [
-          "Calms the mind",
-          "Stretches spine and legs",
-          "Reduces fatigue"
+            "Opens hips and groin",
+            "Reduces stress",
+            "Improves digestion",
+            "Relieves menstrual discomfort",
+            "Promotes relaxation"
         ],
         "steps": [
-          "Stand tall, exhale and fold forward.",
-          "Let head hang.",
-          "Relax into the pose."
+            {
+                "title": "Lie Down",
+                "description": "Lie on back, bring soles of feet together, knees out to sides."
+            },
+            {
+                "title": "Support Hips",
+                "description": "Place blocks or blankets under knees for support."
+            },
+            {
+                "title": "Relax Arms",
+                "description": "Rest arms by sides or on abdomen, palms up."
+            },
+            {
+                "title": "Breathe Deeply",
+                "description": "Close eyes, breathe slowly, relax into pose."
+            }
         ],
-        "image": "/images/asanas/standing_forward_fold.jpg",
-        "video": "/videos/standing_forward_fold.mp4"
-      },
-      {
-        "id": "asana24",
-        "name": "Upward Plank Pose",
-        "bodyParts": [
-          "Shoulders",
-          "Arms",
-          "Spine"
+        "commonMistakes": [
+            {
+                "mistake": "Forcing knees down",
+                "correction": "Use props to support knees."
+            },
+            {
+                "mistake": "Tensing shoulders",
+                "correction": "Relax shoulders away from ears."
+            }
         ],
-        "difficulty": "Intermediate",
-        "duration": "15-30 seconds",
-        "benefits": [
-          "Strengthens arms and back",
-          "Stretches chest and shoulders",
-          "Boosts energy"
+        "precautions": [
+            "Avoid with hip or knee injuries",
+            "Use props during pregnancy"
         ],
-        "steps": [
-          "Sit with legs extended, hands behind hips.",
-          "Lift hips up, point toes.",
-          "Hold and breathe."
+        "modifications": [
+            "Use bolster under spine",
+            "Place feet further from pelvis"
         ],
-        "image": "/images/asanas/upward_plank_pose.jpg",
-        "video": "/videos/upward_plank_pose.mp4"
-      },
-      {
-        "id": "asana25",
+        "props": ["Bolster", "Blocks", "Blanket"],
+        "chakra": "Sacral",
+        "preparatoryPoses": ["Baddha Konasana", "Savasana"],
+        "followUpPoses": ["Savasana", "Viparita Karani"],
+        "breathInstructions": "Breathe deeply into abdomen, exhale to release tension.",
+        "alignmentTips": [
+            "Keep spine neutral",
+            "Support knees comfortably",
+            "Relax pelvis"
+        ],
+        "image": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga6_c33ouf.jpg",
+        "video": "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4"
+    },
+    {
+        "id": "19",
         "name": "Garland Pose",
-        "bodyParts": [
-          "Hips",
-          "Ankles",
-          "Back"
-        ],
+        "sanskritName": "Malasana",
+        "category": "Other",
+        "bodyParts": ["Hips", "Groin", "Ankles", "Lower Back"],
+        "diseases": ["Digestive Disorders", "Lower Back Pain", "Anxiety"],
         "difficulty": "Beginner",
-        "duration": "30-60 seconds",
+        "duration": {
+            "min": "30 seconds",
+            "max": "1 minute"
+        },
         "benefits": [
-          "Improves hip mobility",
-          "Aids digestion",
-          "Strengthens ankles"
+            "Opens hips and groin",
+            "Strengthens ankles",
+            "Relieves lower back pain",
+            "Improves digestion",
+            "Reduces stress"
         ],
         "steps": [
-          "Squat with feet wide.",
-          "Bring palms together at chest.",
-          "Press elbows into knees."
+            {
+                "title": "Squat Down",
+                "description": "Stand with feet slightly wider than hips, toes out, lower into a squat."
+            },
+            {
+                "title": "Bring Hands Together",
+                "description": "Press palms together at heart center, elbows against inner thighs."
+            },
+            {
+                "title": "Lift Chest",
+                "description": "Lengthen spine, lift chest, keep hips low."
+            },
+            {
+                "title": "Breathe and Hold",
+                "description": "Breathe deeply, relax shoulders."
+            }
         ],
-        "image": "/images/asanas/garland_pose.jpg",
-        "video": "/videos/garland_pose.mp4"
-      },
-      {
-        "id": "asana26",
-        "name": "Sphinx Pose",
-        "bodyParts": [
-          "Back",
-          "Chest",
-          "Shoulders"
+        "commonMistakes": [
+            {
+                "mistake": "Heels lifting off floor",
+                "correction": "Place blanket under heels or widen stance."
+            },
+            {
+                "mistake": "Rounding back",
+                "correction": "Lengthen spine, lift chest."
+            }
         ],
-        "difficulty": "Beginner",
-        "duration": "1-2 minutes",
-        "benefits": [
-          "Strengthens spine",
-          "Opens chest",
-          "Stimulates abdominal organs"
+        "precautions": [
+            "Avoid with knee or ankle injuries",
+            "Use caution during pregnancy"
         ],
-        "steps": [
-          "Lie on stomach, elbows under shoulders.",
-          "Lift chest and gaze forward.",
-          "Hold and breathe."
+        "modifications": [
+            "Sit on a block",
+            "Use wall for support"
         ],
-        "image": "/images/asanas/sphinx_pose.jpg",
-        "video": "/videos/sphinx_pose.mp4"
-      },
-      {
-        "id": "asana27",
-        "name": "Half Lord of the Fishes",
-        "bodyParts": [
-          "Spine",
-          "Shoulders",
-          "Neck"
+        "props": ["Block", "Blanket"],
+        "chakra": "Root",
+        "preparatoryPoses": ["Baddha Konasana", "Uttanasana"],
+        "followUpPoses": ["Tadasana", "Utkatasana"],
+        "breathInstructions": "Inhale to lift chest, exhale to sink hips.",
+        "alignmentTips": [
+            "Keep knees tracking over toes",
+            "Lengthen spine",
+            "Relax hips"
         ],
+        "image": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga6_c33ouf.jpg",
+        "video": "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4"
+    },
+    {
+        "id": "20",
+        "name": "Boat Pose",
+        "sanskritName": "Navasana",
+        "category": "Core",
+        "bodyParts": ["Core", "Hips", "Spine", "Balance"],
+        "diseases": ["Digestive Disorders", "Depression", "Diabetes"],
         "difficulty": "Intermediate",
-        "duration": "30-60 seconds",
+        "duration": {
+            "min": "15 seconds",
+            "max": "30 seconds"
+        },
         "benefits": [
-          "Improves spinal mobility",
-          "Stimulates digestive organs",
-          "Relieves fatigue"
+            "Strengthens core",
+            "Improves digestion",
+            "Enhances balance",
+            "Boosts confidence",
+            "Tones abdominal muscles"
         ],
         "steps": [
-          "Sit with legs extended, bend one leg over.",
-          "Twist towards bent leg.",
-          "Use opposite elbow for leverage."
+            {
+                "title": "Sit on Floor",
+                "description": "Sit with knees bent, feet flat, hands behind hips."
+            },
+            {
+                "title": "Lift Legs",
+                "description": "Lean back slightly, lift feet, extend legs to form a V-shape."
+            },
+            {
+                "title": "Extend Arms",
+                "description": "Reach arms forward, parallel to floor."
+            },
+            {
+                "title": "Hold and Breathe",
+                "description": "Engage core, keep spine straight, breathe steadily."
+            }
         ],
-        "image": "/images/asanas/half_lord_fishes.jpg",
-        "video": "/videos/half_lord_fishes.mp4"
-      },
-      {
-        "id": "asana28",
-        "name": "Revolved Triangle",
-        "bodyParts": [
-          "Spine",
-          "Hamstrings",
-          "Hips"
+        "commonMistakes": [
+            {
+                "mistake": "Rounding back",
+                "correction": "Keep spine straight, engage core."
+            },
+            {
+                "mistake": "Tensing shoulders",
+                "correction": "Relax shoulders away from ears."
+            }
         ],
-        "difficulty": "Advanced",
-        "duration": "30-60 seconds",
-        "benefits": [
-          "Improves balance",
-          "Stretches legs and spine",
-          "Detoxifies internal organs"
+        "precautions": [
+            "Avoid with lower back injuries",
+            "Consult doctor for pregnancy"
         ],
-        "steps": [
-          "Stand wide, turn one foot out.",
-          "Reach opposite arm down, twist torso.",
-          "Extend other arm upward."
+        "modifications": [
+            "Keep knees bent",
+            "Hold backs of thighs"
         ],
-        "image": "/images/asanas/revolved_triangle.jpg",
-        "video": "/videos/revolved_triangle.mp4"
-      },
-      {
-      "id": "asana29",
-      "name": "Downward-Facing Dog",
-      "bodyParts": ["Shoulders", "Hamstrings", "Calves"],
-      "difficulty": "Beginner",
-      "duration": "30-60 seconds",
-      "benefits": [
-        "Stretches hamstrings, calves, and spine",
-        "Strengthens arms and legs",
-        "Relieves stress"
-      ],
-      "steps": [
-        "Start on hands and knees.",
-        "Lift knees, push hips back and up.",
-        "Form an inverted V shape.",
-        "Hold and breathe deeply."
-      ],
-      "image": "/images/asanas/downward_dog.jpg",
-      "video": "/videos/downward_dog.mp4"
-    },
-    {
-      "id": "asana30",
-      "name": "Cobra Pose",
-      "bodyParts": ["Back", "Shoulders", "Chest"],
-      "difficulty": "Beginner",
-      "duration": "15-30 seconds",
-      "benefits": [
-        "Opens chest and strengthens spine",
-        "Improves posture",
-        "Energizes the body"
-      ],
-      "steps": [
-        "Lie face down, hands under shoulders.",
-        "Press palms and lift upper body.",
-        "Keep elbows soft and shoulders relaxed.",
-        "Hold with deep breathing."
-      ],
-      "image": "/images/asanas/cobra_pose.jpg",
-      "video": "/videos/cobra_pose.mp4"
-    },
-    {
-      "id": "asana31",
-      "name": "Bridge Pose",
-      "bodyParts": ["Lower Back", "Glutes", "Hamstrings"],
-      "difficulty": "Beginner",
-      "duration": "30-60 seconds",
-      "benefits": [
-        "Strengthens back and glutes",
-        "Opens chest and shoulders",
-        "Stimulates abdominal organs"
-      ],
-      "steps": [
-        "Lie on back, knees bent, feet hip-width.",
-        "Lift hips while pressing feet and arms.",
-        "Clasp hands under your back.",
-        "Hold and breathe."
-      ],
-      "image": "/images/asanas/bridge_pose.jpg",
-      "video": "/videos/bridge_pose.mp4"
-    },
-    {
-      "id": "asana32",
-      "name": "Boat Pose",
-      "bodyParts": ["Core", "Hip Flexors"],
-      "difficulty": "Intermediate",
-      "duration": "20-40 seconds",
-      "benefits": [
-        "Strengthens abs and spine",
-        "Improves balance and posture",
-        "Stimulates kidneys and intestines"
-      ],
-      "steps": [
-        "Sit with knees bent, feet on floor.",
-        "Lift feet, extend legs at 45 degrees.",
-        "Stretch arms forward parallel to the floor.",
-        "Hold and engage core."
-      ],
-      "image": "/images/asanas/boat_pose.jpg",
-      "video": "/videos/boat_pose.mp4"
-    },
-    {
-      "id": "asana33",
-      "name": "Child’s Pose",
-      "bodyParts": ["Neck", "Back", "Hips"],
-      "difficulty": "Beginner",
-      "duration": "1-2 minutes",
-      "benefits": [
-        "Gently stretches spine and hips",
-        "Relieves back and neck tension",
-        "Calms the mind"
-      ],
-      "steps": [
-        "Kneel on mat, big toes touching, knees apart.",
-        "Lower torso between thighs.",
-        "Stretch arms forward or back.",
-        "Rest forehead and breathe."
-      ],
-      "image": "/images/asanas/child_pose.jpg",
-      "video": "/videos/child_pose.mp4"
-    },
-    {
-      "id": "asana34",
-      "name": "Eagle Arms",
-      "bodyParts": ["Shoulders", "Upper Back"],
-      "difficulty": "Beginner",
-      "duration": "30 seconds per side",
-      "benefits": [
-        "Improves shoulder mobility",
-        "Stretches upper back",
-        "Enhances focus"
-      ],
-      "steps": [
-        "Extend arms forward, cross right arm over left.",
-        "Bend elbows, bring palms together.",
-        "Lift elbows slightly, drop shoulders.",
-        "Hold and switch sides."
-      ],
-      "image": "/images/asanas/eagle_arms.jpg",
-      "video": "/videos/eagle_arms.mp4"
-    },
-    {
-      "id": "asana35",
-      "name": "Warrior II",
-      "bodyParts": ["Legs", "Hips", "Arms"],
-      "difficulty": "Intermediate",
-      "duration": "30-60 seconds",
-      "benefits": [
-        "Strengthens legs and arms",
-        "Opens hips and chest",
-        "Improves stamina and concentration"
-      ],
-      "steps": [
-        "Step feet wide, turn right foot out, left foot slightly in.",
-        "Bend right knee, arms parallel to floor.",
-        "Gaze over right hand.",
-        "Hold and repeat on other side."
-      ],
-      "image": "/images/asanas/warrior_2.jpg",
-      "video": "/videos/warrior_2.mp4"
-    },
-    {
-      "id": "asana36",
-      "name": "Seated Forward Bend",
-      "bodyParts": ["Hamstrings", "Calves", "Back"],
-      "difficulty": "Beginner",
-      "duration": "30-90 seconds",
-      "benefits": [
-        "Stretches spine and hamstrings",
-        "Stimulates liver and kidneys",
-        "Improves digestion"
-      ],
-      "steps": [
-        "Sit with legs extended, spine straight.",
-        "Inhale, reach arms up.",
-        "Exhale, hinge at hips and fold forward.",
-        "Hold and relax neck."
-      ],
-      "image": "/images/asanas/seated_forward_bend.jpg",
-      "video": "/videos/seated_forward_bend.mp4"
+        "props": ["Strap"],
+        "chakra": "Solar Plexus",
+        "preparatoryPoses": ["Dandasana", "Plank Pose"],
+        "followUpPoses": ["Savasana", "Balasana"],
+        "breathInstructions": "Inhale to lift chest, exhale to engage core.",
+        "alignmentTips": [
+            "Keep spine straight",
+            "Balance on sitting bones",
+            "Engage core fully"
+        ],
+        "image": "https://res.cloudinary.com/dlixtmy1x/image/upload/v1745503109/yoga6_c33ouf.jpg",
+        "video": "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4"
     }
-  ]
-  
+]

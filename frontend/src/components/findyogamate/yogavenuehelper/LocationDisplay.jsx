@@ -1,8 +1,10 @@
 import React from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
 
-const LocationDisplay = ({ address }) => {
-    // console.log("Location Data:", address);
+const LocationDisplay = ({ address, locationName }) => {
+  // console.log("LocationDisplay Data:", address);
+  // console.log("LocationDisplay Name:", locationName);
+
   if (!address) {
     return (
       <div className="text-center text-gray-500">

@@ -4,10 +4,15 @@ import './index.css';
 import 'leaflet/dist/leaflet.css';
 import './fixLeafletIcons'; // Ensures markers load properly
 
+import { BrowserRouter } from 'react-router-dom'
+import { AppContextProvider } from './context/AppContext.jsx'
+
 import App from './App.jsx';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
+  // <BrowserRouter>
+    <AppContextProvider>
+        <App />
+    </AppContextProvider>  
+  // </BrowserRouter>
 );

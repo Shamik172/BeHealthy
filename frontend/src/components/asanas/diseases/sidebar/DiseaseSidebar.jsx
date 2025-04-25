@@ -1,84 +1,57 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 
 function DiseaseSidebar({ selectedDisease, onSelect }) {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const listRef = useRef(null);
-
   const diseases = [
-    "Headaches",
-    "Body Pain",
-    "Arthritis",
-    "Heart Disease",
-    "Digestive Disorders",
-    "Anxiety",
-    "Asthma",
-    "Hypertension",
-    "Diabetes",
-    "Thyroid Disorders",
-    "Depression"
+    'Headaches', 'Body Pain', 'Arthritis', 'Heart Disease',
+    'Digestive Disorders', 'Anxiety', 'Asthma', 'Hypertension',
+    'Diabetes', 'Thyroid Disorders', 'Depression'
   ];
-
   const diseaseIcons = {
-    "Headaches": "🤕",
-    "Body Pain": "💪",
-    "Arthritis": "🦴",
-    "Heart Disease": "❤️",
-    "Digestive Disorders": "🍽️",
-    "Anxiety": "😟",
-    "Asthma": "🌬️",
-    "Hypertension": "🩸",
-    "Diabetes": "🍭",
-    "Thyroid Disorders": "🦋",
-    "Depression": "😞"
+    Headaches: '🤕', 'Body Pain': '💪', Arthritis: '🦴',
+    'Heart Disease': '❤️', 'Digestive Disorders': '🍽️',
+    Anxiety: '😟', Asthma: '🌬️', Hypertension: '🩸',
+    Diabetes: '🍭', 'Thyroid Disorders': '🦋', Depression: '😞'
   };
-
-  const filteredDiseases = diseases.filter(d =>
-    d.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = diseases.filter(d => d.toLowerCase().includes(search.toLowerCase()));
 
   useEffect(() => {
-    const selectedEl = listRef.current?.querySelector(".selected-disease");
-    if (selectedEl) {
-      selectedEl.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
+    const el = listRef.current?.querySelector('.selected-disease');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, [selectedDisease]);
 
   return (
-    <div className="w-64 p-4 bg-[#F0F9F4] shadow-md overflow-y-auto max-h-screen scrollbar-thin scrollbar-thumb-green-200 scrollbar-track-green-50">
-      <h2 className="text-xl font-bold text-[#2F855A] mb-4 text-center">
-        🌱 Health Conditions
-      </h2>
-
+    <div className="w-full md:w-64 p-4 bg-green-50 shadow-md overflow-y-auto max-h-screen scrollbar-thin scrollbar-thumb-green-200 scrollbar-track-green-50">
+      <h2 className="text-xl font-bold text-green-800 mb-4 text-center">🌱 Health Conditions</h2>
       <input
         type="text"
         placeholder="Search disease..."
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="w-full px-3 py-2 mb-4 border border-[#A0AEC0] rounded-md focus:outline-none focus:ring-2 focus:ring-[#68D391] bg-white text-[#2F855A]"
+        onChange={e => setSearch(e.target.value)}
+        className="w-full px-3 py-2 mb-4 border border-green-200 rounded-md focus:outline-none focus:ring-2 focus:ring-green-300 bg-white text-green-800"
       />
-
       <ul className="space-y-2" ref={listRef}>
-        {filteredDiseases.map((disease, index) => (
+        {filtered.map((d, idx) => (
           <li
-            key={index}
-            onClick={() => onSelect(disease)}
-            className={`cursor-pointer px-3 py-2 rounded-md font-medium transition-transform duration-150 flex items-center gap-2 ${
-              selectedDisease === disease
-                ? "bg-[#48BB78] text-white selected-disease"
-                : "bg-white text-[#2F855A] hover:bg-[#C6F6D5] hover:scale-[1.02]"
+            key={idx}
+            onClick={() => onSelect(d)}
+            className={`cursor-pointer px-3 py-2 rounded-md font-medium flex items-center gap-2 transition-transform duration-150 ${
+              selectedDisease === d
+                ? 'bg-green-300 text-white selected-disease'
+                : 'bg-white text-green-800 hover:bg-green-100 hover:scale-102'
             }`}
           >
-            <span className="text-xl">{diseaseIcons[disease]}</span>
-            {disease}
+            <span className="text-xl">{diseaseIcons[d]}</span>
+            {d}
           </li>
         ))}
-
         <li
-          onClick={() => onSelect("")}
-          className={`cursor-pointer px-3 py-2 rounded-md font-medium transition-transform duration-150 flex items-center gap-2 ${
-            selectedDisease === ""
-              ? "bg-[#68D391] text-white"
-              : "bg-[#EDF2F7] hover:bg-[#C6F6D5] hover:scale-[1.02]"
+          onClick={() => onSelect('')}
+          className={`cursor-pointer px-3 py-2 rounded-md font-medium flex items-center gap-2 transition-transform duration-150 ${
+            selectedDisease === ''
+              ? 'bg-green-300 text-white'
+              : 'bg-gray-100 hover:bg-green-100 hover:scale-102'
           }`}
         >
           <span className="text-xl">🌐</span> Show All
