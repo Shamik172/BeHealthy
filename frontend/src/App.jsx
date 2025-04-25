@@ -39,7 +39,8 @@ import YogaUpload from "./components/yogastreaming/YogaUpload";
 //import ProfilePage from "./components/auth/ProfilePage";
 
 import Task from "./components/task/Task";
-// import YogaStream from "./components/yogastreaming/YogaStream";
+import YogaStream from "./components/yogastreaming/YogaStream";
+
 
 
 function App() {
@@ -96,7 +97,7 @@ function App() {
               <Route path="/auth" element={<AuthPage/>}/>
               <Route path="/email-verify" element={<EmailVerify/>}/>
               <Route path="/reset-password" element={<ResetPassword/>}/>
-             // <Route path="/profile-page" element={<ProfilePage/>} />
+              {/* <Route path="/profile-page" element={<ProfilePage/>} /> */}
 
 
               <Route path="/bodyparts" element={<BodyParts />} />

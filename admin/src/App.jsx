@@ -53,6 +53,7 @@ function App() {
             </AdminRoute>
           }
         />
+
         <Route
           path="/admin/notifications"
           element={
