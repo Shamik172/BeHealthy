@@ -2,9 +2,11 @@ const express=require("express");
 const cors= require("cors");
 const bodyParser =require("body-parser");
 const cookieParser = require('cookie-parser');
+const dotenv=require('dotenv');
 const path = require("path");
 const socketIo = require("socket.io");
 const http = require("http"); // <-- ADD THIS
+
 
 const app = express();
 const server = http.createServer(app); // <-- ADD THIS
@@ -18,16 +20,25 @@ const io = socketIo(server, {
   });
 
 
+
 const AuthRoutes = require('./Routes/AuthRoutes') ;
+// const UserRoutes = require('./Routes/UserRoutes.js');
+// const ContactUsRouter= require('./Routes/ContactUsRouter.js');
+// const AsanasRouter =require('./Routes/AsanasRouter.js');
+// const ReviewRoutes = require("./Routes/ReviewRoutes.js");
+// const ReviewRoutes = require("./Routes/ReviewRoutes.js");
 // const UserRoutes = require('./Routes/UserRoutes.js');
 const ContactUsRouter= require('./Routes/ContactUsRouter.js');
 const AsanasRouter =require('./Routes/AsanasRouter.js');
+const MusicRoutes = require('./Routes/MusicRoutes.js');
 // const ReviewRoutes = require("./Routes/ReviewRoutes.js");
 // const ReviewRoutes = require("./Routes/ReviewRoutes.js");
 // const bodyParser =require("body-parser");
 // const cors= require("cors");
 
 // const AuthRouter = require('./Routes/AuthRouter') ;
+// const ContactUsRouter= require('./Routes/ContactUsRouter');
+// const AsanasRouter =require('./Routes/AsanasRouter');
 // const ContactUsRouter= require('./Routes/ContactUsRouter');
 // const AsanasRouter =require('./Routes/AsanasRouter');
 const UsersRouter = require('./Routes/UsersRouter'); // <-- Add this line
@@ -37,14 +48,19 @@ const YogaStreamRoutes = require('./Routes/yogaStreamRoutes.js'); // <-- Add thi
 const LiveStreamRoutes = require("./Routes/liveStreamRoutes.js"); // <-- Add this line
 
 
+// const loadMusicData = require('./config/music.js');
+
+// loadMusicData();
+
 require('dotenv').config() ;
 require('./config/db.js') ;
+// require('./config/music.js');
 
 const PORT=process.env.PORT || 8080;
 const allowedOrigins =['http://localhost:5173'];
 
-//Middlewares
-app.use(express.json()); // 👈 very important
+app.use(express.json());
+
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors({origin:allowedOrigins , credentials:true}));
@@ -87,6 +103,8 @@ io.on("connection", (socket) => {
   });
 });
 
+//music routes 
+app.use('/music', MusicRoutes) ;
 
 
 // app.listen(PORT , ()=>{
@@ -97,3 +115,8 @@ io.on("connection", (socket) => {
 server.listen(5050, () => {
     console.log("Server running on http://localhost:5050");
   });
+
+//app.listen(PORT , ()=>{
+ //  console.log(`Server is running on PORT : => ${PORT}`);
+//});
+

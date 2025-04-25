@@ -21,11 +21,11 @@ const UserAuth = async (req, res, next) => {
                 message: "Invalid token. Please log in again."
             });
         }
-        console.log("Auth middleware called Executed succcessfulllyyyy\\n !\n");
+        console.log("Auth middleware called Executed succcess and calling next function\n\n");
         next();
     } catch (error) {
         console.log("Error in userAuth middleware:", error);
-
+        // console.log("Auth middleware called Executed succcess and calling next function\n !\n");
         return res.status(500).json({
             success: false,
             message: `Internal Server Error. Authentication failed in middleware.\nError: ${error.message}`

@@ -1,6 +1,4 @@
 import Hero from "./Hero";
-import MusicPlayer from "./music/MusicPlayer";
-import QuoteMarquee from "./quoteTicker/QuoteTicker";
 import YogaCardsHome from "./YogaCardsHome";
 import YogaCategories from "./YogaCategories";
 import YogaSidebar from "./YogaSidebar";
@@ -8,10 +6,7 @@ import YogaSidebar from "./YogaSidebar";
 export default function Home() {
   return (
     <div>
-       {/* <QuoteMarquee /> */}
-       {/* <MusicPlayer /> */}
       <Hero />
-
       {/* Welcome Section */}
       <div className="p-10 text-center">
         <h2 className="text-3xl font-bold text-green-700">Welcome to Yoga Portal</h2>
@@ -24,7 +19,7 @@ export default function Home() {
       <YogaCategories />
 
       {/* Responsive Layout: Sidebar First in Mobile/Tablet, Right in Laptop */}
-      <div className="flex flex-col-reverse lg:flex-row gap-8 px-6">
+      <div className="flex flex-col-reverse lg:flex-row gap-8 px-6 px-6">
         {/* Yoga Cards Section */}
         <div className="w-full lg:w-3/4">
           <YogaCardsHome />

@@ -1,9 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
-import Login from "./components/loginsignup/Login";
-import Signup from "./components/loginsignup/Signup";
-import LoginHome from "./components/loginsignup/LoginHome";
+
 
 import ContactUs from "./components/contactus/ContactUs";
 import AboutUs from "./components/aboutus/AboutUs";
@@ -13,11 +11,9 @@ import History from "./components/history/History";
 import BodyParts from "./components/asanas/bodyParts/BodyParts";
 import Disease from "./components/asanas/diseases/Disease";
 
-
 import Footer from "./components/footer/Footer";
 import YogaVenuePage from "./components/findyogamate/YogaVenuePage";
 // import '@fortawesome/fontawesome-free/css/all.min.css';
-
 
 // Notification components
 import { NotificationProvider } from "./NotificationContext";
@@ -31,9 +27,15 @@ import ResetPassword from "./components/auth/ResetPassword";
 import QuoteMarquee from "./components/quoteTicker/QuoteTicker";
 import Review from "./components/reviews/Review";
 
+
 import LiveStream from "./components/yogastreaming/LiveStream";
 import ViewLiveStream from "./components/yogastreaming/ViewLiveStream";
 import YogaUpload from "./components/yogastreaming/YogaUpload";
+//import ProfilePage from "./components/auth/ProfilePage";
+
+import Task from "./components/task/Task";
+// import YogaStream from "./components/yogastreaming/YogaStream";
+
 
 function App() {
   return (
@@ -43,22 +45,23 @@ function App() {
           <Navbar />
           <QuoteMarquee />
           <NotificationPopup />
-          
+
           <main className="flex-grow">
             <Routes>
               {/* Public Routes */}
+
               <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              {/* <Route path="/signup" element={<Signup />} /> */}
-              {/* <Route path="/loginhome" element={<LoginHome />} /> */}
+             
               <Route path="/contactus" element={<ContactUs />} />
               <Route path="/aboutus" element={<AboutUs />} />
-              <Route path="/reviews" element={<Review/>} />
 
+              <Route path="/reviews" element={<Review/>} />
 
               <Route path="/auth" element={<AuthPage/>}/>
               <Route path="/email-verify" element={<EmailVerify/>}/>
               <Route path="/reset-password" element={<ResetPassword/>}/>
+             // <Route path="/profile-page" element={<ProfilePage/>} />
+
 
               <Route path="/bodyparts" element={<BodyParts />} />
               <Route path="/diseases" element={<Disease />} />
@@ -66,6 +69,7 @@ function App() {
               <Route path="/history" element={<History />} />
               <Route path="/notifications" element={<NotificationHistory />} />
               {/* <Route path="/testx" element={<NotificationButton />} /> */}
+              <Route path="/task" element={<Task />} />
               <Route path="/test" element={<YogaVenuePage />} />
               <Route path="/yogaupload" element={<YogaUpload/>} />
               <Route path="/livestreaming" element={<LiveStream />} />

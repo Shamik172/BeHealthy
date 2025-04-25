@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 const Login = ({ isSignup, toggleForm }) => {
-  axios.defaults.withCredentials = true;
+  // axios.defaults.withCredentials = true;
   const { backendUrl, setIsLoggedin, getUserData } = useContext(AppContent);
   const navigate = useNavigate();
   const [name, setName] = useState('');
@@ -24,31 +24,55 @@ const Login = ({ isSignup, toggleForm }) => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
-      const payload = isSignup ? { name, email, password } : { email, password };
-      console.log('Payload duging login :', payload);
-
-      const { data } = await axios.post(
-        `${backendUrl}/auth/${isSignup ? 'register' : 'login'}`,
-        payload,
-        { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
-      );
-      // console.log('Payload:', payload);
-
-      console.log(`${isSignup ? 'Signup' : 'Login'} response:`, data);
-
-      if (data.success) {
-        toast.success(data.message); // show toast first
-        setIsLoggedin(true);
-        getUserData();
-        navigate('/');
+      if (isSignup) {
+        console.log("Sending data from login Page SignUp : " , {name , email , password})
+        const { data } = await axios.post(
+          backendUrl + '/auth/register',
+          { name, email, password },
+          {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+          }
+        );
+        console.log("Result From Backend ",data);
+        if (data.success) {
+          setIsLoggedin(true);
+          getUserData();
+          navigate('/');
+          toast.success(data.message);
+        } else {
+          toast.error(data.message);
+        }
+  
       } else {
-        toast.error(data.message);
+
+        console.log("Sending data from login Page Login : " , {email , password})
+        const { data } = await axios.post(
+          backendUrl + '/auth/login',
+          { email, password },
+          {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+          }
+        );
+        console.log("Result From Backend ",data);
+        if (data.success) {
+          setIsLoggedin(true);
+          getUserData();
+          navigate('/');
+          toast.success(data.message);
+        } else {
+          console.log("Error in login");
+          toast.error(data.message);
+        }
       }
+  
     } catch (error) {
       console.error('Auth error:', error);
       toast.error(error.response?.data?.message || 'An unexpected error occurred');
     }
   };
+  
 
   const handleInputChange = (setter) => (e) => {
     setter(e.target.value);

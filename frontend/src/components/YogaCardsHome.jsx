@@ -1,49 +1,297 @@
-import { motion } from "framer-motion";
-import yogaPose1 from "../assets/yoga1.jpg";
-import yogaPose2 from "../assets/yoga2.jpg";
-import yogaPose3 from "../assets/yoga3.jpg";
-import yogaPose4 from "../assets/yoga4.jpg";
-import yogaPose5 from "../assets/yoga5.jpg";
-import yogaPose6 from "../assets/yoga6.jpg";
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import Watch from './asanas/clock/Watch';
 
-const yogaData = [
-  { id: 1, image: yogaPose1, title: "Mountain Pose (Tadasana)", description: "A foundational pose that improves posture and balance." },
-  { id: 2, image: yogaPose2, title: "Downward Dog (Adho Mukha Svanasana)", description: "Strengthens the arms and legs while stretching the body." },
-  { id: 3, image: yogaPose3, title: "Warrior Pose (Virabhadrasana)", description: "Boosts endurance and strengthens legs, arms, and core." },
-  { id: 4, image: yogaPose4, title: "Tree Pose (Vrksasana)", description: "Enhances concentration, balance, and stability." },
-  { id: 5, image: yogaPose5, title: "Cobra Pose (Bhujangasana)", description: "Improves spinal flexibility and opens the chest." },
-  { id: 6, image: yogaPose6, title: "Child’s Pose (Balasana)", description: "Relieves stress and gently stretches the back and hips." },
-];
+export default function YogaCardsHome({ selectedBodyPart }) {
+  const [asanas, setAsanas] = useState([]);
+  const [expandedCardId, setExpandedCardId] = useState(null);
 
-function YogaCardsHome() {
+  const videoUrl = "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4";
+  const imageUrl = "https://res.cloudinary.com/dlixtmy1x/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1745255612/thumbnail_bhhs7q.png";
+
+  useEffect(() => {
+    const fetchAsanas = async () => {
+      const query = selectedBodyPart ? `?bodyPart=${encodeURIComponent(selectedBodyPart)}` : '';
+      const res = await fetch(`http://localhost:5050/asanas/by-body-part${query}`);
+      const data = await res.json();
+      console.log("data : ", data);
+      const shuffledAsanas = shuffleArray(data);
+      setAsanas(shuffledAsanas.slice(0, 9));
+      // setAsanas(data);
+    };
+    fetchAsanas();
+  }, [selectedBodyPart]);
+
+  const shuffleArray = (array) => {
+    let shuffledArray = [...array];
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]]; // Swap elements
+    }
+    return shuffledArray;
+  };
+
+  const handleShare = (pose) => {
+    const url = pose.video || imageUrl;
+    const text = `
+      Check out the yoga pose: ${pose.name}!
+      Category: ${pose.category}
+      Difficulty: ${pose.difficulty}
+      Duration: ${pose.duration.min} - ${pose.duration.max}
+      Benefits: ${pose.benefits.join(', ')}
+      Steps: ${pose.steps.map(step => `${step.title}: ${step.description}`).join('\n')}
+    `;
+
+    if (navigator.share) {
+      navigator.share({
+        title: pose.name,
+        text,
+        url,
+      }).catch(err => console.log("Share failed:", err));
+    } else {
+      alert('Share functionality is not supported on this browser.');
+    }
+  };
+
+  // Function to download image, video, or text
+  const handleDownload = (pose , option) => {
+    // const downloadOptions = prompt('Enter download option:\n1. Video\n2. Image\n3. Text');
+    const downloadOptions=option ;
+
+    if (downloadOptions === '1') {
+      const videoUrl = pose.video || videoUrl;
+      const link = document.createElement('a');
+      link.href = videoUrl;
+      link.download = `${pose.name.replace(/\s+/g, '_')}_Yoga_Video`;
+      link.click();
+    } else if (downloadOptions === '2') {
+      const image = pose.image || imageUrl;
+      const link = document.createElement('a');
+      link.href = image;
+      link.download = `${pose.name.replace(/\s+/g, '_')}_Yoga_Image`;
+      link.click();
+    } else if (downloadOptions === '3') {
+      const textContent = `
+        Yoga Pose: ${pose.name}
+        Sanskrit Name: ${pose.sanskritName || 'N/A'}
+        Category: ${pose.category}
+        Difficulty: ${pose.difficulty}
+        Duration: ${pose.duration.min} - ${pose.duration.max}
+        Benefits: ${pose.benefits.join(', ')}
+        Steps: ${pose.steps.map(step => `${step.title}: ${step.description}`).join('\n')}
+      `;
+      const blob = new Blob([textContent], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${pose.name.replace(/\s+/g, '_')}_Yoga_Details.txt`;
+      link.click();
+    }
+  };
+
   return (
-    <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-10">
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-700 mb-6 text-center lg:text-left">
-        Yoga Poses & Benefits
+    <>
+      <h2 className="text-3xl font-bold text-green-700 mb-6 text-center">
+        {selectedBodyPart
+          ? `Yoga Asanas for ${selectedBodyPart}`
+          : 'Yoga for Health & Fitness'}
       </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {asanas.map(pose => {
+          const isExpanded = expandedCardId === pose._id;
+          return (
+            <motion.div
+              key={pose._id}
+              layout
+              className={`bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 ${isExpanded ? 'col-span-full' : ''}`}
+            >
+              <div className="flex">
+                <img
+                  src={pose.image || imageUrl}
+                  alt={pose.name}
+                  title={`Yoga pose: ${pose.name}`}
+                  className={`w-full h-full object-cover rounded-t-lg ${isExpanded ? 'aspect-video max-h-[600px]' : 'h-48'}`}
+                />
+                {isExpanded && (
+                  <div className="flex-1 pl-4">
+                    <Watch />
+                  </div>
+                )}
+              </div>
+              <div className="p-4">
+                <h3 className="text-xl font-semibold text-green-600 mb-2">{pose.name}</h3>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
-        {yogaData.map((pose, index) => (
-          <motion.div
-            key={pose.id}
-            className="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-lg"
-            initial={{ scale: 0.8, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: false, amount: 0.4 }}
-            transition={{ duration: 1.2, ease: "easeOut", delay: index * 0.1 }}
-          >
-            <img src={pose.image} alt={pose.title} className="w-full h-44 sm:h-52 object-cover" />
-            <div className="p-4 text-center">
-              <h3 className="text-base sm:text-lg md:text-xl font-semibold text-green-600">
-                {pose.title}
-              </h3>
-              <p className="text-gray-600 mt-2 text-sm sm:text-base">{pose.description}</p>
-            </div>
-          </motion.div>
-        ))}
+                {/* Sanskrit Name */}
+                {pose.sanskritName && (
+                  <p className="text-sm text-gray-700 mb-1">
+                    <strong className="font-semibold">Sanskrit Name:</strong> {pose.sanskritName}
+                  </p>
+                )}
+                {/* Category */}
+                <p className="text-sm text-gray-700 mb-1">
+                  <strong className="font-semibold">Category:</strong> {pose.category}
+                </p>
+                {/* Difficulty */}
+                <p className="text-sm text-gray-700 mb-1">
+                  <strong className="font-semibold">Difficulty:</strong> {pose.difficulty}
+                </p>
+                {/* Duration */}
+                <p className="text-sm text-gray-700 mb-1">
+                  <strong className="font-semibold">Duration:</strong> {pose.duration.min} - {pose.duration.max}
+                </p>
+
+                {/* Benefits */}
+                {isExpanded && pose.benefits && (
+                  <>
+                    <p className="font-semibold text-sm text-gray-800">Benefits 🌱:</p>
+                    <ul className="text-gray-700 text-sm mb-2 list-disc list-inside">
+                      {pose.benefits.map((b, i) => (
+                        <li key={i}>{b}</li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+
+                {/* Steps */}
+                {isExpanded && pose.steps && (
+                  <>
+                    <p className="font-semibold text-sm text-gray-800">How to do 🧘‍♀️:</p>
+                    <ul className="text-gray-600 text-sm list-disc list-inside mb-2">
+                      {pose.steps.map((step, i) => (
+                        <li key={i}><strong>{step.title}:</strong> {step.description}</li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+
+                {/* Common Mistakes */}
+                {isExpanded && pose.commonMistakes && (
+                  <>
+                    <p className="font-semibold text-sm text-gray-800">Common Mistakes ⚠️:</p>
+                    <ul className="text-gray-600 text-sm list-disc list-inside mb-2">
+                      {pose.commonMistakes.map((mistake, i) => (
+                        <li key={i}><strong>{mistake.mistake}:</strong> {mistake.correction}</li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+
+                {/* Precautions */}
+                {isExpanded && pose.precautions && (
+                  <>
+                    <p className="font-semibold text-sm text-gray-800">Precautions 🚨:</p>
+                    <ul className="text-gray-600 text-sm list-disc list-inside mb-2">
+                      {pose.precautions.map((precaution, i) => (
+                        <li key={i}>{precaution}</li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+
+                {/* Modifications */}
+                {isExpanded && pose.modifications && (
+                  <>
+                    <p className="font-semibold text-sm text-gray-800">Modifications 🔧:</p>
+                    <ul className="text-gray-600 text-sm list-disc list-inside mb-2">
+                      {pose.modifications.map((modification, i) => (
+                        <li key={i}>{modification}</li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+
+                {/* Chakra */}
+                {isExpanded && pose.chakra && (
+                  <p className="text-sm text-gray-700 mb-1">
+                    <strong className="font-semibold">Chakra 🔮:</strong> {pose.chakra}
+                  </p>
+                )}
+
+                {/* Preparatory and Follow-Up Poses */}
+                {isExpanded && (
+                  <>
+                    <p className="font-semibold text-sm text-gray-800">Preparatory Poses 🧘‍♂️:</p>
+                    <ul className="text-gray-600 text-sm list-disc list-inside mb-2">
+                      {pose.preparatoryPoses.map((prepPose, i) => (
+                        <li key={i}>{prepPose}</li>
+                      ))}
+                    </ul>
+                    <p className="font-semibold text-sm text-gray-800">Follow-Up Poses 🔁:</p>
+                    <ul className="text-gray-600 text-sm list-disc list-inside mb-2">
+                      {pose.followUpPoses.map((followPose, i) => (
+                        <li key={i}>{followPose}</li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+
+                {/* Breath Instructions */}
+                {isExpanded && pose.breathInstructions && (
+                  <p className="text-sm text-gray-700 mb-1">
+                    <strong className="font-semibold">Breathing Instructions 🌬️:</strong> {pose.breathInstructions}
+                  </p>
+                )}
+
+                {/* Alignment Tips */}
+                {isExpanded && pose.alignmentTips && (
+                  <>
+                    <p className="font-semibold text-sm text-gray-800">Alignment Tips 🧘‍♀️:</p>
+                    <ul className="text-gray-600 text-sm list-disc list-inside mb-2">
+                      {pose.alignmentTips.map((tip, i) => (
+                        <li key={i}>{tip}</li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+
+                {/* Video */}
+                {isExpanded && pose.video && (
+                  <div className="mt-4">
+                    <video controls className="w-full rounded-md">
+                      <source src={pose.video} type="video/mp4" />
+                    </video>
+                  </div>
+                )}
+
+                 {/* Actions */}
+                 <div className="mt-4 flex gap-4">
+                  <button
+                    onClick={() => handleDownload(pose, 'image')}
+                    className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+                  >
+                    Download Image
+                  </button>
+                  <button
+                    onClick={() => handleDownload(pose, 'video')}
+                    className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+                  >
+                    Download Video
+                  </button>
+                  {/* <button
+                    onClick={() => handleDownload(pose, 'text')}
+                    className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+                  >
+                    Download Text
+                  </button> */}
+                  <button
+                    onClick={() => handleShare(pose)}
+                    className="px-4 py-2 bg-green-500 text-white rounded-lg"
+                  >
+                    Share
+                  </button>
+                </div>
+
+                <button
+                  onClick={() => setExpandedCardId(isExpanded ? null : pose._id)}
+                  className="mt-4 text-green-700 font-semibold underline"
+                >
+                  {isExpanded ? 'View Less' : 'View More'}
+                </button>
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
-    </div>
+    </>
   );
 }
 
-export default YogaCardsHome;
