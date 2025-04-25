@@ -42,6 +42,7 @@ const MusicRoutes = require('./Routes/MusicRoutes.js');
 // const ContactUsRouter= require('./Routes/ContactUsRouter');
 // const AsanasRouter =require('./Routes/AsanasRouter');
 const UsersRouter = require('./Routes/UsersRouter'); // <-- Add this line
+const NotificationsRouter = require('./Routes/NotificationsRouter');
 const VenueRouter = require('./Routes/venueRouter'); // <-- Add this line
 const VenueStatsRoutes = require('./Routes/venueStatsRoutes'); // <-- Add this line
 const YogaStreamRoutes = require('./Routes/yogaStreamRoutes.js'); // <-- Add this line
@@ -79,6 +80,7 @@ app.use('/asanas', AsanasRouter) ;
 // app.use('/users', UsersRouter); // <-- Add this line
 // app.use("/reviews",ReviewRoutes);
 app.use('/users', UsersRouter); // <-- Add this line
+app.use('/notifications', NotificationsRouter);
 
 //map related routes
 app.use('/venue', VenueRouter); // <-- Add this line

@@ -1,18 +1,11 @@
 import { useState, useEffect } from "react";
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, getDay } from "date-fns";
-
-const updates = [
-  "New yoga session added this Sunday!",
-  "Try the Warrior Pose challenge this week.",
-  "Your streak is going strong! Keep it up!",
-  "Join our live meditation session tomorrow!",
-  "Yoga retreat registrations are open!",
-  "10-minute yoga challenge starts today!",
-];
+import axios from "axios";
 
 function YogaSidebar() {
   const [streak, setStreak] = useState([2, 5, 7, 10, 12, 14, 18, 21, 25, 28]);
   const [currentMonth, setCurrentMonth] = useState([]);
+  const [notifications, setNotifications] = useState([]);
   const today = new Date();
 
   useEffect(() => {
@@ -20,19 +13,40 @@ function YogaSidebar() {
     const end = endOfMonth(today);
     const daysArray = eachDayOfInterval({ start, end });
     setCurrentMonth(daysArray);
+
+    // Fetch notifications from backend
+    axios.get("http://localhost:5050/notifications")
+      .then(res => {
+        if (res.data.success) {
+          setNotifications(
+            res.data.notifications.map(n => ({
+              id: n._id,
+              message: n.message,
+              time: new Date(n.date).toLocaleString(),
+            }))
+          );
+        }
+      })
+      .catch(() => setNotifications([]));
   }, []);
 
   return (
     <div className="bg-white px-4 sm:px-6 py-6 sm:py-8 rounded-lg shadow-lg">
-      {/* Use responsive flex direction: col -> row (md) -> col (lg) */}
       <div className="flex flex-col md:flex-row lg:flex-col gap-6">
         {/* Notifications Section */}
         <div className="w-full md:w-1/2 lg:w-full">
           <h3 className="text-lg sm:text-xl font-bold text-green-700">Yoga Updates</h3>
           <div className="mt-3 sm:mt-4 max-h-32 overflow-y-auto border border-gray-200 rounded-md p-2 space-y-2 text-xs sm:text-sm">
-            {updates.map((update, index) => (
-              <div key={index} className="p-2 bg-gray-100 rounded-md">{update}</div>
-            ))}
+            {notifications.length === 0 ? (
+              <div className="text-gray-400 italic">No notifications yet.</div>
+            ) : (
+              notifications.map((note) => (
+                <div key={note.id} className="p-2 bg-green-100 rounded-md">
+                  <div className="font-medium">{note.message}</div>
+                  <div className="text-[10px] text-gray-500">{note.time}</div>
+                </div>
+              ))
+            )}
           </div>
         </div>
 
