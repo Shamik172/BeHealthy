@@ -32,7 +32,8 @@ import Review from "./components/reviews/Review";
 import Task from "./components/task/Task";
 
 
-// import YogaStream from "./components/yogastreaming/YogaStream";
+
+import YogaStream from "./components/yogastreaming/YogaStream";
 
 function App() {
   return (
@@ -57,7 +58,7 @@ function App() {
               <Route path="/auth" element={<AuthPage/>}/>
               <Route path="/email-verify" element={<EmailVerify/>}/>
               <Route path="/reset-password" element={<ResetPassword/>}/>
-             // <Route path="/profile-page" element={<ProfilePage/>} />
+              {/* <Route path="/profile-page" element={<ProfilePage/>} /> */}
 
 
               <Route path="/bodyparts" element={<BodyParts />} />

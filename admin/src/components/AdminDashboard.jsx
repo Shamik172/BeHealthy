@@ -10,6 +10,7 @@ const AdminDashboard = () => {
         <div className="container mx-auto px-6 py-4">
           <h1 className="text-3xl font-bold">Admin Dashboard</h1>
         </div>
+        
       </header>
 
       {/* Dashboard Cards */}
