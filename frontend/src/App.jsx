@@ -31,7 +31,9 @@ import ResetPassword from "./components/auth/ResetPassword";
 import QuoteMarquee from "./components/quoteTicker/QuoteTicker";
 import Review from "./components/reviews/Review";
 
-import YogaStream from "./components/yogastreaming/YogaStream";
+import LiveStream from "./components/yogastreaming/LiveStream";
+import ViewLiveStream from "./components/yogastreaming/ViewLiveStream";
+import YogaUpload from "./components/yogastreaming/YogaUpload";
 
 function App() {
   return (
@@ -45,7 +47,6 @@ function App() {
           <main className="flex-grow">
             <Routes>
               {/* Public Routes */}
-              
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               {/* <Route path="/signup" element={<Signup />} /> */}
@@ -66,7 +67,9 @@ function App() {
               <Route path="/notifications" element={<NotificationHistory />} />
               {/* <Route path="/testx" element={<NotificationButton />} /> */}
               <Route path="/test" element={<YogaVenuePage />} />
-              <Route path="/yogastreaming" element={<YogaStream />} />
+              <Route path="/yogaupload" element={<YogaUpload/>} />
+              <Route path="/livestreaming" element={<LiveStream />} />
+              <Route path="/viewlivestream" element={<ViewLiveStream />} />
             </Routes>
           </main>
           <Footer />
