@@ -19,7 +19,7 @@ const Task = () => {
   const [achievements, setAchievements] = useState({
     streak: 0,
     totalDays: 0,
-    weeklyGoal: 5,
+    weeklyGoal: 7,
   });
   const [notificationVisible, setNotificationVisible] = useState(false);
 
