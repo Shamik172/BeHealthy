@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 
-function AdminSettings() {
-  return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <h1 className="text-3xl font-bold mb-6">Admin Settings</h1>
-      <div className="bg-white rounded-lg shadow-md p-6">
-        {/* Add your settings content here */}
-        <p>Settings content will go here</p>
-      </div>
+const Settings = () => (
+  <div className="min-h-screen bg-gradient-to-br from-[#18181b] via-[#f59e42] to-[#f472b6] py-10 px-2">
+    <div className="max-w-2xl mx-auto p-8 bg-[#232136] rounded-2xl shadow-2xl border border-pink-400/30">
+      <h2 className="text-3xl font-bold mb-8 text-center text-pink-300 tracking-wide drop-shadow-lg">
+        ⚙️ Settings
+      </h2>
+      {/* Your settings form or content here */}
+      <div className="text-pink-100">Settings content goes here...</div>
     </div>
-  );
-}
+  </div>
+);
 
-export default AdminSettings;
+export default Settings;

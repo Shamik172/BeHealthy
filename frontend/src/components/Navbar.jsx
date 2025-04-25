@@ -1,16 +1,23 @@
 import React, { useContext, useState } from "react";
+
+import { Link, NavLink as RouterNavLink, useLocation } from "react-router-dom";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { MdMenu, MdClose } from "react-icons/md";
+import { IoMdNotificationsOutline } from "react-icons/io"; // ✅ Notification Icon
+import ProfileDropdown from "./ProfileDropdown"; // Importing the extracted dropdown
 import { useLocation, useNavigate } from "react-router-dom";
 import { AppContent } from "../context/AppContext";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { MdMenu, MdClose } from "react-icons/md";
+// import { MdMenu, MdClose } from "react-icons/md";
 import MusicPlayer from "./music/MusicPlayer";
 
-function Navbar() {
-  const { userData, setUserData, backendUrl, setIsLoggedin } =
-    useContext(AppContent);
+function Navbar({ unseenCount }) {
+//function Navbar() {
+  const { userData, setUserData, backendUrl, setIsLoggedin } = useContext(AppContent);
   const [darkMode, setDarkMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isLoggedIn,setIsLoggedIn] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [isMusicPlayerVisible, setIsMusicPlayerVisible] = useState(true); // State to control music player visibility
   const location = useLocation();
@@ -18,6 +25,9 @@ function Navbar() {
 
   const toggleDarkMode = () => setDarkMode(!darkMode);
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  const markNotificationsSeen = () => {
+    // Logic to mark notifications as seen
+  };
 
   const sendVerificationOtp = async () => {
     try {
@@ -100,7 +110,38 @@ function Navbar() {
 
           {/* Desktop Nav */}
           <div className="space-x-8 hidden sm:flex flex-grow justify-center">
+
+//             <CustomNavLink to="/" icon="🏠" currentPath={location.pathname}>Home</CustomNavLink>
+//             {!isLoggedIn && (
+//               <>
+//                 <CustomNavLink to="/reviews" icon="📝" currentPath={location.pathname}>Reviews</CustomNavLink>
+//                 <CustomNavLink to="/bodyparts" icon="💪" currentPath={location.pathname}>Body Parts</CustomNavLink>
+//                 <CustomNavLink to="/diseases" icon="🦠" currentPath={location.pathname}>Diseases</CustomNavLink>
+//                 <CustomNavLink to="/aboutus" icon="ℹ️" currentPath={location.pathname}>About Us</CustomNavLink>
+//                 <CustomNavLink to="/contactus" icon="📞" currentPath={location.pathname}>Contact Us</CustomNavLink>
+//                 <CustomNavLink to="/history" icon="📜" currentPath={location.pathname}>History</CustomNavLink>
+//                 <CustomNavLink
+//                   to="/notifications"
+//                   icon={
+//                     <span className="relative">
+//                       🔔
+//                       {unseenCount > 0 && (
+//                         <span className="absolute -top-2 -right-3 bg-red-600 text-white text-xs font-bold rounded-full px-1.5 py-0.5 animate-fadeIn">
+//                           {unseenCount}
+//                         </span>
+//                       )}
+//                     </span>
+//                   }
+//                   currentPath={location.pathname}
+//                   onClick={markNotificationsSeen}
+//                 >
+//                   Notifications
+//                 </CustomNavLink>
+//               </>
+//             )}
+
             {navLinks.map((link) => renderNavLink(link))}
+
           </div>
 
           {/* Right Actions */}
@@ -192,7 +233,19 @@ function Navbar() {
       >
         <div className="text-xl font-bold mb-6">Yoga-Verse</div>
         <div className="flex flex-col space-y-5">
-          {navLinks.map((link) => renderNavLink(link, toggleSidebar))}
+
+//           <MobileNavLink to="/" icon="🏠" onClick={toggleSidebar}>Home</MobileNavLink>
+//           {!isLoggedIn && (
+//             <>
+//               <MobileNavLink to="/reviews" icon="📝" onClick={toggleSidebar}>Reviews</MobileNavLink>
+//               <MobileNavLink to="/bodyparts" icon="💪" onClick={toggleSidebar}>Body Parts</MobileNavLink>
+//               <MobileNavLink to="/diseases" icon="🦠" onClick={toggleSidebar}>Diseases</MobileNavLink>
+//               <MobileNavLink to="/aboutus" icon="ℹ️" onClick={toggleSidebar}>About Us</MobileNavLink>
+//               <MobileNavLink to="/contactus" icon="📞" onClick={toggleSidebar}>Contact Us</MobileNavLink>
+//               <MobileNavLink to="/notifications" icon="🔔" onClick={toggleSidebar}>Notifications</MobileNavLink>
+//             </>
+//           )}
+//           {navLinks.map((link) => renderNavLink(link, toggleSidebar))}
 
           <button
             onClick={() => {
@@ -243,6 +296,33 @@ function Navbar() {
         </div>
       </div>
 
+
+// Desktop NavLink with Icon
+function CustomNavLink({ to, icon, children, currentPath, onClick }) {
+  const isActive = currentPath === to; // Check if current path matches the link's path
+  return (
+    <RouterNavLink
+      to={to}
+      className={`relative text-white text-base font-medium transition-all duration-300 ${isActive ? 'font-bold' : ''} hover:scale-110 hover:text-yellow-300 flex items-center gap-1`}
+      onClick={onClick}
+    >
+      <span className="text-lg">{icon}</span>
+      {children}
+    </RouterNavLink>
+  );
+}
+
+// Mobile NavLink with Icon
+function MobileNavLink({ to, icon, children, onClick }) {
+  return (
+    <Link
+      to={to}
+      onClick={onClick}
+      className="flex items-center space-x-2 px-2 py-2 rounded hover:bg-green-600 transition-colors duration-200 text-base"
+    >
+      <span className="text-lg">{icon}</span>
+      <span>{children}</span>
+    </Link>
       {/* Music Player */}
       {isMusicPlayerVisible && <MusicPlayer />}
     </>

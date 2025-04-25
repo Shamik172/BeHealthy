@@ -14,10 +14,8 @@ export default function YogaCardsHome({ selectedBodyPart }) {
       const query = selectedBodyPart ? `?bodyPart=${encodeURIComponent(selectedBodyPart)}` : '';
       const res = await fetch(`http://localhost:5050/asanas/by-body-part${query}`);
       const data = await res.json();
-      console.log("data : ", data);
       const shuffledAsanas = shuffleArray(data);
       setAsanas(shuffledAsanas.slice(0, 9));
-      // setAsanas(data);
     };
     fetchAsanas();
   }, [selectedBodyPart]);
@@ -26,7 +24,7 @@ export default function YogaCardsHome({ selectedBodyPart }) {
     let shuffledArray = [...array];
     for (let i = shuffledArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]]; // Swap elements
+      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
     }
     return shuffledArray;
   };
@@ -53,24 +51,20 @@ export default function YogaCardsHome({ selectedBodyPart }) {
     }
   };
 
-  // Function to download image, video, or text
-  const handleDownload = (pose , option) => {
-    // const downloadOptions = prompt('Enter download option:\n1. Video\n2. Image\n3. Text');
-    const downloadOptions=option ;
-
-    if (downloadOptions === '1') {
-      const videoUrl = pose.video || videoUrl;
+  const handleDownload = (pose, option) => {
+    if (option === '1') {
+      const video = pose.video || videoUrl;
       const link = document.createElement('a');
-      link.href = videoUrl;
+      link.href = video;
       link.download = `${pose.name.replace(/\s+/g, '_')}_Yoga_Video`;
       link.click();
-    } else if (downloadOptions === '2') {
+    } else if (option === '2') {
       const image = pose.image || imageUrl;
       const link = document.createElement('a');
       link.href = image;
       link.download = `${pose.name.replace(/\s+/g, '_')}_Yoga_Image`;
       link.click();
-    } else if (downloadOptions === '3') {
+    } else if (option === '3') {
       const textContent = `
         Yoga Pose: ${pose.name}
         Sanskrit Name: ${pose.sanskritName || 'N/A'}
@@ -95,21 +89,21 @@ export default function YogaCardsHome({ selectedBodyPart }) {
           ? `Yoga Asanas for ${selectedBodyPart}`
           : 'Yoga for Health & Fitness'}
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 bg-green-50 gap-6">
         {asanas.map(pose => {
           const isExpanded = expandedCardId === pose._id;
           return (
             <motion.div
               key={pose._id}
               layout
-              className={`bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 ${isExpanded ? 'col-span-full' : ''}`}
+              className={`bg-orange-40 rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 ${isExpanded ? 'col-span-full' : ''}`}
             >
               <div className="flex">
                 <img
-                  src={pose.image || imageUrl}
+                  src={isExpanded ? pose.image?.[1] || imageUrl : pose.image?.[0] || imageUrl}
                   alt={pose.name}
                   title={`Yoga pose: ${pose.name}`}
-                  className={`w-full h-full object-cover rounded-t-lg ${isExpanded ? 'aspect-video max-h-[600px]' : 'h-48'}`}
+                  className={`w-full rounded-t-lg transition-all duration-300 ease-in-out object-contain bg-yellow-40 ${isExpanded ? 'max-h-[700px] p-4' : 'h-72 p-2'}`}
                 />
                 {isExpanded && (
                   <div className="flex-1 pl-4">
@@ -120,172 +114,84 @@ export default function YogaCardsHome({ selectedBodyPart }) {
               <div className="p-4">
                 <h3 className="text-xl font-semibold text-green-600 mb-2">{pose.name}</h3>
 
-                {/* Sanskrit Name */}
                 {pose.sanskritName && (
                   <p className="text-sm text-gray-700 mb-1">
-                    <strong className="font-semibold">Sanskrit Name:</strong> {pose.sanskritName}
+                    <strong>Sanskrit Name:</strong> {pose.sanskritName}
                   </p>
                 )}
-                {/* Category */}
-                <p className="text-sm text-gray-700 mb-1">
-                  <strong className="font-semibold">Category:</strong> {pose.category}
-                </p>
-                {/* Difficulty */}
-                <p className="text-sm text-gray-700 mb-1">
-                  <strong className="font-semibold">Difficulty:</strong> {pose.difficulty}
-                </p>
-                {/* Duration */}
-                <p className="text-sm text-gray-700 mb-1">
-                  <strong className="font-semibold">Duration:</strong> {pose.duration.min} - {pose.duration.max}
-                </p>
+                <p className="text-sm text-gray-700 mb-1"><strong>Category:</strong> {pose.category}</p>
+                <p className="text-sm text-gray-700 mb-1"><strong>Difficulty:</strong> {pose.difficulty}</p>
+                <p className="text-sm text-gray-700 mb-1"><strong>Duration:</strong> {pose.duration.min} - {pose.duration.max}</p>
 
-                {/* Benefits */}
-                {isExpanded && pose.benefits && (
-                  <>
-                    <p className="font-semibold text-sm text-gray-800">Benefits 🌱:</p>
-                    <ul className="text-gray-700 text-sm mb-2 list-disc list-inside">
-                      {pose.benefits.map((b, i) => (
-                        <li key={i}>{b}</li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-
-                {/* Steps */}
-                {isExpanded && pose.steps && (
-                  <>
-                    <p className="font-semibold text-sm text-gray-800">How to do 🧘‍♀️:</p>
-                    <ul className="text-gray-600 text-sm list-disc list-inside mb-2">
-                      {pose.steps.map((step, i) => (
-                        <li key={i}><strong>{step.title}:</strong> {step.description}</li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-
-                {/* Common Mistakes */}
-                {isExpanded && pose.commonMistakes && (
-                  <>
-                    <p className="font-semibold text-sm text-gray-800">Common Mistakes ⚠️:</p>
-                    <ul className="text-gray-600 text-sm list-disc list-inside mb-2">
-                      {pose.commonMistakes.map((mistake, i) => (
-                        <li key={i}><strong>{mistake.mistake}:</strong> {mistake.correction}</li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-
-                {/* Precautions */}
-                {isExpanded && pose.precautions && (
-                  <>
-                    <p className="font-semibold text-sm text-gray-800">Precautions 🚨:</p>
-                    <ul className="text-gray-600 text-sm list-disc list-inside mb-2">
-                      {pose.precautions.map((precaution, i) => (
-                        <li key={i}>{precaution}</li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-
-                {/* Modifications */}
-                {isExpanded && pose.modifications && (
-                  <>
-                    <p className="font-semibold text-sm text-gray-800">Modifications 🔧:</p>
-                    <ul className="text-gray-600 text-sm list-disc list-inside mb-2">
-                      {pose.modifications.map((modification, i) => (
-                        <li key={i}>{modification}</li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-
-                {/* Chakra */}
-                {isExpanded && pose.chakra && (
-                  <p className="text-sm text-gray-700 mb-1">
-                    <strong className="font-semibold">Chakra 🔮:</strong> {pose.chakra}
-                  </p>
-                )}
-
-                {/* Preparatory and Follow-Up Poses */}
                 {isExpanded && (
                   <>
-                    <p className="font-semibold text-sm text-gray-800">Preparatory Poses 🧘‍♂️:</p>
-                    <ul className="text-gray-600 text-sm list-disc list-inside mb-2">
-                      {pose.preparatoryPoses.map((prepPose, i) => (
-                        <li key={i}>{prepPose}</li>
-                      ))}
-                    </ul>
-                    <p className="font-semibold text-sm text-gray-800">Follow-Up Poses 🔁:</p>
-                    <ul className="text-gray-600 text-sm list-disc list-inside mb-2">
-                      {pose.followUpPoses.map((followPose, i) => (
-                        <li key={i}>{followPose}</li>
-                      ))}
-                    </ul>
+                    {pose.benefits?.length > 0 && (
+                      <>
+                        <p className="font-semibold text-sm">Benefits 🌱:</p>
+                        <ul className="list-disc list-inside text-sm text-gray-700 mb-2">
+                          {pose.benefits.map((b, i) => <li key={i}>{b}</li>)}
+                        </ul>
+                      </>
+                    )}
+
+                    {pose.steps?.length > 0 && (
+                      <>
+                        <p className="font-semibold text-sm">How to do 🧘‍♀️:</p>
+                        <ul className="list-disc list-inside text-sm text-gray-700 mb-2">
+                          {pose.steps.map((step, i) => (
+                            <li key={i}><strong>{step.title}:</strong> {step.description}</li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
+
+                    {pose.video && (
+                      <div className="my-4">
+                        <video controls className="w-full rounded-lg shadow-md">
+                          <source src={pose.video} type="video/mp4" />
+                          Your browser does not support the video tag.
+                        </video>
+                      </div>
+                    )}
                   </>
                 )}
 
-                {/* Breath Instructions */}
-                {isExpanded && pose.breathInstructions && (
-                  <p className="text-sm text-gray-700 mb-1">
-                    <strong className="font-semibold">Breathing Instructions 🌬️:</strong> {pose.breathInstructions}
-                  </p>
-                )}
-
-                {/* Alignment Tips */}
-                {isExpanded && pose.alignmentTips && (
-                  <>
-                    <p className="font-semibold text-sm text-gray-800">Alignment Tips 🧘‍♀️:</p>
-                    <ul className="text-gray-600 text-sm list-disc list-inside mb-2">
-                      {pose.alignmentTips.map((tip, i) => (
-                        <li key={i}>{tip}</li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-
-                {/* Video */}
-                {isExpanded && pose.video && (
-                  <div className="mt-4">
-                    <video controls className="w-full rounded-md">
-                      <source src={pose.video} type="video/mp4" />
-                    </video>
-                  </div>
-                )}
-
-                 {/* Actions */}
-                 <div className="mt-4 flex gap-4">
+                <div className="mt-4 flex justify-between flex-wrap gap-2">
                   <button
-                    onClick={() => handleDownload(pose, 'image')}
-                    className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+                    onClick={() => setExpandedCardId(isExpanded ? null : pose._id)}
+                    className="px-4 py-2 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 transition-all"
                   >
-                    Download Image
+                    {isExpanded ? 'Collapse' : 'View More'}
                   </button>
-                  <button
-                    onClick={() => handleDownload(pose, 'video')}
-                    className="px-4 py-2 bg-blue-500 text-white rounded-lg"
-                  >
-                    Download Video
-                  </button>
-                  {/* <button
-                    onClick={() => handleDownload(pose, 'text')}
-                    className="px-4 py-2 bg-blue-500 text-white rounded-lg"
-                  >
-                    Download Text
-                  </button> */}
+
                   <button
                     onClick={() => handleShare(pose)}
-                    className="px-4 py-2 bg-green-500 text-white rounded-lg"
+                    className="px-4 py-2 bg-yellow-500 text-white text-sm rounded-md hover:bg-yellow-600"
                   >
                     Share
                   </button>
-                </div>
 
-                <button
-                  onClick={() => setExpandedCardId(isExpanded ? null : pose._id)}
-                  className="mt-4 text-green-700 font-semibold underline"
-                >
-                  {isExpanded ? 'View Less' : 'View More'}
-                </button>
+                  <div className="flex gap-1">
+                    <button
+                      onClick={() => handleDownload(pose, '1')}
+                      className="px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700"
+                    >
+                      Video
+                    </button>
+                    <button
+                      onClick={() => handleDownload(pose, '2')}
+                      className="px-3 py-1 bg-purple-600 text-white text-xs rounded hover:bg-purple-700"
+                    >
+                      Image
+                    </button>
+                    <button
+                      onClick={() => handleDownload(pose, '3')}
+                      className="px-3 py-1 bg-gray-600 text-white text-xs rounded hover:bg-gray-700"
+                    >
+                      Text
+                    </button>
+                  </div>
+                </div>
               </div>
             </motion.div>
           );
@@ -294,4 +200,3 @@ export default function YogaCardsHome({ selectedBodyPart }) {
     </>
   );
 }
-

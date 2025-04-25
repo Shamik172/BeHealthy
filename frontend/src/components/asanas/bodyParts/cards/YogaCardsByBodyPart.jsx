@@ -43,18 +43,18 @@ export default function YogaCardsByBodyPart({ selectedBodyPart }) {
   };
 
   // Function to download image, video, or text
-  const handleDownload = (pose , option) => {
+  const handleDownload = (pose, option) => {
     // const downloadOptions = prompt('Enter download option:\n1. Video\n2. Image\n3. Text');
-    const downloadOptions=option ;
+    const downloadOptions = option;
 
     if (downloadOptions === '1') {
-      const videoUrl = pose.video || videoUrl;
+      const videoUrl = pose.video[0] || videoUrl;
       const link = document.createElement('a');
       link.href = videoUrl;
       link.download = `${pose.name.replace(/\s+/g, '_')}_Yoga_Video`;
       link.click();
     } else if (downloadOptions === '2') {
-      const image = pose.image || imageUrl;
+      const image = pose.image[0] || imageUrl;
       const link = document.createElement('a');
       link.href = image;
       link.download = `${pose.name.replace(/\s+/g, '_')}_Yoga_Image`;
@@ -91,21 +91,28 @@ export default function YogaCardsByBodyPart({ selectedBodyPart }) {
             <motion.div
               key={pose._id}
               layout
-              className={`bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 ${isExpanded ? 'col-span-full' : ''}`}
+              className={`bg-orange-50 rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 ${isExpanded ? 'col-span-full' : ''}`}
             >
               <div className="flex">
-                <img
-                  src={pose.image || imageUrl}
+              <img
+                  src={
+                    isExpanded
+                      ? pose.image?.[1] || imageUrl
+                      : pose.image?.[0] || imageUrl
+                  }
                   alt={pose.name}
                   title={`Yoga pose: ${pose.name}`}
-                  className={`w-full h-full object-cover rounded-t-lg ${isExpanded ? 'aspect-video max-h-[600px]' : 'h-48'}`}
+                  className={`w-full rounded-t-lg transition-all duration-300 ease-in-out bg-yellow-50 
+                 ${isExpanded ? 'object-contain max-h-[700px] p-4 ' : 'h-80 object-cover'}`}
                 />
+
                 {isExpanded && (
                   <div className="flex-1 pl-4">
                     <Watch />
                   </div>
                 )}
               </div>
+
               <div className="p-4">
                 <h3 className="text-xl font-semibold text-green-600 mb-2">{pose.name}</h3>
 
@@ -236,13 +243,13 @@ export default function YogaCardsByBodyPart({ selectedBodyPart }) {
                 {isExpanded && pose.video && (
                   <div className="mt-4">
                     <video controls className="w-full rounded-md">
-                      <source src={pose.video} type="video/mp4" />
+                      <source src={pose.video[0]} type="video/mp4" />
                     </video>
                   </div>
                 )}
 
-                 {/* Actions */}
-                 <div className="mt-4 flex gap-4">
+                {/* Actions */}
+                <div className="mt-4 flex gap-4">
                   <button
                     onClick={() => handleDownload(pose, 'image')}
                     className="px-4 py-2 bg-blue-500 text-white rounded-lg"

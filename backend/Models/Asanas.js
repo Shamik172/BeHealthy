@@ -108,12 +108,12 @@ const AsanasSchema = new Schema({
         default: []
     },
     image: {
-        type: String,
-        trim: true
+        type: [String],
+        default :[]
     },
     video: {
-        type: String,
-        trim: true
+        type: [String],
+        default : []
     }
 }, { timestamps: true });
 

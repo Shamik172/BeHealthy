@@ -6,6 +6,7 @@ import AdminUsers from "./components/AdminUsers";
 import AdminAsanas from "./components/AdminAsanas";
 import AdminSettings from "./components/AdminSettings";
 import AdminRoute from "./components/AdminRoute";
+import AdminNotifications from "./components/AdminNotifications";
 
 function App() {
   return (
@@ -49,6 +50,15 @@ function App() {
           element={
             <AdminRoute>
               <AdminSettings />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/notifications"
+          element={
+            <AdminRoute>
+              <AdminNotifications />
             </AdminRoute>
           }
         />
