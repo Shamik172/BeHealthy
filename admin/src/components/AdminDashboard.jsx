@@ -1,67 +1,201 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { FaUsers, FaDumbbell, FaCog } from "react-icons/fa";  // React icons
+import React, { useEffect, useState, useMemo } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
+const API_USERS = "http://localhost:5050/users";
+const API_ASANAS = "http://localhost:5050/asanas";
+const API_USER_STATS = "http://localhost:5050/users/stats/daily";
 
 const AdminDashboard = () => {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-green-100 via-white to-green-50">
-      {/* Header */}
-      <header className="bg-green-600 text-white shadow-lg">
-        <div className="container mx-auto px-6 py-4">
-          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-        </div>
-        
-      </header>
+  const [userStats, setUserStats] = useState({ total: 0, recent: [] });
+  const [asanaStats, setAsanaStats] = useState({ total: 0, recent: [] });
+  const [userGrowth, setUserGrowth] = useState({ labels: [], data: [] });
+  const navigate = useNavigate();
 
-      {/* Dashboard Cards */}
-      <div className="container mx-auto px-6 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Users Card */}
-          <div className="bg-white p-6 rounded-lg shadow hover:shadow-xl transition group">
-            <FaUsers className="w-10 h-10 text-green-600 mb-4 group-hover:scale-110 transition" />
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Users Management</h2>
-            <p className="text-gray-600 mb-4">View and manage registered users.</p>
+  useEffect(() => {
+    fetch(API_USERS)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setUserStats({
+            total: data.users.length,
+            recent: data.users.slice(-5).reverse(),
+          });
+        }
+      });
+    fetch(API_ASANAS)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setAsanaStats({
+            total: data.asanas.length,
+            recent: data.asanas.slice(-5).reverse(),
+          });
+        }
+      });
+    fetch(API_USER_STATS)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setUserGrowth({
+            labels: data.stats.map((s) => s._id),
+            data: data.stats.map((s) => s.count),
+          });
+        }
+      });
+  }, []);
+
+  // Calculate trend: compare last two days
+  const userTrend = useMemo(() => {
+    const arr = userGrowth.data;
+    if (arr.length < 2) return null;
+    const prev = arr[arr.length - 2];
+    const curr = arr[arr.length - 1];
+    if (curr > prev) return "up";
+    if (curr < prev) return "down";
+    return "equal";
+  }, [userGrowth.data]);
+
+  const chartData = {
+    labels: userGrowth.labels,
+    datasets: [
+      {
+        label: "User Registrations Per Day",
+        data: userGrowth.data,
+        backgroundColor: "rgba(99,102,241,0.8)", // Indigo-500
+        borderRadius: 6,
+        borderSkipped: false,
+      },
+    ],
+  };
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      tooltip: {
+        callbacks: {
+          title: (tooltipItems) => tooltipItems[0].label,
+        },
+        backgroundColor: "#18181b",
+        titleColor: "#f472b6",
+        bodyColor: "#f3f4f6",
+        borderColor: "#6366f1",
+        borderWidth: 2,
+      },
+      legend: { display: false },
+      title: { display: false },
+    },
+    scales: {
+      x: {
+        title: { display: true, text: "Date", color: "#a5b4fc" },
+        ticks: { color: "#a5b4fc", autoSkip: true, maxTicksLimit: 10 },
+        grid: { color: "#27272a" },
+      },
+      y: {
+        title: { display: true, text: "Users", color: "#a5b4fc" },
+        beginAtZero: true,
+        ticks: { color: "#a5b4fc" },
+        grid: { color: "#27272a" },
+      },
+    },
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-pink-500 via-indigo-500 to-blue-500 animate-gradient-x py-10 px-2">
+      <div className="max-w-5xl mx-auto p-8 bg-[#232136] rounded-3xl shadow-2xl border border-[#6366f1]/30">
+        {/* Notification Icon */}
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={() => navigate("/admin/notifications")}
+            className="relative p-2 rounded-full hover:bg-indigo-900 transition"
+            title="Notifications"
+          >
+            <span role="img" aria-label="notifications" className="text-2xl">🔔</span>
+          </button>
+        </div>
+        <h1 className="text-4xl font-extrabold mb-10 text-pink-400 text-center tracking-wider drop-shadow-lg">
+          📊 Admin Dashboard Analytics
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+          <div className="bg-gradient-to-br from-indigo-500 via-blue-600 to-cyan-400 rounded-2xl p-8 shadow-xl flex flex-col items-center border border-indigo-300/40">
+            <div className="text-5xl font-extrabold text-white drop-shadow-lg">{userStats.total}</div>
+            <div className="text-lg text-indigo-100 mb-2 font-semibold">Total Users</div>
             <Link
               to="/admin/users"
-              className="text-green-600 hover:underline font-medium"
+              className="mt-2 px-4 py-2 rounded-lg bg-white/10 text-indigo-100 hover:bg-white/20 transition font-bold shadow"
             >
-              Go to Users →
+              Manage Users
             </Link>
           </div>
-
-          {/* Asanas Card */}
-          <div className="bg-white p-6 rounded-lg shadow hover:shadow-xl transition group">
-            <FaDumbbell className="w-10 h-10 text-green-600 mb-4 group-hover:scale-110 transition" />
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Asanas Management</h2>
-            <p className="text-gray-600 mb-4">Add, edit, or remove yoga asanas.</p>
+          <div className="bg-gradient-to-br from-pink-500 via-fuchsia-600 to-violet-400 rounded-2xl p-8 shadow-xl flex flex-col items-center border border-pink-300/40">
+            <div className="flex items-center gap-2">
+              <div className="text-5xl font-extrabold text-white drop-shadow-lg">{asanaStats.total}</div>
+              {userTrend === "up" && (
+                <span className="text-green-400 text-3xl" title="User registrations increased today">▲</span>
+              )}
+              {userTrend === "down" && (
+                <span className="text-red-400 text-3xl" title="User registrations decreased today">▼</span>
+              )}
+              {userTrend === "equal" && (
+                <span className="text-gray-400 text-3xl" title="User registrations unchanged">▬</span>
+              )}
+            </div>
+            <div className="text-lg text-pink-100 mb-2 font-semibold">Total Asanas</div>
             <Link
               to="/admin/asanas"
-              className="text-green-600 hover:underline font-medium"
+              className="mt-2 px-4 py-2 rounded-lg bg-white/10 text-pink-100 hover:bg-white/20 transition font-bold shadow"
             >
-              Go to Asanas →
-            </Link>
-          </div>
-
-          {/* Settings Card */}
-          <div className="bg-white p-6 rounded-lg shadow hover:shadow-xl transition group">
-            <FaCog className="w-10 h-10 text-green-600 mb-4 group-hover:scale-110 transition" />
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">Settings</h2>
-            <p className="text-gray-600 mb-4">Update admin preferences and site settings.</p>
-            <Link
-              to="/admin/settings"
-              className="text-green-600 hover:underline font-medium"
-            >
-              Go to Settings →
+              Manage Asanas
             </Link>
           </div>
         </div>
-      </div>
 
-      {/* Test Button */}
-      <div className="mt-4">
-        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-          Test Button
-        </button>
+        <div className="mb-10 bg-[#18181b] rounded-2xl p-6 shadow border border-[#6366f1]/20">
+          <h2 className="text-xl font-bold mb-4 text-indigo-200">Recent Users</h2>
+          <ul className="space-y-2">
+            {userStats.recent.length === 0 ? (
+              <li className="text-gray-500">No recent users.</li>
+            ) : (
+              userStats.recent.map((user) => (
+                <li key={user._id} className="flex items-center gap-2">
+                  <span className="font-semibold text-indigo-300">{user.name}</span>
+                  <span className="text-indigo-400 text-sm">&lt;{user.email}&gt;</span>
+                </li>
+              ))
+            )}
+          </ul>
+        </div>
+
+        <div className="mb-10 bg-[#18181b] rounded-2xl p-6 shadow border border-[#f472b6]/20">
+          <h2 className="text-xl font-bold mb-4 text-pink-200">Recent Asanas</h2>
+          <ul className="space-y-2">
+            {asanaStats.recent.length === 0 ? (
+              <li className="text-gray-500">No recent asanas.</li>
+            ) : (
+              asanaStats.recent.map((asana) => (
+                <li key={asana._id} className="flex items-center gap-2">
+                  <span className="font-semibold text-pink-300">{asana.name}</span>
+                </li>
+              ))
+            )}
+          </ul>
+        </div>
+
+        <div className="bg-[#18181b] rounded-2xl p-6 shadow border border-[#0ea5e9]/20">
+          <h2 className="text-xl font-bold mb-4 text-cyan-200">User Growth (Daily)</h2>
+          <Bar data={chartData} options={chartOptions} />
+        </div>
       </div>
     </div>
   );

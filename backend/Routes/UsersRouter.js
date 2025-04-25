@@ -12,6 +12,42 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Get user count per month for chart
+router.get('/stats/monthly', async (req, res) => {
+  try {
+    const stats = await User.aggregate([
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },
+          count: { $sum: 1 }
+        }
+      },
+      { $sort: { _id: 1 } }
+    ]);
+    res.json({ success: true, stats });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error fetching stats' });
+  }
+});
+
+// Get user count per day for chart
+router.get('/stats/daily', async (req, res) => {
+  try {
+    const stats = await User.aggregate([
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+          count: { $sum: 1 }
+        }
+      },
+      { $sort: { _id: 1 } }
+    ]);
+    res.json({ success: true, stats });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error fetching stats' });
+  }
+});
+
 // Add new user (set default password and role)
 router.post('/', async (req, res) => {
     try {
