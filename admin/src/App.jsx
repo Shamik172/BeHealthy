@@ -6,7 +6,7 @@ import AdminUsers from "./components/AdminUsers";
 import AdminAsanas from "./components/AdminAsanas";
 import AdminSettings from "./components/AdminSettings";
 import AdminRoute from "./components/AdminRoute";
-import AuthPage from './components/auth/AuthPage';
+import AdminNotifications from "./components/AdminNotifications";
 
 function App() {
   return (
@@ -55,10 +55,10 @@ function App() {
         />
 
         <Route
-          path="/admin/auth"
+          path="/admin/notifications"
           element={
             <AdminRoute>
-              <AuthPage />
+              <AdminNotifications />
             </AdminRoute>
           }
         />
