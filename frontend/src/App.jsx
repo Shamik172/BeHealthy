@@ -27,12 +27,15 @@ import ResetPassword from "./components/auth/ResetPassword";
 import QuoteMarquee from "./components/quoteTicker/QuoteTicker";
 import Review from "./components/reviews/Review";
 
+
+import LiveStream from "./components/yogastreaming/LiveStream";
+import ViewLiveStream from "./components/yogastreaming/ViewLiveStream";
+import YogaUpload from "./components/yogastreaming/YogaUpload";
 //import ProfilePage from "./components/auth/ProfilePage";
 
 import Task from "./components/task/Task";
-
-
 // import YogaStream from "./components/yogastreaming/YogaStream";
+
 
 function App() {
   return (
@@ -68,7 +71,9 @@ function App() {
               {/* <Route path="/testx" element={<NotificationButton />} /> */}
               <Route path="/task" element={<Task />} />
               <Route path="/test" element={<YogaVenuePage />} />
-              <Route path="/yogastreaming" element={<YogaStream />} />
+              <Route path="/yogaupload" element={<YogaUpload/>} />
+              <Route path="/livestreaming" element={<LiveStream />} />
+              <Route path="/viewlivestream" element={<ViewLiveStream />} />
             </Routes>
           </main>
           <Footer />
