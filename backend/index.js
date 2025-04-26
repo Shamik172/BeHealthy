@@ -19,29 +19,16 @@ const io = socketIo(server, {
     },
   });
 
-
+// <<Anantesh >>   Dont't remove anything from here
 
 const AuthRoutes = require('./Routes/AuthRoutes') ;
-// const UserRoutes = require('./Routes/UserRoutes.js');
-// const ContactUsRouter= require('./Routes/ContactUsRouter.js');
-// const AsanasRouter =require('./Routes/AsanasRouter.js');
-// const ReviewRoutes = require("./Routes/ReviewRoutes.js");
-// const ReviewRoutes = require("./Routes/ReviewRoutes.js");
-// const UserRoutes = require('./Routes/UserRoutes.js');
 const ContactUsRouter= require('./Routes/ContactUsRouter.js');
 const AsanasRouter =require('./Routes/AsanasRouter.js');
 const MusicRoutes = require('./Routes/MusicRoutes.js');
-// const ReviewRoutes = require("./Routes/ReviewRoutes.js");
-// const ReviewRoutes = require("./Routes/ReviewRoutes.js");
-// const bodyParser =require("body-parser");
-// const cors= require("cors");
+const UserRoutes = require("./Routes/UserRoutes.js");          // for front end use
+const streakRoutes = require('./Routes/StreakRoutes.js');
 
-// const AuthRouter = require('./Routes/AuthRouter') ;
-// const ContactUsRouter= require('./Routes/ContactUsRouter');
-// const AsanasRouter =require('./Routes/AsanasRouter');
-// const ContactUsRouter= require('./Routes/ContactUsRouter');
-// const AsanasRouter =require('./Routes/AsanasRouter');
-const UsersRouter = require('./Routes/UsersRouter'); // <-- Add this line
+const UsersRouter = require('./Routes/UsersRouter');           // for fetching data on admin side
 const NotificationsRouter = require('./Routes/NotificationsRouter');
 const VenueRouter = require('./Routes/venueRouter'); // <-- Add this line
 const VenueStatsRoutes = require('./Routes/venueStatsRoutes'); // <-- Add this line
@@ -49,16 +36,12 @@ const YogaStreamRoutes = require('./Routes/yogaStreamRoutes.js'); // <-- Add thi
 const LiveStreamRoutes = require("./Routes/liveStreamRoutes.js"); // <-- Add this line
 
 
-// const loadMusicData = require('./config/music.js');
-
-// loadMusicData();
-
 require('dotenv').config() ;
 require('./config/db.js') ;
-// require('./config/music.js');
+
 
 const PORT=process.env.PORT || 8080;
-const allowedOrigins =['http://localhost:5173'];
+const allowedOrigins =['http://localhost:5173','http://localhost:5174'];
 
 app.use(express.json());
 
@@ -68,17 +51,22 @@ app.use(cors({origin:allowedOrigins , credentials:true}));
 app.use('/uploads', express.static(path.join(__dirname, "uploads")));
 
 
-//Routes
+//Routes  just to check wether server is runnig or not
 app.get('/',(req , res)=>{
     res.send("Server is running...") ;
 });
 
-app.use('/auth', AuthRoutes);
-// app.use('/user',UserRoutes) ; 
-app.use('/contactus', ContactUsRouter) ;
-app.use('/asanas', AsanasRouter) ;
-// app.use('/users', UsersRouter); // <-- Add this line
-// app.use("/reviews",ReviewRoutes);
+
+
+// Anantesh                                 << !!   Don't delete anything from here !!!!>>
+app.use('/auth', AuthRoutes);                          // user login-signup
+app.use('/contactus', ContactUsRouter) ;               // contact us section
+app.use('/asanas', AsanasRouter) ;                     // for asanas based on disease or body-part
+app.use('/music', MusicRoutes) ;                       // for music component
+app.use('/user',UserRoutes) ;                         // for fetchhing user data on frontend
+app.use('/streak', streakRoutes);                    // for maintaining streak data
+
+
 app.use('/users', UsersRouter); // <-- Add this line
 app.use('/notifications', NotificationsRouter);
 
@@ -105,20 +93,12 @@ io.on("connection", (socket) => {
   });
 });
 
-//music routes 
-app.use('/music', MusicRoutes) ;
 
-
-// app.listen(PORT , ()=>{
-//    console.log(`Server is running on PORT : => ${PORT}`);
-// });
 
 // Start the server
 server.listen(5050, () => {
     console.log("Server running on http://localhost:5050");
   });
 
-//app.listen(PORT , ()=>{
- //  console.log(`Server is running on PORT : => ${PORT}`);
-//});
+
 
