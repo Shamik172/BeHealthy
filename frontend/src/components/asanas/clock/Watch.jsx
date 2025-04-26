@@ -21,19 +21,22 @@ export default function Watch() {
     let color;
     switch (mode) {
       case "stopwatch":
-        color = "linear-gradient(to right, #B2EBF2, #03A9F4)";
+        color = "linear-gradient(to right, #F472B6, #FB7185)"; // pinkish
         break;
       case "countdown":
-        color = "linear-gradient(to right, #FFECB3, #FF9800)";
+        color = "linear-gradient(to right, #FBBF24, #F97316)"; // amber-orange
         break;
       case "pomodoro":
-        color = isFocus ? "linear-gradient(to right, #FFCDD2, #F44336)" : "linear-gradient(to right, #C8E6C9, #4CAF50)";
+        color = isFocus 
+          ? "linear-gradient(to right, #F87171, #F43F5E)" // focus = reddish
+          : "linear-gradient(to right, #34D399, #10B981)"; // break = green
         break;
       default:
-        color = "linear-gradient(to right, #E0F7FA, #26C6DA)";
+        color = "linear-gradient(to right, #38BDF8, #06B6D4)"; // clock = blue-cyan
     }
     bgControls.start({ background: color });
   };
+  
 
   useEffect(() => {
     const interval = setInterval(() => {
