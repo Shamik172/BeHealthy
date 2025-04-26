@@ -13,7 +13,7 @@ import Disease from "./components/asanas/diseases/Disease";
 
 import Footer from "./components/footer/Footer";
 import YogaVenuePage from "./components/findyogamate/YogaVenuePage";
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
 // import '@fortawesome/fontawesome-free/css/all.min.css';
 
 // Notification components
@@ -37,8 +37,7 @@ import YogaUpload from "./components/yogastreaming/YogaUpload";
 import ProfilePage from "./components/auth/ProfilePage";
 
 import Task from "./components/task/Task";
-import YogaStream from "./components/yogastreaming/YogaStream";
-
+// import YogaStream from "./components/yogastreaming/YogaStream";
 
 function App() {
   const [unseenCount, setUnseenCount] = useState(0);
@@ -46,18 +45,17 @@ function App() {
   useEffect(() => {
     const lastSeenId = localStorage.getItem("lastSeenNotificationId");
     const fetchNotifications = () => {
-      axios.get("http://localhost:5050/notifications")
-        .then(res => {
-          if (res.data.success) {
-            const notifs = res.data.notifications;
-            if (notifs.length > 0) {
-              const idx = notifs.findIndex(n => n._id === lastSeenId);
-              setUnseenCount(idx === -1 ? notifs.length : idx);
-            } else {
-              setUnseenCount(0);
-            }
+      axios.get("http://localhost:5050/notifications").then((res) => {
+        if (res.data.success) {
+          const notifs = res.data.notifications;
+          if (notifs.length > 0) {
+            const idx = notifs.findIndex((n) => n._id === lastSeenId);
+            setUnseenCount(idx === -1 ? notifs.length : idx);
+          } else {
+            setUnseenCount(0);
           }
-        });
+        }
+      });
     };
     fetchNotifications();
     const interval = setInterval(fetchNotifications, 10000);
@@ -75,11 +73,13 @@ function App() {
     <Router>
       <NotificationProvider>
         <div className="flex flex-col min-h-screen">
-          <Navbar unseenCount={unseenCount} markNotificationsSeen={markNotificationsSeen} />
-//           <Navbar />
+          <Navbar
+            unseenCount={unseenCount}
+            markNotificationsSeen={markNotificationsSeen}
+          />
+          {/* // <Navbar /> */}
           <QuoteMarquee />
           <NotificationPopup />
-
           <main className="flex-grow">
             <Routes>
               {/* Public Routes */}
@@ -88,11 +88,11 @@ function App() {
 
               <Route path="/contactus" element={<ContactUs />} />
               <Route path="/aboutus" element={<AboutUs />} />
-              <Route path="/reviews" element={<Review/>} />
+              <Route path="/reviews" element={<Review />} />
 
-              <Route path="/auth" element={<AuthPage/>}/>
-              <Route path="/email-verify" element={<EmailVerify/>}/>
-              <Route path="/reset-password" element={<ResetPassword/>}/>
+              <Route path="/auth" element={<AuthPage />} />
+              <Route path="/email-verify" element={<EmailVerify />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
               {/* <Route path="/profile-page" element={<ProfilePage/>} /> */}
 
               <Route path="/auth" element={<AuthPage />} />
@@ -108,7 +108,7 @@ function App() {
               {/* <Route path="/testx" element={<NotificationButton />} /> */}
               <Route path="/task" element={<Task />} />
               <Route path="/test" element={<YogaVenuePage />} />
-              <Route path="/yogaupload" element={<YogaUpload/>} />
+              <Route path="/yogaupload" element={<YogaUpload />} />
               <Route path="/livestreaming" element={<LiveStream />} />
               <Route path="/viewlivestream" element={<ViewLiveStream />} />
             </Routes>
