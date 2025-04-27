@@ -37,11 +37,9 @@ import ViewLiveStream from "./components/yogastreaming/ViewLiveStream";
 import YogaUpload from "./components/yogastreaming/YogaUpload";
 
 import Task from "./components/task/Task";
-
 // Import the TasksProvider and DailyTasksPage
 import { TasksProvider } from "./context/TasksContext";
 import DailyStreakPage from "./components/daily/DailySteakPage";
-
 
 function App() {
   const [unseenCount, setUnseenCount] = useState(0);
@@ -49,18 +47,17 @@ function App() {
   useEffect(() => {
     const lastSeenId = localStorage.getItem("lastSeenNotificationId");
     const fetchNotifications = () => {
-      axios.get("http://localhost:5050/notifications")
-        .then(res => {
-          if (res.data.success) {
-            const notifs = res.data.notifications;
-            if (notifs.length > 0) {
-              const idx = notifs.findIndex(n => n._id === lastSeenId);
-              setUnseenCount(idx === -1 ? notifs.length : idx);
-            } else {
-              setUnseenCount(0);
-            }
+      axios.get("http://localhost:5050/notifications").then((res) => {
+        if (res.data.success) {
+          const notifs = res.data.notifications;
+          if (notifs.length > 0) {
+            const idx = notifs.findIndex((n) => n._id === lastSeenId);
+            setUnseenCount(idx === -1 ? notifs.length : idx);
+          } else {
+            setUnseenCount(0);
           }
-        });
+        }
+      });
     };
     fetchNotifications();
     const interval = setInterval(fetchNotifications, 10000);
@@ -78,10 +75,10 @@ function App() {
     <Router>
       <NotificationProvider>
         <div className="flex flex-col min-h-screen">
+          {/* // <Navbar /> */}
           <Navbar unseenCount={unseenCount} markNotificationsSeen={markNotificationsSeen} />
           <QuoteMarquee />
           <NotificationPopup />
-
           <main className="flex-grow">
             <Routes>
               {/* Public Routes */}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { yogaPlans } from "./yogaPlans.jsx";
+import yogaPlans from "./YogaPlans.jsx";
 import { MainContent } from "./MainContent.jsx";
 import { WeeklyPlanSection } from "./WeeklyPlanSection.jsx";
 import { AchievementBadge } from "./AchievementBadge.jsx";

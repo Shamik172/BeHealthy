@@ -11,10 +11,11 @@ function Navbar() {
   const { userData, setUserData, backendUrl, setIsLoggedin, isLoggedIn, isInstructorLoggedIn,
     instructorData, setInstructorData, setIsInstructorLoggedIn,
   } = useContext(AppContent);
+
   const [darkMode, setDarkMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [isMusicPlayerVisible, setIsMusicPlayerVisible] = useState(true); // State to control music player visibility
+  const [isMusicPlayerVisible, setIsMusicPlayerVisible] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -78,7 +79,7 @@ function Navbar() {
     { to: "/reviews", icon: "📝", label: "Reviews" },
     { to: "/bodyparts", icon: "💪", label: "Body Parts" },
     { to: "/diseases", icon: "🦠", label: "Diseases" },
-    { to: "/aboutus", icon: "ℹ️", label: "About Us" },
+    { to: "/aboutus", icon: "ℹ", label: "About Us" },
     { to: "/contactus", icon: "📞", label: "Contact Us" },
     { to: "/history", icon: "📜", label: "History" },
     { to: "/notifications", icon: "🔔", label: "Notifications" },
