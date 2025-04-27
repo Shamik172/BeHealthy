@@ -1,33 +1,23 @@
 import React, { useContext, useState } from "react";
-
-import { Link, NavLink as RouterNavLink, useLocation } from "react-router-dom";
-import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { Link, NavLink as RouterNavLink, useLocation, useNavigate } from "react-router-dom";
 import { MdMenu, MdClose } from "react-icons/md";
-import { IoMdNotificationsOutline } from "react-icons/io"; // ✅ Notification Icon
-import ProfileDropdown from "./ProfileDropdown"; // Importing the extracted dropdown
-import { useLocation, useNavigate } from "react-router-dom";
 import { AppContent } from "../context/AppContext";
 import { toast } from "react-toastify";
 import axios from "axios";
-// import { MdMenu, MdClose } from "react-icons/md";
 import MusicPlayer from "./music/MusicPlayer";
 
-function Navbar({ unseenCount }) {
-//function Navbar() {
+function Navbar({ unseenCount = 0, markNotificationsSeen }) {
   const { userData, setUserData, backendUrl, setIsLoggedin } = useContext(AppContent);
   const [darkMode, setDarkMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isLoggedIn,setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [isMusicPlayerVisible, setIsMusicPlayerVisible] = useState(true); // State to control music player visibility
+  const [isMusicPlayerVisible, setIsMusicPlayerVisible] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
 
   const toggleDarkMode = () => setDarkMode(!darkMode);
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
-  const markNotificationsSeen = () => {
-    // Logic to mark notifications as seen
-  };
 
   const sendVerificationOtp = async () => {
     try {
@@ -42,9 +32,7 @@ function Navbar({ unseenCount }) {
       } else {
         toast.error("Verification OTP failed");
       }
-      console.log("Data recived from backend after verify call : ",data);
     } catch (error) {
-      console.error("Error in sendVerificationOtp @Navbar");
       toast.error("Error sending OTP");
     }
   };
@@ -77,28 +65,52 @@ function Navbar({ unseenCount }) {
     { to: "/task", icon: "🔥", label: "task" },
   ];
 
-  const renderNavLink = (link, onClickExtra = () => {}) => (
-    <div
-      key={link.to}
-      onClick={() => {
-        navigate(link.to);
-        onClickExtra();
-      }}
-      className={`cursor-pointer hover:text-yellow-300 text-white font-medium transition-all duration-200 flex items-center gap-1 ${
-        location.pathname === link.to ? "underline underline-offset-4" : ""
-      }`}
-    >
-      <span>{link.icon}</span> {link.label}
-    </div>
-  );
+  // Desktop NavLink with Icon and Notification Badge
+  function CustomNavLink({ to, icon, children, currentPath, onClick }) {
+    const isActive = currentPath === to;
+    return (
+      <RouterNavLink
+        to={to}
+        className={`relative text-white text-base font-medium transition-all duration-300 ${isActive ? 'font-bold' : ''} hover:scale-110 hover:text-yellow-300 flex items-center gap-1`}
+        onClick={onClick}
+      >
+        <span className="text-lg relative">
+          {icon}
+          {to === "/notifications" && unseenCount > 0 && (
+            <span className="absolute -top-2 -right-3 bg-red-600 text-white text-xs font-bold rounded-full px-1.5 py-0.5 animate-fadeIn">
+              {unseenCount}
+            </span>
+          )}
+        </span>
+        {children}
+      </RouterNavLink>
+    );
+  }
+
+  // Mobile NavLink with Icon and Notification Badge
+  function MobileNavLink({ to, icon, children, onClick }) {
+    return (
+      <Link
+        to={to}
+        onClick={onClick}
+        className="flex items-center space-x-2 px-2 py-2 rounded hover:bg-green-600 transition-colors duration-200 text-base"
+      >
+        <span className="text-lg relative">
+          {icon}
+          {to === "/notifications" && unseenCount > 0 && (
+            <span className="absolute -top-2 -right-3 bg-red-600 text-white text-xs font-bold rounded-full px-1.5 py-0.5 animate-fadeIn">
+              {unseenCount}
+            </span>
+          )}
+        </span>
+        <span>{children}</span>
+      </Link>
+    );
+  }
 
   return (
     <>
-      <nav
-        className={`${
-          darkMode ? "bg-green-800" : "bg-green-600"
-        } p-4 shadow-md z-50 relative`}
-      >
+      <nav className={`${darkMode ? "bg-green-800" : "bg-green-600"} p-4 shadow-md z-50 relative`}>
         <div className="flex justify-between items-center w-full">
           {/* Logo */}
           <div
@@ -110,38 +122,28 @@ function Navbar({ unseenCount }) {
 
           {/* Desktop Nav */}
           <div className="space-x-8 hidden sm:flex flex-grow justify-center">
-
-//             <CustomNavLink to="/" icon="🏠" currentPath={location.pathname}>Home</CustomNavLink>
-//             {!isLoggedIn && (
-//               <>
-//                 <CustomNavLink to="/reviews" icon="📝" currentPath={location.pathname}>Reviews</CustomNavLink>
-//                 <CustomNavLink to="/bodyparts" icon="💪" currentPath={location.pathname}>Body Parts</CustomNavLink>
-//                 <CustomNavLink to="/diseases" icon="🦠" currentPath={location.pathname}>Diseases</CustomNavLink>
-//                 <CustomNavLink to="/aboutus" icon="ℹ️" currentPath={location.pathname}>About Us</CustomNavLink>
-//                 <CustomNavLink to="/contactus" icon="📞" currentPath={location.pathname}>Contact Us</CustomNavLink>
-//                 <CustomNavLink to="/history" icon="📜" currentPath={location.pathname}>History</CustomNavLink>
-//                 <CustomNavLink
-//                   to="/notifications"
-//                   icon={
-//                     <span className="relative">
-//                       🔔
-//                       {unseenCount > 0 && (
-//                         <span className="absolute -top-2 -right-3 bg-red-600 text-white text-xs font-bold rounded-full px-1.5 py-0.5 animate-fadeIn">
-//                           {unseenCount}
-//                         </span>
-//                       )}
-//                     </span>
-//                   }
-//                   currentPath={location.pathname}
-//                   onClick={markNotificationsSeen}
-//                 >
-//                   Notifications
-//                 </CustomNavLink>
-//               </>
-//             )}
-
-            {navLinks.map((link) => renderNavLink(link))}
-
+            {navLinks.map((link) =>
+              link.to === "/notifications" ? (
+                <CustomNavLink
+                  key={link.to}
+                  to={link.to}
+                  icon={link.icon}
+                  currentPath={location.pathname}
+                  onClick={markNotificationsSeen}
+                >
+                  {link.label}
+                </CustomNavLink>
+              ) : (
+                <CustomNavLink
+                  key={link.to}
+                  to={link.to}
+                  icon={link.icon}
+                  currentPath={location.pathname}
+                >
+                  {link.label}
+                </CustomNavLink>
+              )
+            )}
           </div>
 
           {/* Right Actions */}
@@ -233,19 +235,30 @@ function Navbar({ unseenCount }) {
       >
         <div className="text-xl font-bold mb-6">Yoga-Verse</div>
         <div className="flex flex-col space-y-5">
-
-//           <MobileNavLink to="/" icon="🏠" onClick={toggleSidebar}>Home</MobileNavLink>
-//           {!isLoggedIn && (
-//             <>
-//               <MobileNavLink to="/reviews" icon="📝" onClick={toggleSidebar}>Reviews</MobileNavLink>
-//               <MobileNavLink to="/bodyparts" icon="💪" onClick={toggleSidebar}>Body Parts</MobileNavLink>
-//               <MobileNavLink to="/diseases" icon="🦠" onClick={toggleSidebar}>Diseases</MobileNavLink>
-//               <MobileNavLink to="/aboutus" icon="ℹ️" onClick={toggleSidebar}>About Us</MobileNavLink>
-//               <MobileNavLink to="/contactus" icon="📞" onClick={toggleSidebar}>Contact Us</MobileNavLink>
-//               <MobileNavLink to="/notifications" icon="🔔" onClick={toggleSidebar}>Notifications</MobileNavLink>
-//             </>
-//           )}
-//           {navLinks.map((link) => renderNavLink(link, toggleSidebar))}
+          {navLinks.map((link) =>
+            link.to === "/notifications" ? (
+              <MobileNavLink
+                key={link.to}
+                to={link.to}
+                icon={link.icon}
+                onClick={() => {
+                  markNotificationsSeen();
+                  toggleSidebar();
+                }}
+              >
+                {link.label}
+              </MobileNavLink>
+            ) : (
+              <MobileNavLink
+                key={link.to}
+                to={link.to}
+                icon={link.icon}
+                onClick={toggleSidebar}
+              >
+                {link.label}
+              </MobileNavLink>
+            )
+          )}
 
           <button
             onClick={() => {
@@ -296,33 +309,6 @@ function Navbar({ unseenCount }) {
         </div>
       </div>
 
-
-// Desktop NavLink with Icon
-function CustomNavLink({ to, icon, children, currentPath, onClick }) {
-  const isActive = currentPath === to; // Check if current path matches the link's path
-  return (
-    <RouterNavLink
-      to={to}
-      className={`relative text-white text-base font-medium transition-all duration-300 ${isActive ? 'font-bold' : ''} hover:scale-110 hover:text-yellow-300 flex items-center gap-1`}
-      onClick={onClick}
-    >
-      <span className="text-lg">{icon}</span>
-      {children}
-    </RouterNavLink>
-  );
-}
-
-// Mobile NavLink with Icon
-function MobileNavLink({ to, icon, children, onClick }) {
-  return (
-    <Link
-      to={to}
-      onClick={onClick}
-      className="flex items-center space-x-2 px-2 py-2 rounded hover:bg-green-600 transition-colors duration-200 text-base"
-    >
-      <span className="text-lg">{icon}</span>
-      <span>{children}</span>
-    </Link>
       {/* Music Player */}
       {isMusicPlayerVisible && <MusicPlayer />}
     </>

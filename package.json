@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "cookie-parser": "^1.4.7",
     "framer-motion": "^12.7.4"
   }
 }

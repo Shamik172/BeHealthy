@@ -39,7 +39,7 @@ import YogaUpload from "./components/yogastreaming/YogaUpload";
 //import ProfilePage from "./components/auth/ProfilePage";
 
 import Task from "./components/task/Task";
-import YogaStream from "./components/yogastreaming/YogaStream";
+// import YogaStream from "./components/yogastreaming/YogaStream";
 
 
 
@@ -79,7 +79,7 @@ function App() {
       <NotificationProvider>
         <div className="flex flex-col min-h-screen">
           <Navbar unseenCount={unseenCount} markNotificationsSeen={markNotificationsSeen} />
-//           <Navbar />
+{/* //           <Navbar /> */}
           <QuoteMarquee />
           <NotificationPopup />
 
