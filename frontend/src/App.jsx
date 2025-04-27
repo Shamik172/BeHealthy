@@ -40,6 +40,7 @@ import Task from "./components/task/Task";
 // Import the TasksProvider and DailyTasksPage
 import { TasksProvider } from "./context/TasksContext";
 import DailyStreakPage from "./components/daily/DailySteakPage";
+import YogaTask from "./components/tasks/YogaTask"
 
 function App() {
   const [unseenCount, setUnseenCount] = useState(0);
@@ -104,6 +105,7 @@ function App() {
               <Route path="/yogaupload" element={<YogaUpload />} />
               <Route path="/livestreaming" element={<LiveStream />} />
               <Route path="/viewlivestream" element={<ViewLiveStream />} />
+              <Route path='/yogatasks' element={<YogaTask />} />
 
               {/* Add the new route for DailyStreakPage */}
               <Route path="/daily-tasks" element={

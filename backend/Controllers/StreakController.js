@@ -63,7 +63,6 @@ const updateStreakAndSaveAsana = async (req, res) => {
 
 // ✅ 2. Get all Completed Asanas for a User (optionally by date)
 const getCompletedAsanas = async (req, res) => {
-
     
   try {
     const userId = req.user?.id; 

@@ -7,6 +7,16 @@ const streakSchema = new Schema({
     ref: 'User', // Referencing the User schema
     required: true,
   },
+  // Add a field to track today's assigned yoga
+  todayTask: {
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Asana', 
+    required: false
+  },
+  taskAssignedDate: {
+    type: Date,
+    default: Date.now,
+  },
   streakCount: {
     type: Number,
     default: 0,

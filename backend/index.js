@@ -36,6 +36,7 @@ const VenueRouter = require('./Routes/venueRouter'); // <-- Add this line
 const VenueStatsRoutes = require('./Routes/venueStatsRoutes'); // <-- Add this line
 const YogaStreamRoutes = require('./Routes/yogaStreamRoutes.js'); // <-- Add this line
 const LiveStreamRoutes = require("./Routes/liveStreamRoutes.js"); // <-- Add this line
+const streaksRoutes = require('./Routes/streaksRoutes.js')
 
 
 require('dotenv').config() ;
@@ -66,7 +67,7 @@ app.use('/contactus', ContactUsRouter) ;               // contact us section
 app.use('/asanas', AsanasRouter) ;                     // for asanas based on disease or body-part
 app.use('/music', MusicRoutes) ;                       // for music component
 app.use('/user',UserRoutes) ;                         // for fetchhing user data on frontend
-app.use('/streak', streakRoutes);                    // for maintaining streak data
+// app.use('/streak', streakRoutes);                    // for maintaining streak data
 app.use('/auth/instructor',InstructorRoutes) ;
 app.use('/instructor',Instructor);
 
@@ -96,6 +97,8 @@ io.on("connection", (socket) => {
   });
 });
 
+// Your auth routes here...
+app.use('/api/streak', streaksRoutes);
 
 
 // Start the server
