@@ -27,6 +27,8 @@ const AsanasRouter =require('./Routes/AsanasRouter.js');
 const MusicRoutes = require('./Routes/MusicRoutes.js');
 const UserRoutes = require("./Routes/UserRoutes.js");          // for front end use
 const streakRoutes = require('./Routes/StreakRoutes.js');
+const InstructorRoutes = require('./Routes/InstructorRoutes.js');
+const Instructor = require('./Routes/Instructor.js');    // to get instructor personal info
 
 const UsersRouter = require('./Routes/UsersRouter');           // for fetching data on admin side
 const NotificationsRouter = require('./Routes/NotificationsRouter');
@@ -65,7 +67,8 @@ app.use('/asanas', AsanasRouter) ;                     // for asanas based on di
 app.use('/music', MusicRoutes) ;                       // for music component
 app.use('/user',UserRoutes) ;                         // for fetchhing user data on frontend
 app.use('/streak', streakRoutes);                    // for maintaining streak data
-
+app.use('/auth/instructor',InstructorRoutes) ;
+app.use('/instructor',Instructor);
 
 app.use('/users', UsersRouter); // <-- Add this line
 app.use('/notifications', NotificationsRouter);

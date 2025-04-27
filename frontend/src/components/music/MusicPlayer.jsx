@@ -110,7 +110,7 @@ const MusicPlayer = () => {
     isVisible && (
       <Rnd
         default={{
-          x: window.innerWidth - 380,
+          x: window.innerWidth - 380-30,
           y: window.innerHeight - 240,
           width: 380,
           height: 240,
