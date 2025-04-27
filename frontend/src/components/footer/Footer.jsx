@@ -3,12 +3,12 @@ import { FaInstagram, FaTwitter, FaYoutube, FaFacebookF } from "react-icons/fa";
 
 function Footer() {
   return (
-    <footer className="bg-green-600 dark:bg-green-800 text-white dark:text-gray-200 py-10 px-8 sm:px-12 pb-28 transition-all duration-300">
+    <footer className="bg-green-500 dark:bg-green-800 text-yellow-200 dark:text-gray-200 py-10 px-8 sm:px-12 pb-28 transition-all duration-300">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
 
         {/* Logo & Tagline */}
         <div>
-          <h1 className="text-3xl font-bold mb-3 text-white">Yoga-Verse</h1>
+          <h1 className="text-3xl font-bold mb-3 text-yellow-300">Yoga-Healix</h1>
           <p className="text-sm text-green-100 opacity-90">
             Discover balance and clarity through mindful yoga practices tailored for you.
           </p>

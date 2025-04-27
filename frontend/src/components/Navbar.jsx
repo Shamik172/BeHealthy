@@ -5,10 +5,13 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { MdMenu, MdClose } from "react-icons/md";
 import MusicPlayer from "./music/MusicPlayer";
+import { FaChalkboardTeacher } from "react-icons/fa"; // Add instructor icon import
 
 function Navbar() {
-  const { userData, setUserData, backendUrl, setIsLoggedin } =
-    useContext(AppContent);
+  const { userData, setUserData, backendUrl, setIsLoggedin, isInstructorLoggedIn,
+    instructorData, setInstructorData, setIsInstructorLoggedIn,
+  } = useContext(AppContent);
+
   const [darkMode, setDarkMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -32,14 +35,13 @@ function Navbar() {
       } else {
         toast.error("Verification OTP failed");
       }
-      console.log("Data received from backend after verify call:", data);
     } catch (error) {
-      console.error("Error in sendVerificationOtp @Navbar", error);
       toast.error("Error sending OTP");
     }
   };
 
-  const handleLogout = async () => {
+  // User logout
+  const handleUserLogout = async () => {
     try {
       await axios.post(
         `${backendUrl}/auth/logout`,
@@ -55,6 +57,23 @@ function Navbar() {
     }
   };
 
+  // Instructor logout
+  const handleInstructorLogout = async () => {
+    try {
+      await axios.post(
+        `${backendUrl}/auth/instructor/logout`,
+        {},
+        { withCredentials: true }
+      );
+      setInstructorData({});
+      setIsInstructorLoggedIn(false);
+      toast.success("Instructor logged out successfully");
+      navigate("/");
+    } catch (err) {
+      toast.error("Instructor logout failed");
+    }
+  };
+
   const navLinks = [
     { to: "/", icon: "🏠", label: "Home" },
     { to: "/reviews", icon: "📝", label: "Reviews" },
@@ -67,16 +86,15 @@ function Navbar() {
     { to: "/task", icon: "🔥", label: "Task" },
   ];
 
-  const renderNavLink = (link, onClickExtra = () => {}) => (
+  const renderNavLink = (link, onClickExtra = () => { }) => (
     <div
       key={link.to}
       onClick={() => {
         navigate(link.to);
         onClickExtra();
       }}
-      className={`cursor-pointer hover:text-yellow-300 text-white font-medium transition-all duration-200 flex items-center gap-1 ${
-        location.pathname === link.to ? "underline underline-offset-4" : ""
-      }`}
+      className={`cursor-pointer hover:text-yellow-300 text-white font-medium transition-all duration-200 flex items-center gap-1 ${location.pathname === link.to ? "underline underline-offset-4" : ""
+        }`}
     >
       <span>{link.icon}</span> {link.label}
     </div>
@@ -85,17 +103,16 @@ function Navbar() {
   return (
     <>
       <nav
-        className={`${
-          darkMode ? "bg-green-800" : "bg-green-600"
-        } p-4 shadow-md z-50 relative`}
+        className={`${darkMode ? "bg-green-800" : "bg-green-600"
+          } p-4 shadow-md z-50 relative`}
       >
         <div className="flex justify-between items-center w-full">
           {/* Logo */}
           <div
-            className="text-white text-3xl font-extrabold italic tracking-wide ml-4 cursor-pointer"
+            className="text-yellow-300 text-3xl font-extrabold italic tracking-wide ml-4 cursor-pointer"
             onClick={() => navigate("/")}
           >
-            Yoga-Verse
+            Yoga-Healix
           </div>
 
           {/* Desktop Nav */}
@@ -113,36 +130,46 @@ function Navbar() {
               {darkMode ? "🌞" : "🌙"}
             </button>
 
-            {userData?.name ? (
+            {userData?.name || instructorData?.name ? (
               <div className="relative flex items-center gap-3">
                 <div className="hidden sm:flex flex-col text-right text-white">
                   <p className="text-sm font-medium">
-                    Welcome, {userData.name}
+                    Welcome, {userData?.name || instructorData?.name}
                   </p>
-                  {userData.email && (
-                    <p className="text-xs">{userData.email}</p>
+                  {userData?.email && (
+                    <p className="text-xs">{userData?.email}</p>
                   )}
                 </div>
                 <div
                   className="w-10 h-10 flex items-center justify-center bg-white text-green-700 font-bold rounded-full cursor-pointer"
                   onClick={() => setShowDropdown(!showDropdown)}
                 >
-                  {userData.name[0].toUpperCase()}
+                  {isInstructorLoggedIn ? (
+                    <FaChalkboardTeacher /> // Instructor icon
+                  ) : (
+                    userData?.name?.[0]?.toUpperCase() ?? "?" // Fallback if name is not available
+                  )}
                 </div>
 
                 {showDropdown && (
                   <div className="absolute right-0 top-12 bg-white text-sm text-gray-700 shadow-lg rounded-lg w-44 p-3 z-50">
                     <ul className="space-y-2">
-                      {!userData.isAccountVerified && (
+                      {/* {!userData?.isAccountVerified && (
                         <li
                           onClick={sendVerificationOtp}
                           className="cursor-pointer hover:text-green-600"
                         >
                           📧 Verify Email
                         </li>
-                      )}
+                      )} */}
                       <li
-                        onClick={handleLogout}
+                        onClick={() => navigate(`/instructor/profile`)}
+                        className="cursor-pointer hover:text-green-600"
+                      >
+                        👤 View Profile
+                      </li>
+                      <li
+                        onClick={isInstructorLoggedIn ? handleInstructorLogout : handleUserLogout}
                         className="cursor-pointer hover:text-red-500"
                       >
                         🚪 Log Out
@@ -152,12 +179,33 @@ function Navbar() {
                 )}
               </div>
             ) : (
-              <button
-                className="border border-white rounded-full px-5 py-1 text-white hover:bg-white hover:text-green-600 transition-all duration-200"
-                onClick={() => navigate("/auth")}
-              >
-                Login
-              </button>
+              <div className="relative">
+                <button
+                  className="border border-white rounded-full px-5 py-1 text-white hover:bg-white hover:text-green-600 transition-all duration-200"
+                  onClick={() => setShowDropdown(true)}
+                >
+                  Login
+                </button>
+
+                {showDropdown && (
+                  <div className="absolute right-0 top-12 bg-white text-sm text-gray-700 shadow-lg rounded-lg w-44 p-3 z-50">
+                    <ul className="space-y-2">
+                      <li
+                        onClick={() => navigate("/auth")}
+                        className="cursor-pointer hover:text-green-600"
+                      >
+                        👤 User Login
+                      </li>
+                      <li
+                        onClick={() => navigate("/instructor")}
+                        className="cursor-pointer hover:text-green-600"
+                      >
+                        🧘‍♂️ Instructor Login
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
             )}
 
             {/* Toggle Music Player Visibility */}
@@ -184,11 +232,9 @@ function Navbar() {
 
       {/* Mobile Sidebar */}
       <div
-        className={`sm:hidden fixed top-0 left-0 h-full w-64 z-40 transform ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 ease-in-out ${
-          darkMode ? "bg-green-900" : "bg-green-700"
-        } text-white p-6`}
+        className={`sm:hidden fixed top-0 left-0 h-full w-64 z-40 transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } transition-transform duration-300 ease-in-out ${darkMode ? "bg-green-900" : "bg-green-700"
+          } text-white p-6`}
       >
         <div className="text-xl font-bold mb-6">Yoga-Verse</div>
         <div className="flex flex-col space-y-5">
@@ -205,10 +251,10 @@ function Navbar() {
             <span>{darkMode ? "Light Mode" : "Dark Mode"}</span>
           </button>
 
-          {userData?.name ? (
+          {userData?.name || instructorData?.name ? (
             <div className="mt-6">
-              <div className="text-sm font-medium">{userData.name}</div>
-              {!userData.isAccountVerified && (
+              <div className="text-sm font-medium">{userData?.name || instructorData?.name}</div>
+              {!userData?.isAccountVerified && (
                 <div
                   onClick={() => {
                     sendVerificationOtp();
@@ -221,7 +267,16 @@ function Navbar() {
               )}
               <div
                 onClick={() => {
-                  handleLogout();
+                  navigate(`/profile`);
+                  toggleSidebar();
+                }}
+                className="mt-2 cursor-pointer text-green-400"
+              >
+                👤 View Profile
+              </div>
+              <div
+                onClick={() => {
+                  isInstructorLoggedIn ? handleInstructorLogout() : handleUserLogout();
                   toggleSidebar();
                 }}
                 className="mt-2 cursor-pointer text-red-400"
@@ -230,15 +285,26 @@ function Navbar() {
               </div>
             </div>
           ) : (
-            <button
-              className="border border-white rounded-full px-4 py-1 text-white mt-6"
-              onClick={() => {
-                navigate("/auth");
-                toggleSidebar();
-              }}
-            >
-              Login
-            </button>
+            <div className="mt-6">
+              <button
+                className="border border-white rounded-full px-4 py-1 text-white mt-2"
+                onClick={() => {
+                  navigate("/login");
+                  toggleSidebar();
+                }}
+              >
+                Login
+              </button>
+              <button
+                className="border border-white rounded-full px-4 py-1 text-white mt-2"
+                onClick={() => {
+                  navigate("/instructor-login");
+                  toggleSidebar();
+                }}
+              >
+                Instructor Login
+              </button>
+            </div>
           )}
         </div>
       </div>

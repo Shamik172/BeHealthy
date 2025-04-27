@@ -5,7 +5,7 @@ const Asanas = require('../Models/Asanas');
 // const auth = require('../Middlewares/Auth');
 // const admin = require('../Middlewares/Admin');
 
-const { getAsanasByBodyPart } = require('../Controllers/AsanasController.js');
+const { getAsanasByBodyPart, getTodaysAsana } = require('../Controllers/AsanasController.js');
 const AsanasModel = require('../Models/Asanas');
 const fs = require('fs');
 const path = require('path');
@@ -142,5 +142,7 @@ router.get("/by-disease", async (req, res) => {
 });
 
 router.get('/by-body-parts', getAsanasByBodyPart);
+
+router.get('/today', getTodaysAsana) ;
 
 module.exports = router;

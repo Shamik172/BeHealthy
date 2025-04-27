@@ -240,10 +240,19 @@ export default function YogaCardsByBodyPart({ selectedBodyPart }) {
                 )}
 
                 {/* Video */}
-                {isExpanded && pose.video && (
+                {isExpanded && pose.video[0] !=="" && (
                   <div className="mt-4">
                     <video controls className="w-full rounded-md">
                       <source src={pose.video[0]} type="video/mp4" />
+                    </video>
+                    <p>  &copy; "Video content courtesy of Dr. Zio – Yoga Teacher, with gratitude for inspiring and guiding our yoga journey."</p>
+                  </div>
+                )}
+
+                {isExpanded && pose.video[0] ==="" && (
+                  <div className="mt-4">
+                    <video controls className="w-full rounded-md">
+                      <source src={pose.video[1]} type="video/mp4" />
                     </video>
                   </div>
                 )}
