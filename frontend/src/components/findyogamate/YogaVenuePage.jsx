@@ -176,18 +176,15 @@ const YogaVenue = () => {
       );
       return;
     }
-    {
-      console.log("selectedLocation: ", selectedLocation);
-    }
-    {
-      console.log("selectedSlot: ", selectedSlot);
-    }
+
+    { console.log("selectedLocation: ", selectedLocation); }
+    { console.log("selectedSlot: ", selectedSlot); }
 
     const url = "http://localhost:5050/venue/locations/save";
     try {
       const res = await axios.post(url, {
         location: selectedLocation,
-        slot: selectedSlot,
+        // slot: selectedSlot,
       });
       console.log("location: ", selectedLocation);
       console.log("slot: ", selectedSlot);
@@ -219,9 +216,6 @@ const YogaVenue = () => {
             name: selectedLocation.label,
             lat: selectedLocation.lat,
             lng: selectedLocation.lng,
-            slotCounts: { Morning: 0, Evening: 0 },
-            // Morning: selectedSlot === "Morning" ? 1 : 0,
-            // Evening: selectedSlot === "Evening" ? 1 : 0,
             distance,
           };
           updatedVenues.push(newVenue);
