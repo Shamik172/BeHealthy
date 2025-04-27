@@ -1,8 +1,10 @@
 import React from 'react';
+import WriteReview from './WriteReview';
 
 const ReviewsTab = () => {
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
+      <WriteReview/>
       <h3 className="text-lg font-semibold text-green-600 mb-4">Your Reviews</h3>
       <div className="space-y-4">
         <div className="border p-4 rounded-lg">

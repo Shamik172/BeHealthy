@@ -29,6 +29,7 @@ const UserRoutes = require("./Routes/UserRoutes.js");          // for front end 
 const streakRoutes = require('./Routes/StreakRoutes.js');
 const InstructorRoutes = require('./Routes/InstructorRoutes.js');
 const Instructor = require('./Routes/Instructor.js');    // to get instructor personal info
+const ReviewRoutes = require('./Routes/ReviewRoutes.js');
 
 const UsersRouter = require('./Routes/UsersRouter');           // for fetching data on admin side
 const NotificationsRouter = require('./Routes/NotificationsRouter');
@@ -69,6 +70,7 @@ app.use('/user',UserRoutes) ;                         // for fetchhing user data
 app.use('/streak', streakRoutes);                    // for maintaining streak data
 app.use('/auth/instructor',InstructorRoutes) ;
 app.use('/instructor',Instructor);
+app.use('/reviews', ReviewRoutes);
 
 app.use('/users', UsersRouter); // <-- Add this line
 app.use('/notifications', NotificationsRouter);

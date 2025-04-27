@@ -1,105 +1,162 @@
-const Review = require('../Models/Review');
+// controllers/reviewsController.js
+const Review = require('../Models/Review.js');
+const User = require('../Models/User.js');
+const { validationResult } = require('express-validator');
 
-// Get all reviews (filter/sort optional)
+
+const submitReview = async (req, res) => {
+  const { email, name, review, rating} = req.body;
+  const userId = req.user?.id;
+  const user=userId;
+
+  try {
+    const newReview = new Review({
+      user,
+      email,
+      name,
+      review,
+      rating,
+      createdAt: new Date(),
+    });
+     console.log("Revies : ", newReview);
+    await newReview.save();
+    res.status(200).json({ success: true, message: 'Review submitted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Failed to submit review' });
+  }
+};
+// Create a review
+const createReview = async (req, res) => {
+  const { rating, review } = req.body;
+
+  // Validate input
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  try {
+    const newReview = new Review({
+      user: req.user.id, // Get user from the JWT payload
+      name: req.user.name,
+      email: req.user.email,
+      rating,
+      review,
+    });
+
+    await newReview.save();
+    return res.status(201).json({
+      success: true,
+      message: 'Review created successfully',
+    });
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).json({
+      success: false,
+      message: 'Server Error',
+    });
+  }
+};
+
+// Get all reviews for a specific entity (e.g., instructor or product)
 const getReviews = async (req, res) => {
-  const { sort = "-createdAt", limit = 50, asanaId } = req.query;
-  const filter = asanaId ? { asanaId } : {};
-  const reviews = await Review.find(filter)
-    .sort(sort)
-    .limit(Number(limit))
-    .populate("user", "name isVerified");
-  res.json(reviews);
-};
+  try {
+    const reviews = await Review.find()
+      .populate('user', 'name email') // Populate user data to show name and email
+      .sort({ createdAt: -1 }); // Sort by most recent first
 
-// Create review
-exports.createReview = async (req, res) => {
-  const { comment, rating, asanaId } = req.body;
-
-  const review = new Review({
-    user: req.user._id,
-    username: req.user.name,
-    comment,
-    rating,
-    asanaId,
-    isVerified: req.user.isVerified || false,
-  });
-
-  await review.save();
-  res.status(201).json(review);
-};
-
-// Update review
-exports.updateReview = async (req, res) => {
-  const review = await Review.findById(req.params.id);
-  if (!review) return res.status(404).json({ message: "Review not found" });
-  if (review.user.toString() !== req.user._id.toString())
-    return res.status(401).json({ message: "Unauthorized" });
-
-  review.comment = req.body.comment || review.comment;
-  review.rating = req.body.rating || review.rating;
-  await review.save();
-
-  res.json(review);
-};
-
-// Delete review
-exports.deleteReview = async (req, res) => {
-  const review = await Review.findById(req.params.id);
-  if (!review) return res.status(404).json({ message: "Review not found" });
-  if (review.user.toString() !== req.user._id.toString())
-    return res.status(401).json({ message: "Unauthorized" });
-
-  await review.remove();
-  res.json({ message: "Review deleted" });
-};
-
-// Toggle Like
-exports.toggleLike = async (req, res) => {
-  const review = await Review.findById(req.params.id);
-  const userId = req.user._id.toString();
-  if (!review) return res.status(404).json({ message: "Review not found" });
-
-  if (review.likes.includes(userId)) {
-    review.likes.pull(userId);
-  } else {
-    review.likes.push(userId);
-    review.dislikes.pull(userId); // Remove dislike if liked
+    return res.status(200).json({
+      success: true,
+      reviews,
+    });
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).json({
+      success: false,
+      message: 'Server Error',
+    });
   }
-
-  await review.save();
-  res.json(review);
 };
 
-// Toggle Dislike
-exports.toggleDislike = async (req, res) => {
-  const review = await Review.findById(req.params.id);
-  const userId = req.user._id.toString();
-  if (!review) return res.status(404).json({ message: "Review not found" });
+// Edit a review
+const editReview = async (req, res) => {
+  const { review, rating } = req.body;
 
-  if (review.dislikes.includes(userId)) {
-    review.dislikes.pull(userId);
-  } else {
-    review.dislikes.push(userId);
-    review.likes.pull(userId); // Remove like if disliked
+  try {
+    const reviewToUpdate = await Review.findById(req.params.id);
+
+    if (!reviewToUpdate) {
+      return res.status(404).json({
+        success: false,
+        message: 'Review not found',
+      });
+    }
+
+    // Ensure the user is the owner of the review
+    if (reviewToUpdate.user.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        message: 'You can only edit your own review',
+      });
+    }
+
+    reviewToUpdate.review = review;
+    reviewToUpdate.rating = rating;
+
+    await reviewToUpdate.save();
+    return res.status(200).json({
+      success: true,
+      message: 'Review updated successfully',
+    });
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).json({
+      success: false,
+      message: 'Server Error',
+    });
   }
-
-  await review.save();
-  res.json(review);
 };
 
-// Report Review
-exports.reportReview = async (req, res) => {
-  const review = await Review.findById(req.params.id);
-  const userId = req.user._id.toString();
-  if (!review) return res.status(404).json({ message: "Review not found" });
+// Delete a review
+const deleteReview = async (req, res) => {
+  try {
+    const reviewToDelete = await Review.findById(req.params.id);
 
-  if (!review.reports.includes(userId)) {
-    review.reports.push(userId);
-    await review.save();
+    if (!reviewToDelete) {
+      return res.status(404).json({
+        success: false,
+        message: 'Review not found',
+      });
+    }
+
+    // Ensure the user is the owner of the review
+    if (reviewToDelete.user.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        message: 'You can only delete your own review',
+      });
+    }
+
+    await reviewToDelete.remove();
+    return res.status(200).json({
+      success: true,
+      message: 'Review deleted successfully',
+    });
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).json({
+      success: false,
+      message: 'Server Error',
+    });
   }
-
-  res.json({ message: "Reported successfully" });
 };
 
 
-module.exports = {getReviews}
+module.exports ={
+  submitReview,
+  createReview,
+  getReviews,
+  editReview,
+  deleteReview
+}

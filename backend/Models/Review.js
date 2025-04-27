@@ -1,19 +1,36 @@
-const mongoose = require ("mongoose");
+// models/Review.js
+const mongoose = require('mongoose');
+const User = require('./User.js');
 
-const reviewSchema = new mongoose.Schema(
-  {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    username: { type: String, required: true },
-    asanaId: { type: mongoose.Schema.Types.ObjectId, ref: "Asanas", required: true }, 
-    rating: { type: Number, min: 1, max: 5 },
-    comment: { type: String, required: true },
-    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    dislikes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    reports: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    isVerified: { type: Boolean, default: false },
+const reviewSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User', // Assuming there's a User model to reference the user
+    required: true,
   },
-  { timestamps: true }
-);
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  rating: {
+    type: Number,
+    min: 1,
+    max: 5,
+    required: true,
+  },
+  review: {
+    type: String,
+    required: true,
+    minlength: 10,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
-const Review = mongoose.model("Review", reviewSchema);
-module.exports = Review;
+module.exports = mongoose.model('Review', reviewSchema);

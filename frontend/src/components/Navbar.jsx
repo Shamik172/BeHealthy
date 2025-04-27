@@ -8,7 +8,7 @@ import MusicPlayer from "./music/MusicPlayer";
 import { FaChalkboardTeacher } from "react-icons/fa"; // Add instructor icon import
 
 function Navbar() {
-  const { userData, setUserData, backendUrl, setIsLoggedin, isInstructorLoggedIn,
+  const { userData, setUserData, backendUrl, setIsLoggedin, isLoggedIn, isInstructorLoggedIn,
     instructorData, setInstructorData, setIsInstructorLoggedIn,
   } = useContext(AppContent);
   const [darkMode, setDarkMode] = useState(false);
@@ -153,20 +153,25 @@ function Navbar() {
                 {showDropdown && (
                   <div className="absolute right-0 top-12 bg-white text-sm text-gray-700 shadow-lg rounded-lg w-44 p-3 z-50">
                     <ul className="space-y-2">
-                      {/* {!userData?.isAccountVerified && (
+                      {!userData?.isAccountVerified && (
                         <li
                           onClick={sendVerificationOtp}
                           className="cursor-pointer hover:text-green-600"
                         >
                           📧 Verify Email
                         </li>
-                      )} */}
-                      <li
-                        onClick={() => navigate(`/instructor/profile`)}
-                        className="cursor-pointer hover:text-green-600"
-                      >
-                        👤 View Profile
-                      </li>
+                      )}
+                      {(isInstructorLoggedIn || userData) && (
+                        <li
+                          onClick={() =>
+                            navigate(isInstructorLoggedIn ? '/instructor/profile' : '/profile')
+                          }
+                          className="cursor-pointer hover:text-green-600"
+                        >
+                          👤 View Profile
+                        </li>
+                      )}
+
                       <li
                         onClick={isInstructorLoggedIn ? handleInstructorLogout : handleUserLogout}
                         className="cursor-pointer hover:text-red-500"
