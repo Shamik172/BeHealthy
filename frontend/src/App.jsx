@@ -16,6 +16,9 @@ import Profile from "./components/profile/Profile";
 import BodyParts from "./components/asanas/bodyParts/BodyParts";
 import Disease from "./components/asanas/diseases/Disease";
 import Footer from "./components/footer/Footer";
+import InstructorAuthPage from "./components/instructor/InstructorAuthPage";
+import InstructorProfile from "./components/instructor/profile/InstructorProfile";
+
 
 import YogaVenuePage from "./components/findyogamate/YogaVenuePage";
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -94,7 +97,8 @@ function App() {
               <Route path="/bodyparts" element={<BodyParts />} />
               <Route path="/diseases" element={<Disease />} />
               <Route path="/history" element={<History />} />
-                 
+              <Route path="/instructor" element={<InstructorAuthPage/>}/>
+              <Route path="/instructor/profile" element={<InstructorProfile/>}/>
 
               <Route path="/notifications" element={<NotificationHistory />} />
               <Route path="/task" element={<Task />} />

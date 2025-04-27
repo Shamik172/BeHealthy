@@ -96,12 +96,16 @@ export default function YogaCardsByDisease({ selectedDisease }) {
               transition={{ duration: 0.3 }}
             >
               <div className="flex flex-col md:flex-row">
-                <img
-                  src={pose.image || imageUrl}
+              <img
+                  src={
+                    isExpanded
+                      ? pose.image?.[1] || imageUrl
+                      : pose.image?.[0] || imageUrl
+                  }
                   alt={pose.name}
                   title={`Yoga pose: ${pose.name}`}
                   className={`w-full rounded-t-lg transition-all duration-300 ease-in-out bg-yellow-50 
-                    ${isExpanded ? 'object-contain max-h-[700px] p-4 md:w-1/2' : 'h-80 object-cover'}`}
+                 ${isExpanded ? 'object-contain max-h-[700px] p-4 ' : 'h-80 object-cover'}`}
                 />
 
                 {isExpanded && (
@@ -167,11 +171,21 @@ export default function YogaCardsByDisease({ selectedDisease }) {
                     <p className="font-semibold text-sm text-gray-800">Chakra:</p>
                     <p className="text-gray-600 text-sm">{pose.chakra}</p>
 
-                    {pose.video && (
-                      <video controls className="w-full rounded-md my-2">
-                        <source src={pose.video} type="video/mp4" />
-                        Your browser does not support the video tag.
-                      </video>
+                    {isExpanded && pose.video[0] !== "" && (
+                      <div className="mt-4">
+                        <video controls className="w-full rounded-md">
+                          <source src={pose.video[0]} type="video/mp4" />
+                        </video>
+                        <p>  &copy; "Video content courtesy of Dr. Zio – Yoga Teacher, with gratitude for inspiring and guiding our yoga journey."</p>
+                      </div>
+                    )}
+
+                    {isExpanded && pose.video[0] === "" && (
+                      <div className="mt-4">
+                        <video controls className="w-full rounded-md">
+                          <source src={pose.video[1]} type="video/mp4" />
+                        </video>
+                      </div>
                     )}
                   </>
                 )}

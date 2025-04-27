@@ -8,12 +8,17 @@ export const AppContent = createContext();
 // Provider Component
 export const AppContextProvider = ({ children }) => {
   axios.defaults.withCredentials = true;
-  const backendUrl = import.meta.env.VITE_BACKEND_URL ;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
+  // User-related states
   const [isLoggedin, setIsLoggedin] = useState(false);
   const [userData, setUserData] = useState({});
 
-  // Check Authentication Status
+  // Instructor-related states
+  const [isInstructorLoggedIn, setIsInstructorLoggedIn] = useState(false);
+  const [instructorData, setInstructorData] = useState({});
+
+  // Check Authentication Status for user
   const getAuthState = async () => {
     try {
       const { data } = await axios.get(`${backendUrl}/auth/is-auth`, { withCredentials: true });
@@ -42,9 +47,40 @@ export const AppContextProvider = ({ children }) => {
     }
   };
 
-  // Run on initial load
+  // Check Instructor Authentication Status
+  const getInstructorAuthState = async () => {
+    try {
+      const { data } = await axios.get(`${backendUrl}/auth/instructor/is-auth`, { withCredentials: true });
+      if (data.success) {
+        setIsInstructorLoggedIn(true);
+        getInstructorData();
+      } else {
+        setIsInstructorLoggedIn(false);
+      }
+    } catch (error) {
+      toast.error("Instructor auth check failed: " + error.message);
+    }
+  };
+
+  // Fetch Instructor Data
+  const getInstructorData = async () => {
+    try {
+      const { data } = await axios.get(`${backendUrl}/instructor/data`, { withCredentials: true });
+      console.log("Instructor data : " , data);
+      if (data.success) {
+        setInstructorData(data.instructorData);
+      } else {
+        toast.error(data.message || "Failed to fetch instructor data");
+      }
+    } catch (error) {
+      toast.error("Instructor data fetch failed: " + error.message);
+    }
+  };
+
+  // Run on initial load (both for user and instructor)
   useEffect(() => {
     getAuthState();
+    getInstructorAuthState();
   }, []);
 
   // Shared values
@@ -55,6 +91,11 @@ export const AppContextProvider = ({ children }) => {
     setIsLoggedin,
     setUserData,
     getUserData,
+    isInstructorLoggedIn,
+    instructorData,
+    setIsInstructorLoggedIn,
+    setInstructorData,
+    getInstructorData,
   };
 
   return <AppContent.Provider value={value}>{children}</AppContent.Provider>;
