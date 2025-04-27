@@ -11,7 +11,8 @@ export const News = () => {
       setError(null);
       try {
         const response = await fetch(
-          "https://newsapi.org/v2/everything?q=productivity&from=2025-03-26&sortBy=publishedAt&apiKey=62974cff19654a8580912f3bc116245c"
+          // "https://newsapi.org/v2/everything?q=yoga&from=2025-03-26&sortBy=publishedAt&apiKey=62974cff19654a8580912f3bc116245c"?
+          "https://newsapi.org/v2/everything?q=yoga+health+benefits&language=en&sortBy=relevancy&apiKey=62974cff19654a8580912f3bc116245c"
         );
         if (!response.ok) {
           throw new Error(`Failed to fetch news: ${response.statusText}`);

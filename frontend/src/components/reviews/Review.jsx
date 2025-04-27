@@ -1,14 +1,12 @@
-import React from 'react'
-import ReviewsList from './ReviewsList'
-import ReviewForm from './ReviewForm'
+import React from "react";
+import ReviewsPage from "./ReviewsPage";
 
 const Review = () => {
   return (
     <div>
-        <ReviewsList/>
-        <ReviewForm />
+      <ReviewsPage />
     </div>
-  )
-}
+  );
+};
 
-export default Review
+export default Review;
