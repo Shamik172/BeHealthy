@@ -20,7 +20,7 @@ function App() {
         />
 
         <Route 
-          path="/" 
+          path="/map" 
           element={
             <div className="p-4 min-h-screen bg-gray-100">
               <h1 className="text-xl font-bold mb-4 text-center">Map Example</h1>
@@ -31,7 +31,7 @@ function App() {
 
         {/* Admin Routes */}
         <Route 
-          path="/admin"
+          path="/"
           element={<AdminDashboard />} 
         />
 

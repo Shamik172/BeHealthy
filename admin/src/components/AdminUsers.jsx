@@ -139,9 +139,9 @@ const AdminUsers = () => {
             <table className="min-w-full bg-[#232136] border border-blue-900 rounded-lg shadow-sm">
               <thead>
                 <tr className="bg-blue-900 text-blue-200 text-lg">
-                  <th className="px-5 py-3 border-b text-left">Name</th>
-                  <th className="px-5 py-3 border-b text-left">Email</th>
-                  <th className="px-5 py-3 border-b text-left">Actions</th>
+                  <th className="px-5 py-3 border-b text-left text-white">Name</th>
+                  <th className="px-5 py-3 border-b text-left text-white">Email</th>
+                  <th className="px-5 py-3 border-b text-left text-white">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -160,9 +160,9 @@ const AdminUsers = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.05 }}
                     >
-                      <td className="px-5 py-3 border-b">{user.name}</td>
-                      <td className="px-5 py-3 border-b">{user.email}</td>
-                      <td className="px-5 py-3 border-b">
+                      <td className="px-5 py-3 border-b text-white">{user.name}</td>
+                      <td className="px-5 py-3 border-b text-white">{user.email}</td>
+                      <td className="px-5 py-3 border-b text-white">
                         <button
                           onClick={() => openDeleteModal(user)}
                           className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded transition font-semibold"

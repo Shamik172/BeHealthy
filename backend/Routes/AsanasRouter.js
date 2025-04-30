@@ -96,16 +96,16 @@ router.get('/by-body-part', async (req, res) => {
       
       try {
         // Clear all existing asanas
-        await AsanasModel.deleteMany({});
-        console.log("Asanas Deleted success");
+        // await AsanasModel.deleteMany({});
+        // console.log("Asanas Deleted success");
         // Read asanas data from JSON file
-        const filePath = path.join(__dirname, './asanasData.json'); // Replace with the correct path to your JSON file
-        const rawData = fs.readFileSync(filePath);
-        const asanasData = JSON.parse(rawData);
+        // const filePath = path.join(__dirname, './asanasData.json'); // Replace with the correct path to your JSON file
+        // const rawData = fs.readFileSync(filePath);
+        // const asanasData = JSON.parse(rawData);
     
-        // Insert asanas from JSON into the database
-        await AsanasModel.insertMany(asanasData);
-        console.log("Asaans inserted success");
+        // // Insert asanas from JSON into the database
+        // await AsanasModel.insertMany(asanasData);
+        // console.log("Asaans inserted success");
         // Fetch asanas based on the bodyPart query
         const { bodyPart } = req.query;
         let asanas;
