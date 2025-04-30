@@ -72,8 +72,13 @@ const UserSchema = new mongoose.Schema({
     youtube: { type: String, default: '' },
     facebook: { type: String, default: '' },
     twitter: { type: String, default: '' }
-  }
+  },
+  venue: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Venue"
+  }],
 }, { timestamps: true });
+
 
 const User = mongoose.model('User', UserSchema);
 
