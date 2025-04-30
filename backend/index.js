@@ -26,9 +26,11 @@ const ContactUsRouter= require('./Routes/ContactUsRouter.js');
 const AsanasRouter =require('./Routes/AsanasRouter.js');
 const MusicRoutes = require('./Routes/MusicRoutes.js');
 const UserRoutes = require("./Routes/UserRoutes.js");          // for front end use
-const streakRoutes = require('./Routes/StreakRoutes.js');
+const Streak = require('./Routes/StreakRoutes.js');
 const InstructorRoutes = require('./Routes/InstructorRoutes.js');
 const Instructor = require('./Routes/Instructor.js');    // to get instructor personal info
+const ReviewRoutes = require('./Routes/ReviewRoutes.js');
+const DailyTaskRoutes = require('./Routes/DailyTaskRoutes.js');
 
 const UsersRouter = require('./Routes/UsersRouter');           // for fetching data on admin side
 const NotificationsRouter = require('./Routes/NotificationsRouter');
@@ -67,9 +69,12 @@ app.use('/contactus', ContactUsRouter) ;               // contact us section
 app.use('/asanas', AsanasRouter) ;                     // for asanas based on disease or body-part
 app.use('/music', MusicRoutes) ;                       // for music component
 app.use('/user',UserRoutes) ;                         // for fetchhing user data on frontend
-// app.use('/streak', streakRoutes);                    // for maintaining streak data
+app.use('/streak',Streak);                           // for maintaining streak data
 app.use('/auth/instructor',InstructorRoutes) ;
 app.use('/instructor',Instructor);
+app.use('/reviews', ReviewRoutes);
+app.use('/daily',DailyTaskRoutes);
+
 
 app.use('/users', UsersRouter); // <-- Add this line
 app.use('/notifications', NotificationsRouter);

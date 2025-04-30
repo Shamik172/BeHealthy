@@ -48,13 +48,13 @@ const SettingsTab = () => {
 
   return (
     <motion.div
-      className="bg-gray-50 p-8 rounded-lg shadow-lg space-y-6"
+      className="bg-white p-8 md:p-10 rounded-lg shadow-lg space-y-6 max-w-4xl mx-auto"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
       <motion.h3
-        className="text-2xl font-semibold text-gray-800 mb-6"
+        className="text-3xl font-semibold text-gray-800 mb-6"
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -62,6 +62,7 @@ const SettingsTab = () => {
         Account Settings
       </motion.h3>
 
+      {/* Change Name */}
       <motion.div
         initial={{ x: -20, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -72,11 +73,12 @@ const SettingsTab = () => {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          className="w-full p-4 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-green-400 focus:outline-none transition-all ease-in-out"
           placeholder="John Doe"
         />
       </motion.div>
 
+      {/* Old Password */}
       <motion.div
         initial={{ x: -20, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -87,11 +89,12 @@ const SettingsTab = () => {
           type="password"
           value={oldPassword}
           onChange={(e) => setOldPassword(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          className="w-full p-4 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-green-400 focus:outline-none transition-all ease-in-out"
           placeholder="********"
         />
       </motion.div>
 
+      {/* New Password */}
       <motion.div
         initial={{ x: -20, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -102,11 +105,12 @@ const SettingsTab = () => {
           type="password"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          className="w-full p-4 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-green-400 focus:outline-none transition-all ease-in-out"
           placeholder="********"
         />
       </motion.div>
 
+      {/* Confirm New Password */}
       <motion.div
         initial={{ x: -20, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -117,12 +121,13 @@ const SettingsTab = () => {
           type="password"
           value={confirmNewPassword}
           onChange={(e) => setConfirmNewPassword(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          className="w-full p-4 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-green-400 focus:outline-none transition-all ease-in-out"
           placeholder="********"
         />
         {passwordError && <p className="text-red-500 text-sm mt-2">{passwordError}</p>}
       </motion.div>
 
+      {/* Notification Preferences */}
       <motion.div
         initial={{ x: -20, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -132,7 +137,7 @@ const SettingsTab = () => {
         <select
           value={notificationPref}
           onChange={(e) => setNotificationPref(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          className="w-full p-4 border border-gray-300 rounded-lg mt-2 focus:ring-2 focus:ring-green-400 focus:outline-none transition-all ease-in-out"
         >
           <option>Email & Push Notifications</option>
           <option>Email Only</option>
@@ -141,9 +146,10 @@ const SettingsTab = () => {
         </select>
       </motion.div>
 
+      {/* Save Button */}
       <motion.button
         onClick={handleSave}
-        className="bg-blue-600 text-white p-3 rounded-lg w-full mt-6 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+        className="bg-green-600 text-white p-4 rounded-lg w-full mt-6 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition ease-in-out"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}

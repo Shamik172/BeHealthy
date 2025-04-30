@@ -352,7 +352,6 @@ const resetInstructorPassword = async (req, res) => {
     }
 };
 
-
 // Get all instructors
 const getAllInstructors = async (req, res) => {
   try {

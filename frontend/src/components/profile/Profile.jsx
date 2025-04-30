@@ -7,8 +7,9 @@ import SettingsTab from './SettingsTab';
 import ProfileHeader from './ProfileHeader';
 import ProfileUpdate from './ProfileUpdate';
 import StreakHeatmap from './StreakHeatmap';
+import BecomeInstructor from './BecomeInstructor';
 
-const tabs = ['Overview', 'Progress', 'Reviews', 'Settings', 'Update-Profile'];
+const tabs = ['Overview', 'Progress', 'Reviews', 'Settings', 'Update-Profile','Become Instructor'];
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState('Overview');
@@ -25,6 +26,8 @@ const Profile = () => {
         return <SettingsTab />;
       case 'Update-Profile':
         return <ProfileUpdate />;
+      case 'Become Instructor' :
+        return <BecomeInstructor />
       default:
         return <OverviewTab />;
     }
@@ -45,7 +48,7 @@ const Profile = () => {
         initial={{ opacity: 0, y: -20 }} 
         animate={{ opacity: 1, y: 0 }} 
         transition={{ duration: 0.5 }}
-        className="w-full max-w-6xl mt-4"
+        className="w-full max-w mt-4"
       >
         <StreakHeatmap />
       </motion.div>
