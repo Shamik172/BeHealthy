@@ -1,6 +1,6 @@
 const Streak = require('../Models/Streak');
 const moment = require('moment');
-const { use } = require('../Routes/StreakRoutes');
+// const { use } = require('../Routes/StreakRoutes');
 
 // POST /api/streak/update-streak
 const updateStreak = async (req, res) => {
@@ -70,7 +70,7 @@ const getStreak = async (req, res) => {
 
 const completed = async (req, res) => {
 
-  console.log("Streak Controller Called : ");
+  // console.log("Streak Controller Called : ");
   try {
     const userId = req.user?.id;
     console.log("User Id : " , userId) ;

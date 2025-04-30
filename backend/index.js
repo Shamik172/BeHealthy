@@ -105,7 +105,7 @@ io.on("connection", (socket) => {
 });
 
 // Your auth routes here...
-app.use('/api/streak', streaksRoutes);
+// app.use('/api/streak', streaksRoutes);
 
 
 // Start the server

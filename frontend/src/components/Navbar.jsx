@@ -8,16 +8,20 @@ import MusicPlayer from "./music/MusicPlayer";
 import { FaChalkboardTeacher } from "react-icons/fa"; // Add instructor icon import
 import LiveStream from "./yogastreaming/LiveStream";
 
-function Navbar() {
+// function Navbar() {
+//   const { userData, setUserData, backendUrl, setIsLoggedin, isLoggedIn, isInstructorLoggedIn,
+//     instructorData, setInstructorData, setIsInstructorLoggedIn,
+//   } = useContext(AppContent);
+//   console.log("isLoggedIn:", isLoggedIn, "isInstructorLoggedIn:", isInstructorLoggedIn);
+// function Navbar({ unseenCount = 0, markNotificationsSeen }) {
+//   const { userData, setUserData, backendUrl, setIsLoggedin } = useContext(AppContent);
+function Navbar({ unseenCount = 0, markNotificationsSeen }) {
   const { userData, setUserData, backendUrl, setIsLoggedin, isLoggedIn, isInstructorLoggedIn,
     instructorData, setInstructorData, setIsInstructorLoggedIn,
   } = useContext(AppContent);
-  console.log("isLoggedIn:", isLoggedIn, "isInstructorLoggedIn:", isInstructorLoggedIn);
-function Navbar({ unseenCount = 0, markNotificationsSeen }) {
-  const { userData, setUserData, backendUrl, setIsLoggedin } = useContext(AppContent);
+
   const [darkMode, setDarkMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [isMusicPlayerVisible, setIsMusicPlayerVisible] = useState(true);
   const location = useLocation();
@@ -88,7 +92,6 @@ function Navbar({ unseenCount = 0, markNotificationsSeen }) {
     ,
   ];
 
-//harsit section
   // Desktop NavLink with Icon and Notification Badge
   function CustomNavLink({ to, icon, children, currentPath, onClick }) {
     const isActive = currentPath === to;
@@ -132,10 +135,7 @@ function Navbar({ unseenCount = 0, markNotificationsSeen }) {
     );
   }
 
-  return (
-    <>
-      <nav className={`${darkMode ? "bg-green-800" : "bg-green-600"} p-4 shadow-md z-50 relative`}>
-{*/harshit ends here*}
+
   const renderNavLink = (link, onClickExtra = () => { }) => (
     <div
       key={link.to}
@@ -199,7 +199,7 @@ function Navbar({ unseenCount = 0, markNotificationsSeen }) {
                 </CustomNavLink>
               )
             )}
-            {navLinks.map((link) => renderNavLink(link))}
+            {/* {navLinks.map((link) => renderNavLink(link))} */}
           </div> 
           <div className="flex items-center gap-3 sm:ml-auto">
             {/* Mobile and Desktop Flexbox */}
@@ -390,7 +390,7 @@ function Navbar({ unseenCount = 0, markNotificationsSeen }) {
               </MobileNavLink>
             )
           )}
-          //{navLinks.map((link) => renderNavLink(link, toggleSidebar))}
+          {/* {navLinks.map((link) => renderNavLink(link, toggleSidebar))} */}
 
           <button
             onClick={() => {
