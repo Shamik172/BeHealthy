@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { yogaPlans } from "./yogaPlans.jsx";
+import yogaPlans from "./YogaPlans.jsx";
 import { MainContent } from "./MainContent.jsx";
 import { WeeklyPlanSection } from "./WeeklyPlanSection.jsx";
 import { AchievementBadge } from "./AchievementBadge.jsx";
@@ -19,7 +19,7 @@ const Task = () => {
   const [achievements, setAchievements] = useState({
     streak: 0,
     totalDays: 0,
-    weeklyGoal: 5,
+    weeklyGoal: 7,
   });
   const [notificationVisible, setNotificationVisible] = useState(false);
 

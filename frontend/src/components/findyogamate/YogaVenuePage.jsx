@@ -45,18 +45,47 @@ const YogaVenue = () => {
     }
   }, [userLocation]);
 
+  const fetchAllVenueCounts = async (venuesList) => {
+    try {
+      const updatedVenues = await Promise.all(
+        venuesList.map(async (venue) => {
+          try {
+            const res = await axios.get(`http://localhost:5050/venue-stats/location/getlocation`, {
+              params: { lat: venue.lat, lon: venue.lng },
+            });
+  
+            const { morningCount, eveningCount } = res.data;
+  
+            return {
+              ...venue,
+              slotCounts: {
+                Morning: morningCount,
+                Evening: eveningCount,
+              },
+            };
+          } catch (error) {
+            console.error(`Failed to fetch stats for venue at (${venue.lat}, ${venue.lng})`, error);
+            return venue; // fallback to venue without counts
+          }
+        })
+      );
+  
+      setVenues(updatedVenues);
+      console.log("Venues updated with slot counts:", updatedVenues);
+    } catch (error) {
+      console.error("Error fetching all venue counts:", error);
+    }
+  };
+  
+
   const fetchNearbyVenues = async (lat, lng) => {
     try {
-      const res = await axios.get(
-        "http://localhost:5050/venue/locations/nearby",
-        {
-          params: { lat, lng },
-        }
-      );
-
+      const res = await axios.get("http://localhost:5050/venue/locations/nearby", {
+        params: { lat, lng },
+      });
+  
       if (res.status === 200) {
         console.log("this is fetched data", res.data.data);
-        // const fetchedVenues = res.data.data;
         const fetchedVenues = res.data.data.map((venue) => ({
           ...venue,
           lat: venue.location.coordinates[1],
@@ -64,14 +93,20 @@ const YogaVenue = () => {
           name: venue.location.name,
           distance: venue.location.distance,
         }));
-
+  
         console.log("fetchedVenues (from API):", fetchedVenues);
+        
+        // First set venues
         setVenues(fetchedVenues);
+  
+        // Then fetch slot counts separately
+        fetchAllVenueCounts(fetchedVenues);
       }
     } catch (error) {
       console.error("Error fetching nearby venues:", error);
     }
   };
+  
 
   const handleSelectLocation = (location) => {
     const lat = location.y || location.lat;
@@ -141,18 +176,15 @@ const YogaVenue = () => {
       );
       return;
     }
-    {
-      console.log("selectedLocation: ", selectedLocation);
-    }
-    {
-      console.log("selectedSlot: ", selectedSlot);
-    }
+
+    { console.log("selectedLocation: ", selectedLocation); }
+    { console.log("selectedSlot: ", selectedSlot); }
 
     const url = "http://localhost:5050/venue/locations/save";
     try {
       const res = await axios.post(url, {
         location: selectedLocation,
-        slot: selectedSlot,
+        // slot: selectedSlot,
       });
       console.log("location: ", selectedLocation);
       console.log("slot: ", selectedSlot);
@@ -184,9 +216,6 @@ const YogaVenue = () => {
             name: selectedLocation.label,
             lat: selectedLocation.lat,
             lng: selectedLocation.lng,
-            slotCounts: { Morning: 0, Evening: 0 },
-            // Morning: selectedSlot === "Morning" ? 1 : 0,
-            // Evening: selectedSlot === "Evening" ? 1 : 0,
             distance,
           };
           updatedVenues.push(newVenue);
@@ -200,88 +229,65 @@ const YogaVenue = () => {
         }));
 
         // Update venueStats for the selected slot
-        const venueStatsUrl =
-          "http://localhost:5050/venue-stats/location/putlocation";
-        const venueStatsData = {
-          lat: selectedLocation.lat,
-          lon: selectedLocation.lng,
-          morningCount: selectedSlot === "Morning" ? 1 : 0, // Example of slot-based counts
-          eveningCount: selectedSlot === "Evening" ? 1 : 0,
-        };
+        const venueStatsUrl = "http://localhost:5050/venue-stats/location/putlocation";
+      const venueStatsData = {
+        lat: selectedLocation.lat,
+        lon: selectedLocation.lng,
+        slot: selectedSlot.toLowerCase(),
+      };
 
-        // // Send a POST request to update the venueStats
-        // await axios.post(venueStatsUrl, venueStatsData)
-        //   .then((response) => {
-        //     console.log("Venue stats updated successfully:", response.data);
-        //   })
-        //   .catch((error) => {
-        //     console.error("Error updating venue stats:", error);
-        //   });
+      try {
+        const statsUpdateRes = await axios.post(venueStatsUrl, venueStatsData);
+        console.log("Venue stats updated successfully:", statsUpdateRes.data);
 
-        // Update venueStats for the selected slot
-        try {
-          // const statsUpdateRes = await axios.put(venueStatsUrl, venueStatsData);
-          const statsUpdateRes = await axios.post(venueStatsUrl, venueStatsData);
-          console.log(
-            "fetching from venueStats, Venue stats updated successfully:",
-            statsUpdateRes.data
-          );
+        const venueId = statsUpdateRes.data?.venueId;
+        console.log("Venue ID (lat-lon):", venueId);
 
-          // Use the venueId from the response
-          const venueId = statsUpdateRes.data?.venueId;
-          console.log("Venue ID (lat-lon):", venueId);
+        if (venueId) {
+          try {
+            const statsFetchRes = await axios.get(
+              "http://localhost:5050/venue-stats/location/getlocation",
+              {
+                params: {
+                  lat: selectedLocation.lat,
+                  lon: selectedLocation.lng,
+                },
+              }
+            );
+            const { morningCount, eveningCount } = statsFetchRes.data;
+            console.log("Fetched slot counts:", { morningCount, eveningCount });
 
-          if (venueId) {
-            try {
-              const statsFetchRes = await axios.get(
-                `http://localhost:5050/venue-stats/location/getlocation`,
-                {
-                  params: {
-                    lat: selectedLocation.lat,
-                    lon: selectedLocation.lng,
-                  },
-                }
-              );
-              const { morningCount, eveningCount } = statsFetchRes.data;
-              console.log("Fetched slot counts:", {
-                morningCount,
-                eveningCount,
-              });
+            const getVenueId = (lat, lng) => `${lat}-${lng}`;
+            const updatedVenuesWithStats = updatedVenues.map((venue) =>
+              getVenueId(venue.lat, venue.lng) === venueId
+                ? {
+                    ...venue,
+                    slotCounts: {
+                      Morning: morningCount,
+                      Evening: eveningCount,
+                    },
+                  }
+                : venue
+            );
 
-              // Update the venue in your local state
-              const getVenueId = (lat, lng) => `${lat}-${lng}`;
-              const updatedVenuesWithStats = updatedVenues.map((venue) =>
-                // `${venue.lat}-${venue.lng}` === venueId  // Compare based on lat-lon combination
-                getVenueId(venue.lat, venue.lng) === venueId
-                  ? {
-                      ...venue,
-                      slotCounts: {
-                        Morning: morningCount,
-                        Evening: eveningCount,
-                      },
-                    }
-                  : venue
-              );
-              setVenues(updatedVenuesWithStats);
-              console.log(
-                "Updated venues with stats: ",
-                updatedVenuesWithStats
-              );
-            } catch (err) {
-              console.error("Failed to fetch venue stats after update:", err);
-            }
+            setVenues(updatedVenuesWithStats);
+            console.log("Updated venues with stats: ", updatedVenuesWithStats);
+          } catch (err) {
+            console.error("Failed to fetch venue stats after update:", err);
           }
-        } catch (error) {
-          console.error("Error updating venue stats:", error);
         }
-
-        setMessage("");
-        setSelectedLocation(null);
-        setSelectedSlot("");
-        setDistanceToVenue(null);
-        setSelectedVenueName("");
+      } catch (error) {
+        console.error("Error updating venue stats:", error);
       }
-    } catch (err) {
+
+      // Clear selections after successful save
+      setMessage("");
+      setSelectedLocation(null);
+      setSelectedSlot("");
+      setDistanceToVenue(null);
+      setSelectedVenueName("");
+    }
+  } catch (err) {
       console.error("Error in venue submission:", err);
 
       // If location already exists (handled by backend) and is valid:
@@ -314,8 +320,6 @@ const YogaVenue = () => {
               name: selectedLocation.label,
               lat: selectedLocation.lat,
               lng: selectedLocation.lng,
-              // Morning: selectedSlot === "Morninvg" ? 1 : 0,
-              // Evening: selectedSlot === "Evening" ? 1 : 0,
               distance,
             };
             updatedVenues.push(newVenue);
@@ -400,7 +404,6 @@ const YogaVenue = () => {
     }
 
     // CASE 4: All conditions satisfied — Proceed with selection
-
     // Add venueKey to the selected slot
     setUserSelectedVenues((prev) => ({
       ...prev,

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const UserAuth = async (req, res, next) => {
     const { token } = req.cookies;
-    console.log("Auth middleware called !\n");
+    // console.log("Auth middleware called !\n");
     if (!token) {
         return res.status(401).json({
             success: false,
@@ -21,7 +21,7 @@ const UserAuth = async (req, res, next) => {
                 message: "Invalid token. Please log in again."
             });
         }
-        console.log("Auth middleware called Executed succcess and calling next function\n\n");
+        // console.log("Auth middleware called Executed succcess and calling next function\n\n");
         next();
     } catch (error) {
         console.log("Error in userAuth middleware:", error);

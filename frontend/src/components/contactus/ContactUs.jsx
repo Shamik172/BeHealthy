@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ToastContainer } from "react-toastify";
 import { handleSuccess, handleError } from "../../utils";
+// import DeveloperListPage from "../developers/DeveloperListPage";
 
 function ContactUs() {
   const [contactInfo, setContactInfo] = useState({
@@ -9,15 +10,17 @@ function ContactUs() {
     email: "",
     msg: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    
     const { name, value } = e.target;
     setContactInfo((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(""); // Clear any previous error
 
     const { name, email, msg } = contactInfo;
 
@@ -25,12 +28,14 @@ function ContactUs() {
       return handleError("All fields are required");
     }
 
+    setLoading(true); // Set loading state to true when submitting
+
     try {
       const url = "http://localhost:5050/contactus";
       const response = await fetch(url, {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(contactInfo),
       });
@@ -38,15 +43,18 @@ function ContactUs() {
       const result = await response.json();
       const { success, message: msg, error } = result;
 
+      setLoading(false); // Reset loading state after submission
+
       if (success) {
         handleSuccess(msg);
         setContactInfo({ name: "", email: "", msg: "" });
       } else {
-        handleError(error || "Submission failed. Try again.");
+        setError(error || "Submission failed. Try again.");
       }
     } catch (err) {
+      setLoading(false);
       console.error("Contact Error:", err);
-      handleError("Something went wrong. Please try again.");
+      setError("Something went wrong. Please try again.");
     }
   };
 
@@ -80,6 +88,18 @@ function ContactUs() {
 
         <h2 className="text-3xl font-bold text-green-800 mb-6">Contact Us</h2>
         <p className="text-gray-500 mb-4">We're here to help 🌿</p>
+
+        {/* Form and Error Message */}
+        {error && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-red-600 mb-4"
+          >
+            {error}
+          </motion.div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <motion.input
@@ -119,10 +139,15 @@ function ContactUs() {
             whileTap={{ scale: 0.9 }}
             className="w-full bg-green-600 text-white py-3 rounded-lg shadow-md hover:bg-green-700 transition"
           >
-            Send Message
+            {loading ? (
+              <span>Sending...</span>
+            ) : (
+              "Send Message"
+            )}
           </motion.button>
         </form>
       </motion.div>
+      {/* <DeveloperListPage/> */}
       <ToastContainer />
     </div>
   );

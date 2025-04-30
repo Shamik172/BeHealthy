@@ -97,7 +97,8 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     const { email, password } = req.body;
-
+    console.log(email,password);
+    
     if (!email || !password) {
 
         return res.status(400).json({
@@ -109,7 +110,7 @@ const login = async (req, res) => {
     try {
 
         const user = await User.findOne({ email });
-
+         
         if (!user) {
 
             return res.status(400).json({
@@ -185,8 +186,9 @@ const logout = async (req, res) => {
 }
 
 const sendVerifyOtp = async (req, res) => {
+    
     const userId = req.user?.id;
-    console.log("Send Verify OTP Started \n");
+    console.log("Send Verify OTP Started , uSERiD : \n" , userId);
     if (!userId) {
         return res.status(400).json({
             success: false,

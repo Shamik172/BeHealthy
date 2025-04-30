@@ -1,4 +1,4 @@
-export const yogaPlans = {
+const yogaPlans = {
   week1: {
     Monday: {
       pose: "Surya Namaskar",
@@ -58,3 +58,5 @@ export const yogaPlans = {
     },
   },
 };
+
+export default yogaPlans;

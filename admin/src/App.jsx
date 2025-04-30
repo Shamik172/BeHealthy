@@ -50,7 +50,7 @@ function App() {
           element={<AdminSettings />} 
         />
 
-        <Route 
+        <Route
           path="/admin/notifications"
           element={<AdminNotifications />} 
         />

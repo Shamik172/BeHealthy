@@ -37,8 +37,25 @@ const getAsanasByBodyPart = async (req, res) => {
 };
 
 
+
+const getTodaysAsana = async (req, res) => {
+  try {
+    // Fetch the first asana (or modify criteria as needed)
+    const todaysAsana = await AsanasModel.findOne(); // You can customize this query further based on your needs
+
+    if (!todaysAsana) {
+      return res.status(404).json({ message: 'No asana found for today.' });
+    }
+
+    res.status(200).json(todaysAsana);
+  } catch (error) {
+    console.error('Error fetching today\'s asana:', error);
+    res.status(500).json({ message: 'Failed to fetch today\'s asana', error: error.message });
+  }
+};
 module.exports = {
-  getAsanasByBodyPart
+  getAsanasByBodyPart,
+  getTodaysAsana
 };
 
 // // Example route in routes/asanaRoutes.js or similar

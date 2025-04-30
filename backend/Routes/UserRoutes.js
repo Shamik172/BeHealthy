@@ -1,9 +1,14 @@
 const express = require('express');
-const UserRouter = express.Router();
+const UserAuth = require('../Middlewares/UserAuth');
+const { getUserData, updateProfile, updateSettings  } = require('../Controllers/UserController');
+const UserRoutes = express.Router();
 
-const UserAuth = require('../Middlewares/UserAuth.js');
-const { getUserData } = require('../Controllers/UserController.js');
 
-UserRouter.get('/data', UserAuth, getUserData);
+UserRoutes.get('/data', UserAuth , getUserData);
 
-module.exports = UserRouter;
+UserRoutes.post('/update-profile', UserAuth , updateProfile ) ;
+  
+UserRoutes.post('/update-settings', UserAuth , updateSettings) ;
+
+UserRoutes.get('/profile', UserAuth , getUserData ) ;
+module.exports = UserRoutes;
