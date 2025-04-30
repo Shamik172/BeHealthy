@@ -38,6 +38,7 @@ const VenueRouter = require('./Routes/venueRouter'); // <-- Add this line
 const VenueStatsRoutes = require('./Routes/venueStatsRoutes'); // <-- Add this line
 const YogaStreamRoutes = require('./Routes/yogaStreamRoutes.js'); // <-- Add this line
 const LiveStreamRoutes = require("./Routes/liveStreamRoutes.js"); // <-- Add this line
+const streaksRoutes = require('./Routes/streaksRoutes.js')
 
 
 require('dotenv').config() ;
@@ -101,6 +102,8 @@ io.on("connection", (socket) => {
   });
 });
 
+// Your auth routes here...
+app.use('/api/streak', streaksRoutes);
 
 
 // Start the server
