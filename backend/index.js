@@ -38,7 +38,8 @@ const VenueRouter = require('./Routes/venueRouter'); // <-- Add this line
 const VenueStatsRoutes = require('./Routes/venueStatsRoutes'); // <-- Add this line
 const YogaStreamRoutes = require('./Routes/yogaStreamRoutes.js'); // <-- Add this line
 const LiveStreamRoutes = require("./Routes/liveStreamRoutes.js"); // <-- Add this line
-const streaksRoutes = require('./Routes/streaksRoutes.js')
+
+const adminRouter = require("./Routes/adminRoutes.js"); // <-- Add this line
 
 
 require('dotenv').config() ;
@@ -88,6 +89,7 @@ app.use('/yoga-stream', YogaStreamRoutes);
 
 //live streaming section
 app.use("/live-stream", LiveStreamRoutes);
+app.use('/admin', adminRouter); // <-- Add this line;
 
 // Socket.IO Events
 io.on("connection", (socket) => {

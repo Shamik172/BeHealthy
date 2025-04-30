@@ -5,61 +5,54 @@ import AdminDashboard from "./components/AdminDashboard";
 import AdminUsers from "./components/AdminUsers";
 import AdminAsanas from "./components/AdminAsanas";
 import AdminSettings from "./components/AdminSettings";
-import AdminRoute from "./components/AdminRoute";
 import AdminNotifications from "./components/AdminNotifications";
+
+import AdminLogin from './components/AdminLogin';
 
 function App() {
   return (
     <Router>
       <Routes>
         {/* Public Routes */}
-        <Route path="/" element={
-          <div className="p-4 min-h-screen bg-gray-100">
-            <h1 className="text-xl font-bold mb-4 text-center">Map Example</h1>
-            <MapComponent />
-          </div>
-        } />
+        <Route 
+          path="/admin/login" 
+          element={<AdminLogin />} 
+        />
+
+        <Route 
+          path="/" 
+          element={
+            <div className="p-4 min-h-screen bg-gray-100">
+              <h1 className="text-xl font-bold mb-4 text-center">Map Example</h1>
+              <MapComponent />
+            </div>
+          } 
+        />
 
         {/* Admin Routes */}
-        <Route
+        <Route 
           path="/admin"
-          element={
-            <AdminRoute>
-              <AdminDashboard />
-            </AdminRoute>
-          }
+          element={<AdminDashboard />} 
         />
-        <Route
+
+        <Route 
           path="/admin/users"
-          element={
-            <AdminRoute>
-              <AdminUsers />
-            </AdminRoute>
-          }
+          element={<AdminUsers />} 
         />
-        <Route
+
+        <Route 
           path="/admin/asanas"
-          element={
-            <AdminRoute>
-              <AdminAsanas />
-            </AdminRoute>
-          }
+          element={<AdminAsanas />} 
         />
-        <Route
+
+        <Route 
           path="/admin/settings"
-          element={
-            <AdminRoute>
-              <AdminSettings />
-            </AdminRoute>
-          }
+          element={<AdminSettings />} 
         />
+
         <Route
           path="/admin/notifications"
-          element={
-            <AdminRoute>
-              <AdminNotifications />
-            </AdminRoute>
-          }
+          element={<AdminNotifications />} 
         />
       </Routes>
     </Router>

@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink as RouterNavLink, useLocation, useNavigate } from "react-router-dom";
+import { MdMenu, MdClose } from "react-icons/md";
 import { AppContent } from "../context/AppContext";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { MdMenu, MdClose } from "react-icons/md";
 import MusicPlayer from "./music/MusicPlayer";
 import { FaChalkboardTeacher } from "react-icons/fa"; // Add instructor icon import
 import LiveStream from "./yogastreaming/LiveStream";
@@ -13,9 +13,11 @@ function Navbar() {
     instructorData, setInstructorData, setIsInstructorLoggedIn,
   } = useContext(AppContent);
   console.log("isLoggedIn:", isLoggedIn, "isInstructorLoggedIn:", isInstructorLoggedIn);
-
+function Navbar({ unseenCount = 0, markNotificationsSeen }) {
+  const { userData, setUserData, backendUrl, setIsLoggedin } = useContext(AppContent);
   const [darkMode, setDarkMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [isMusicPlayerVisible, setIsMusicPlayerVisible] = useState(true);
   const location = useLocation();
@@ -86,6 +88,54 @@ function Navbar() {
     ,
   ];
 
+//harsit section
+  // Desktop NavLink with Icon and Notification Badge
+  function CustomNavLink({ to, icon, children, currentPath, onClick }) {
+    const isActive = currentPath === to;
+    return (
+      <RouterNavLink
+        to={to}
+        className={`relative text-white text-base font-medium transition-all duration-300 ${isActive ? 'font-bold' : ''} hover:scale-110 hover:text-yellow-300 flex items-center gap-1`}
+        onClick={onClick}
+      >
+        <span className="text-lg relative">
+          {icon}
+          {to === "/notifications" && unseenCount > 0 && (
+            <span className="absolute -top-2 -right-3 bg-red-600 text-white text-xs font-bold rounded-full px-1.5 py-0.5 animate-fadeIn">
+              {unseenCount}
+            </span>
+          )}
+        </span>
+        {children}
+      </RouterNavLink>
+    );
+  }
+
+  // Mobile NavLink with Icon and Notification Badge
+  function MobileNavLink({ to, icon, children, onClick }) {
+    return (
+      <Link
+        to={to}
+        onClick={onClick}
+        className="flex items-center space-x-2 px-2 py-2 rounded hover:bg-green-600 transition-colors duration-200 text-base"
+      >
+        <span className="text-lg relative">
+          {icon}
+          {to === "/notifications" && unseenCount > 0 && (
+            <span className="absolute -top-2 -right-3 bg-red-600 text-white text-xs font-bold rounded-full px-1.5 py-0.5 animate-fadeIn">
+              {unseenCount}
+            </span>
+          )}
+        </span>
+        <span>{children}</span>
+      </Link>
+    );
+  }
+
+  return (
+    <>
+      <nav className={`${darkMode ? "bg-green-800" : "bg-green-600"} p-4 shadow-md z-50 relative`}>
+{*/harshit ends here*}
   const renderNavLink = (link, onClickExtra = () => { }) => (
     <div
       key={link.to}
@@ -106,6 +156,7 @@ function Navbar() {
         className={`${darkMode ? "bg-green-800" : "bg-green-600"
           } p-4 shadow-md z-50 relative`}
       >
+
         <div className="flex justify-between items-center w-full">
           {/* Logo */}
           <div className="flex items-center">
@@ -126,11 +177,30 @@ function Navbar() {
 
           {/* Desktop Nav */}
           <div className="space-x-8 hidden sm:flex flex-grow justify-center">
+            {navLinks.map((link) =>
+              link.to === "/notifications" ? (
+                <CustomNavLink
+                  key={link.to}
+                  to={link.to}
+                  icon={link.icon}
+                  currentPath={location.pathname}
+                  onClick={markNotificationsSeen}
+                >
+                  {link.label}
+                </CustomNavLink>
+              ) : (
+                <CustomNavLink
+                  key={link.to}
+                  to={link.to}
+                  icon={link.icon}
+                  currentPath={location.pathname}
+                >
+                  {link.label}
+                </CustomNavLink>
+              )
+            )}
             {navLinks.map((link) => renderNavLink(link))}
           </div> 
-          <div>
-                
-          </div>
           <div className="flex items-center gap-3 sm:ml-auto">
             {/* Mobile and Desktop Flexbox */}
             <div className="flex items-center space-x-6 text-xl sm:text-xl font-extrabold  pr-5 italic tracking-wide ml-3 cursor-pointer">
@@ -296,7 +366,31 @@ function Navbar() {
       >
         <div className="text-xl font-bold mb-6">Yoga-Verse</div>
         <div className="flex flex-col space-y-5">
-          {navLinks.map((link) => renderNavLink(link, toggleSidebar))}
+          {navLinks.map((link) =>
+            link.to === "/notifications" ? (
+              <MobileNavLink
+                key={link.to}
+                to={link.to}
+                icon={link.icon}
+                onClick={() => {
+                  markNotificationsSeen();
+                  toggleSidebar();
+                }}
+              >
+                {link.label}
+              </MobileNavLink>
+            ) : (
+              <MobileNavLink
+                key={link.to}
+                to={link.to}
+                icon={link.icon}
+                onClick={toggleSidebar}
+              >
+                {link.label}
+              </MobileNavLink>
+            )
+          )}
+          //{navLinks.map((link) => renderNavLink(link, toggleSidebar))}
 
           <button
             onClick={() => {
