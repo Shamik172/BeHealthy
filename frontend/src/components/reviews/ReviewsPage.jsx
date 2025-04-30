@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Pagination } from "./Pagination";
-import { WriteReviews } from "./WriteReviews";
 import "./reviewStyle.css";
 const ReviewsPage = () => {
   const [reviews, setReviews] = useState([
@@ -149,23 +148,7 @@ const ReviewsPage = () => {
           <p className="mt-3 text-lg text-gray-600 animate-fade-in delay-100">
             Explore heartfelt reviews and testimonials from our happy clients
           </p>
-          <button
-            onClick={() => setShowForm(true)}
-            className="mt-6 inline-flex items-center px-6 py-3 border border-transparent text-base font-semibold rounded-full text-white bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 focus:outline-none focus:ring-4 focus:ring-green-300 transition-all duration-300 transform hover:scale-105"
-          >
-            Write a Review
-          </button>
         </div>
-
-        <WriteReviews
-          showForm={showForm}
-          setShowForm={setShowForm}
-          setReviews={setReviews}
-          reviews={reviews}
-          endIndex={endIndex}
-          setCurrentPage={setCurrentPage}
-        />
-
         <div className="bg-white shadow-2xl rounded-2xl p-8 animate-fade-in delay-200">
           <div className="flex flex-col md:flex-row justify-between items-center mb-8">
             <h2 className="text-2xl md:text-3xl font-bold text-gray-800">

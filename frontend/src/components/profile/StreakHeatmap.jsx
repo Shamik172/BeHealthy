@@ -7,51 +7,38 @@ import { motion } from "framer-motion";
 import { AppContent } from "../../context/AppContext";
 import axios from "axios";
 
-const StreakHeatmap = ({ activityDates = [] }) => {
-  const [streakData, setStreakData] = useState([]);
+const StreakHeatmap = () => {
+  const [completedDates, setCompletedDates] = useState([]);
   const [loading, setLoading] = useState(true);
-   const { userData, backendUrl, setUserData } = useContext(AppContent);
-    // console.log("user data" , userData);
+  const { userData, backendUrl } = useContext(AppContent);
 
   useEffect(() => {
     const fetchStreakData = async () => {
       try {
-        const response = await axios.get(
-          backendUrl + '/streak/completed',
-          {}, // empty body
-          {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true,
-          }
-        );
-        console.log("response " , response);
-        const streakCount = response.data.streakCount || 0;
-        const data = [];
-        for (let i = 0; i < 7; i++) {
-          data.push({
-            date: new Date().setDate(new Date().getDate() - i),
-            activityDone: i < streakCount,
-          });
-        }
-        setStreakData(data);
+        const response = await axios.get(`${backendUrl}/streak/completed`, {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        });
+        console.log("response : ", response.data.streak.history);
+        const   history  = response.data.streak.history || {};
+        console.log("History : ", history);
+        setCompletedDates(history || []);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching streak data:", error);
         setLoading(false);
       }
     };
-    
 
     fetchStreakData();
-  }, []);
+  }, [backendUrl]);
 
   const today = new Date();
   const yearAgo = new Date();
   yearAgo.setFullYear(today.getFullYear() - 1);
 
-  // Make sure activityDates is an array before calling .map
   const activeDays = new Set(
-    (activityDates || []).map((date) => new Date(date).toDateString())
+    (completedDates || []).map((date) => new Date(date).toDateString())
   );
 
   const getValueForDay = (date) =>
@@ -136,9 +123,7 @@ const StreakHeatmap = ({ activityDates = [] }) => {
           tooltipDataAttrs={(value) => {
             if (!value || !value.date) return null;
             const d = new Date(value.date);
-            const weekday = d.toLocaleDateString("en-US", {
-              weekday: "long",
-            });
+            const weekday = d.toLocaleDateString("en-US", { weekday: "long" });
             const formatted = d.toLocaleDateString("en-US", {
               year: "numeric",
               month: "short",
@@ -152,7 +137,6 @@ const StreakHeatmap = ({ activityDates = [] }) => {
             };
           }}
         />
-        {/* Render exactly one Tooltip with matching id */}
         <Tooltip id="heatmap-tooltip" />
       </motion.div>
     </motion.div>

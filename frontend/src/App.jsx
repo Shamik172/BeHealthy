@@ -29,7 +29,7 @@ import NotificationPopup from "./components/Notification/NotificationPopup";
 import NotificationHistory from "./components/Notification/NotificatioHistory";
 import NotificationButton from "./Testx/NotificationButton";
 
-import AdminDashboard from "../../admin/src/components/AdminDashboard";
+// import AdminDashboard from "../../admin/src/components/AdminDashboard";
 import axios from "axios";
 
 import LiveStream from "./components/yogastreaming/LiveStream";
@@ -39,7 +39,9 @@ import YogaUpload from "./components/yogastreaming/YogaUpload";
 import Task from "./components/task/Task";
 // Import the TasksProvider and DailyTasksPage
 import { TasksProvider } from "./context/TasksContext";
-import DailyStreakPage from "./components/daily/DailySteakPage";
+import Developers from "./components/developers/Developers";
+import StreakPage from "./components/daily/StreakPage";
+import Meditation from "./components/meditation/Meditation";
 
 function App() {
   const [unseenCount, setUnseenCount] = useState(0);
@@ -96,21 +98,19 @@ function App() {
               <Route path="/history" element={<History />} />
               <Route path="/instructor" element={<InstructorAuthPage/>}/>
               <Route path="/instructor/profile" element={<InstructorProfile/>}/>
+              <Route path="/ourteam" element={<Developers/>}/>
+              <Route path="/task" element={<StreakPage />} />
+              <Route path="meditation" element={<Meditation/>}/>
 
               <Route path="/notifications" element={<NotificationHistory />} />
-              <Route path="/task" element={<Task />} />
-              <Route path="/testx" element={<NotificationButton />} />
-              <Route path="/test" element={<YogaVenuePage />} />
+              
+              {/* <Route path="/testx" element={<NotificationButton />} /> */}
+              <Route path="/nearby-venue" element={<YogaVenuePage />} />
               <Route path="/yogaupload" element={<YogaUpload />} />
               <Route path="/livestreaming" element={<LiveStream />} />
               <Route path="/viewlivestream" element={<ViewLiveStream />} />
 
-              {/* Add the new route for DailyStreakPage */}
-              <Route path="/daily-tasks" element={
-                <TasksProvider>
-                  <DailyStreakPage/>
-                </TasksProvider>
-              } />
+            
             </Routes>
           </main>
           <Footer />
