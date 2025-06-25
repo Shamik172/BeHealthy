@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import {
   format,
@@ -8,19 +8,20 @@ import {
   getDay,
   isSameMonth,
 } from 'date-fns';
+import { AppContent } from '../../context/AppContext';
 
 const StreakCalendar = () => {
   const [streakDays, setStreakDays] = useState([]);
   const [currentMonth, setCurrentMonth] = useState([]);
   const today = new Date();
-
+   const {backendUrl} = useContext(AppContent);
   useEffect(() => {
     const start = startOfMonth(today);
     const end = endOfMonth(today);
     setCurrentMonth(eachDayOfInterval({ start, end }));
-
+   
     axios
-      .get('http://localhost:5050/streak/completed', { withCredentials: true })
+      .get(`${backendUrl}/streak/completed`, { withCredentials: true })
       .then(res => {
         const history = res.data?.streak?.history || [];
         const days = history

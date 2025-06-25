@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { AppContent } from '../../context/AppContext';
 
 const DailyChallenge = () => {
     const [asana, setAsana] = useState(null);
@@ -8,7 +9,8 @@ const DailyChallenge = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get('http://localhost:5050/daily/daily-task');
+                const {backendUrl} = useContext(AppContent);
+                const res = await axios.get(`${backendUrl}/daily/daily-task`);
                 // Extract the returned asana object
                 const d = res.data?.asana || {};
 

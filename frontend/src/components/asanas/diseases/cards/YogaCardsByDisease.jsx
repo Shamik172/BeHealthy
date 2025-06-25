@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Watch from '../../clock/Watch';
+import { AppContent } from '../../../../context/AppContext';
 
 export default function YogaCardsByDisease({ selectedDisease }) {
   const [asanas, setAsanas] = useState([]);
@@ -13,7 +14,8 @@ export default function YogaCardsByDisease({ selectedDisease }) {
     const fetchAsanas = async () => {
       const query = selectedDisease ? `?disease=${encodeURIComponent(selectedDisease)}` : '';
       try {
-        const res = await fetch(`http://localhost:5050/asanas/by-disease${query}`);
+        const {backendUrl} = useContext(AppContent);
+        const res = await fetch(`${backendUrl}/asanas/by-disease${query}`);
         const data = await res.json();
         setAsanas(data);
       } catch (err) {

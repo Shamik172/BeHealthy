@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, getDay } from "date-fns";
 import { News } from "./News/News";
 import axios from "axios";
 import StreakCalendar from "./daily/StreakCalander";
+import { AppContent } from "../context/AppContext";
 
 
 const updates = [
@@ -16,10 +17,10 @@ const updates = [
 
 export default function YogaSidebar() {
   const [notifications, setNotifications] = useState([]);
-
+  const {backendUrl} = useContext(AppContent);
   useEffect(() => {
     axios
-      .get("http://localhost:5050/notifications")
+      .get(`${backendUrl}/notifications`)
       .then(res => {
         if (res.data.success) {
           setNotifications(

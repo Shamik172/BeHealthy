@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { AppContent } from "../../context/AppContext";
 
 const NotificationHistory = () => {
   const [notifications, setNotifications] = useState([]);
-
+  const {backendUrl} = useContext(AppContent);
   useEffect(() => {
-    axios.get("http://localhost:5050/notifications")
+    axios.get(`${backendUrl}/notifications`)
       .then(res => {
         if (res.data.success) {
           setNotifications(

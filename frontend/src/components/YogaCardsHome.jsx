@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Watch from './asanas/clock/Watch';
+import { AppContent } from '../context/AppContext';
 
 export default function YogaCardsHome({ selectedBodyPart }) {
   const [asanas, setAsanas] = useState([]);
@@ -8,11 +9,11 @@ export default function YogaCardsHome({ selectedBodyPart }) {
 
   const videoUrl = "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4";
   const imageUrl = "https://res.cloudinary.com/dlixtmy1x/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1745255612/thumbnail_bhhs7q.png";
-
+  const {backendUrl} = useContext(AppContent);
   useEffect(() => {
     const fetchAsanas = async () => {
       const query = selectedBodyPart ? `?bodyPart=${encodeURIComponent(selectedBodyPart)}` : '';
-      const res = await fetch(`http://localhost:5050/asanas/by-body-part${query}`);
+      const res = await fetch(`${backendUrl}/asanas/by-body-part${query}`);
       const data = await res.json();
       const shuffledAsanas = shuffleArray(data);
       setAsanas(shuffledAsanas.slice(0, 9));
