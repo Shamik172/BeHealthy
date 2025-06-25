@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ManualLocationInput from "./yogavenuehelper/ManualLocationInput";
 import SearchBar from "./yogavenuehelper/SearchBar";
 import VenueSelectionCard from "./yogavenuehelper/VenueSelectionCard";
@@ -11,6 +11,7 @@ import Header from "./yogavenuehelper/Header";
 import LocationDisplay from "./yogavenuehelper/LocationDisplay";
 import { MdWarning } from "react-icons/md"; // Importing the warning icon from react-icons
 import axios from "axios";
+import { AppContent } from "../../context/AppContext";
 
 const provider = new OpenStreetMapProvider();
 
@@ -31,6 +32,7 @@ const YogaVenue = () => {
     Evening: [],
   });
   const [errorMsg, setErrorMsg] = useState(""); // Added error message state if distance more than 10km
+  const {backendUrl} = useContext(AppContent);
 
   const {
     locationDenied,
@@ -50,7 +52,8 @@ const YogaVenue = () => {
       const updatedVenues = await Promise.all(
         venuesList.map(async (venue) => {
           try {
-            const res = await axios.get(`http://localhost:5050/venue-stats/location/getlocation`, {
+            
+            const res = await axios.get(`${backendUrl}/venue-stats/location/getlocation`, {
               params: { lat: venue.lat, lon: venue.lng },
             });
   

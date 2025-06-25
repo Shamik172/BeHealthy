@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 
@@ -42,14 +42,16 @@ import { TasksProvider } from "./context/TasksContext";
 import Developers from "./components/developers/Developers";
 import StreakPage from "./components/daily/StreakPage";
 import Meditation from "./components/meditation/Meditation";
+import { AppContent } from "./context/AppContext";
 
 function App() {
   const [unseenCount, setUnseenCount] = useState(0);
+  const {backendUrl} = useContext(AppContent);
 
   useEffect(() => {
     const lastSeenId = localStorage.getItem("lastSeenNotificationId");
     const fetchNotifications = () => {
-      axios.get("http://localhost:5050/notifications").then((res) => {
+      axios.get(`${backendUrl}/notifications`).then((res) => {
         if (res.data.success) {
           const notifs = res.data.notifications;
           if (notifs.length > 0) {

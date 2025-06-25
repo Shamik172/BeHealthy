@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Watch from '../../clock/Watch';
+import { AppContent } from '../../../../context/AppContext';
 
 export default function YogaCardsByBodyPart({ selectedBodyPart }) {
   const [asanas, setAsanas] = useState([]);
@@ -12,7 +13,8 @@ export default function YogaCardsByBodyPart({ selectedBodyPart }) {
   useEffect(() => {
     const fetchAsanas = async () => {
       const query = selectedBodyPart ? `?bodyPart=${encodeURIComponent(selectedBodyPart)}` : '';
-      const res = await fetch(`http://localhost:5050/asanas/by-body-part${query}`);
+      const {backendUrl} = useContext(AppContent);
+      const res = await fetch(`${backendUrl}/asanas/by-body-part${query}`);
       const data = await res.json();
       console.log("data : ", data);
       setAsanas(data);

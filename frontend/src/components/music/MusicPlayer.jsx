@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { Rnd } from 'react-rnd';
 import {
@@ -6,6 +6,7 @@ import {
   FaRedo, FaVolumeMute, FaVolumeUp, FaSun, FaMoon, FaTimes
 } from 'react-icons/fa';
 import axios from 'axios';
+import { AppContent } from '../../context/AppContext';
 
 const MusicPlayer = () => {
   const audioRef = useRef(null);
@@ -20,11 +21,12 @@ const MusicPlayer = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [tracks, setTracks] = useState([]);
   const controls = useAnimation();
+  const {backendUrl} = useContext(AppContent);
 
   useEffect(() => {
     const fetchTracks = async () => {
       try {
-        const response = await axios.get('http://localhost:5050/music/get-all');
+        const response = await axios.get(`${backendUrl}/music/get-all`);
         setTracks(response.data.data);
       } catch (error) {
         console.error('Error fetching tracks:', error);
