@@ -2,5 +2,10 @@
   "dependencies": {
     "cookie-parser": "^1.4.7",
     "framer-motion": "^12.7.4"
-  }
+  },
+  "devDependencies": {
+  "vite": "^5.0.0",
+  "rollup": "4.14.0"
+}
+
 }
