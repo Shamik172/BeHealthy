@@ -47,7 +47,7 @@ require('./config/db.js') ;
 
 
 const PORT=process.env.PORT || 8080;
-const allowedOrigins =['http://localhost:5173','http://localhost:5174',"https://yoga-healix-1.onrender.com/"];
+const allowedOrigins =['http://localhost:5173','http://localhost:5174',"https://yoga-healix-1.onrender.com"];
 
 app.use(express.json());
 
@@ -110,7 +110,7 @@ io.on("connection", (socket) => {
 
 // Start the server
 server.listen(5050, () => {
-    console.log("Server running on http://localhost:5050");
+    console.log("Server running ....");
   });
 
 
