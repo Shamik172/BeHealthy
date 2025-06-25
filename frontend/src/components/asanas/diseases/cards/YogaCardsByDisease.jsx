@@ -9,12 +9,12 @@ export default function YogaCardsByDisease({ selectedDisease }) {
 
   const videoUrl = "https://res.cloudinary.com/dlixtmy1x/video/upload/v1745243364/Coming_Soon_Title_hgggmz.mp4";
   const imageUrl = "https://res.cloudinary.com/dlixtmy1x/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1745255612/thumbnail_bhhs7q.png";
-
+  const {backendUrl} = useContext(AppContent);
   useEffect(() => {
     const fetchAsanas = async () => {
       const query = selectedDisease ? `?disease=${encodeURIComponent(selectedDisease)}` : '';
       try {
-        const {backendUrl} = useContext(AppContent);
+        
         const res = await fetch(`${backendUrl}/asanas/by-disease${query}`);
         const data = await res.json();
         setAsanas(data);

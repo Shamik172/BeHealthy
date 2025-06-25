@@ -5,11 +5,11 @@ import { AppContent } from '../../context/AppContext';
 const DailyChallenge = () => {
     const [asana, setAsana] = useState(null);
     const [loading, setLoading] = useState(true);
-
+    const {backendUrl} = useContext(AppContent);
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const {backendUrl} = useContext(AppContent);
+                
                 const res = await axios.get(`${backendUrl}/daily/daily-task`);
                 // Extract the returned asana object
                 const d = res.data?.asana || {};
