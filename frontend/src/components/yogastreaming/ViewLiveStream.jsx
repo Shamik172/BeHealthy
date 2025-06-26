@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
 
-const socket = io("http://localhost:5050");
+const socket = io("https://yoga-healix.onrender.com");
 
 const ViewLiveStream = () => {
   const videoRef = useRef(null);

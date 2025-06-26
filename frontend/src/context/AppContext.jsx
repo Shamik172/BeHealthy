@@ -37,7 +37,9 @@ export const AppContextProvider = ({ children }) => {
   const getUserData = async () => {
     try {
       const { data } = await axios.get(`${backendUrl}/user/data`, { withCredentials: true });
+      console.log("data after login by getUserData : " , data);
       if (data.success) {
+        
         setUserData(data.userData);
       } else {
         toast.error(data.message || "Failed to fetch user data");

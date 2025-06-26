@@ -62,15 +62,6 @@ const ReviewRoutes = require('./Routes/ReviewRoutes.js');
 const DailyTaskRoutes = require('./Routes/DailyTaskRoutes.js');
 const UsersRouter = require('./Routes/UsersRouter');
 const NotificationsRouter = require('./Routes/NotificationsRouter');
-const VenueRouter = require('./Routes/venueRouter');
-const VenueStatsRoutes = require('./Routes/venueStatsRoutes');
-const YogaStreamRoutes = require('./Routes/yogaStreamRoutes.js');
-const LiveStreamRoutes = require("./Routes/liveStreamRoutes.js");
-const adminRouter = require("./Routes/adminRoutes.js");
-
-// ✅ Test route
-app.get('/', (req, res) => {
-  res.send("Server is running...");
 });
 
 // ✅ Route bindings
