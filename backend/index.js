@@ -41,7 +41,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// ✅ Initialize socket.io with open CORS (optional: restrict in production)
+// ✅ Socket.io open CORS (optional: restrict for production)
 const io = socketIo(server, {
   cors: {
     origin: "*",
@@ -49,7 +49,7 @@ const io = socketIo(server, {
   }
 });
 
-// ⛔ Don't remove any routes
+// ✅ Route imports
 const AuthRoutes = require('./Routes/AuthRoutes');
 const ContactUsRouter = require('./Routes/ContactUsRouter.js');
 const AsanasRouter = require('./Routes/AsanasRouter.js');
@@ -62,7 +62,11 @@ const ReviewRoutes = require('./Routes/ReviewRoutes.js');
 const DailyTaskRoutes = require('./Routes/DailyTaskRoutes.js');
 const UsersRouter = require('./Routes/UsersRouter');
 const NotificationsRouter = require('./Routes/NotificationsRouter');
-});
+const VenueRouter = require('./Routes/venueRouter');
+const VenueStatsRoutes = require('./Routes/venueStatsRoutes');
+const YogaStreamRoutes = require('./Routes/yogaStreamRoutes.js');
+const LiveStreamRoutes = require('./Routes/liveStreamRoutes.js');
+const adminRouter = require('./Routes/adminRoutes.js');
 
 // ✅ Route bindings
 app.use('/auth', AuthRoutes);
