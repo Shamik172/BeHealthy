@@ -53,7 +53,10 @@ app.use(express.json());
 
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(cors({origin:allowedOrigins , credentials:true}));
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true  // ✅ THIS IS REQUIRED
+}));
 app.use('/uploads', express.static(path.join(__dirname, "uploads")));
 
 
