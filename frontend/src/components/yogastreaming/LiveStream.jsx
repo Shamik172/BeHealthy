@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { io } from "socket.io-client";
 import { FaPlay, FaStop } from "react-icons/fa";
 
-const socket = io("http://localhost:5050");
+const socket = io("https://yoga-healix.onrender.com");
 
 const LiveStream = () => {
   const videoRef = useRef(null);

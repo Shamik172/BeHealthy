@@ -38,7 +38,7 @@ const Login = ({ isSignup, toggleForm }) => {
         if (data.success) {
           setIsLoggedin(true);
           getUserData();
-          navigate('/');
+          navigate('/profile');
           toast.success(data.message);
         } else {
           toast.error(data.message);
@@ -58,8 +58,9 @@ const Login = ({ isSignup, toggleForm }) => {
         console.log("Result From Backend ",data);
         if (data.success) {
           setIsLoggedin(true);
+          console.log("data after login : " , data);
           getUserData();
-          navigate('/');
+          navigate('/profile');
           toast.success(data.message);
         } else {
           console.log("Error in login");

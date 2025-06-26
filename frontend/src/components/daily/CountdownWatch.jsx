@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { motion } from 'framer-motion';
+import { AppContent } from '../../context/AppContext';
 
-const INITIAL_TIME = 5 * 60; // 5 minutes in seconds
+const INITIAL_TIME = 1 * 10; // 10 seconds
 
 const CountdownTimer = ({ onTimerEnd, userId }) => {
   const [timeLeft, setTimeLeft] = useState(INITIAL_TIME);
@@ -12,12 +13,12 @@ const CountdownTimer = ({ onTimerEnd, userId }) => {
   const [marking, setMarking] = useState(false); // For loading state on mark
   const [taskCompleted, setTaskCompleted] = useState(false); // Task status
   const intervalRef = useRef(null);
-
+  const {backendUrl} = useContext(AppContent);
   // Check if task is completed for today
   useEffect(() => {
     const checkTaskStatus = async () => {
       try {
-        const res = await axios.get(`http://localhost:5050/streak/alreadydone`);
+        const res = await axios.get(`${backendUrl}/streak/alreadydone`);
         setTaskCompleted(res.data.alreadyDone); // Set the status based on the response
       } catch (err) {
         console.error('Error checking daily task status:', err);
@@ -81,7 +82,7 @@ const CountdownTimer = ({ onTimerEnd, userId }) => {
   const handleMarkComplete = async () => {
     try {
       setMarking(true);
-      const res = await axios.post('http://localhost:5050/streak/update-streak');
+      const res = await axios.post(`${backendUrl}/streak/update-streak`);
       toast.success(res.data.message || "Streak updated!");
       setIsCompleted(false); // Optionally reset button
     } catch (err) {
