@@ -11,7 +11,9 @@ const http = require("http"); // <-- ADD THIS
 const app = express();
 const server = http.createServer(app); // <-- ADD THIS
 
+
 // Initialize socket.io with CORS config
+
 const io = socketIo(server, {
     cors: {
       origin: "*",
@@ -20,7 +22,6 @@ const io = socketIo(server, {
   });
 
 // <<Anantesh >>   Dont't remove anything from here
-
 const AuthRoutes = require('./Routes/AuthRoutes.js') ;
 const ContactUsRouter= require('./Routes/ContactUsRouter.js');
 const AsanasRouter =require('./Routes/AsanasRouter.js');
@@ -34,6 +35,7 @@ const DailyTaskRoutes = require('./Routes/DailyTaskRoutes.js');
 
 const UsersRouter = require('./Routes/UsersRouter');           // for fetching data on admin side
 const NotificationsRouter = require('./Routes/NotificationsRouter');
+
 const VenueRouter = require('./Routes/venueRouter'); 
 const VenueStatsRoutes = require('./Routes/venueStatsRoutes'); 
 const YogaStreamRoutes = require('./Routes/yogaStreamRoutes.js'); 
@@ -61,8 +63,6 @@ app.use('/uploads', express.static(path.join(__dirname, "uploads")));
 app.get('/',(req , res)=>{
     res.send("Server is running...") ;
 });
-
-
 
 // Anantesh                                 << !!   Don't delete anything from here !!!!>>
 app.use('/auth', AuthRoutes);                          // user login-signup
