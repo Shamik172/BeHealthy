@@ -85,10 +85,10 @@ app.use('/notifications', NotificationsRouter);
 // app.use('/venue-stats', VenueStatsRoutes); // For stats like count & users per venue-slot
 
 //yoga streaming section
-// app.use('/yoga-stream', YogaStreamRoutes);
+app.use('/yoga-stream', YogaStreamRoutes);
 
 //live streaming section
-// app.use("/live-stream", LiveStreamRoutes);
+app.use("/live-stream", LiveStreamRoutes);
 app.use('/admin', adminRouter); 
 
 // Socket.IO Events

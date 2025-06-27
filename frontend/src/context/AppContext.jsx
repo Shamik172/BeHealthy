@@ -8,8 +8,8 @@ export const AppContent = createContext();
 // Provider Component
 export const AppContextProvider = ({ children }) => {
   axios.defaults.withCredentials = true;
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
-   // const backendUrl =  'https://yoga-healix.onrender.com';
+  // const backendUrl = import.meta.env.VITE_BACKEND_URL;
+   const backendUrl =  'https://yoga-healix.onrender.com';
   // User-related states
   const [isLoggedin, setIsLoggedin] = useState(false);
   const [userData, setUserData] = useState({});
